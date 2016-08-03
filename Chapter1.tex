@@ -134,7 +134,7 @@ The natural deduction system of \ac{IPL} is given below:
 
 
 \subsection{Basic Properties of Intuitionistic Entailment}
-
+\label{ssec:entail}
 			\begin{mdframed}
 			\textbf{Reflexivity}
 			    
@@ -270,7 +270,7 @@ $\Gamma\vdash_{IPL} \phi \true$ iff for any \vocab{Heyting Algebra} $H$ we have 
 \end{theorem}
 \end{mdframed}
 
-\section{Proof trees and proof terms}
+\section{Proof trees and proof terms, proofs and programs}
 \vocab{IPL} can be viewed as a declarative axiomatization of proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
 	\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\{\Turnsi {\Gamma} {\phi_2 \true}}} {\Turnsi {\Gamma} {  \phi_1 \wedge\phi_2 \true}}
@@ -291,24 +291,46 @@ Here we provide such a  formulation in proof trees of judgments together with th
 \inferrule*[]{}{J}
 \end{mathpar}
 We focus one judgments $J$ of the form ${A \true}$.
-Here are the the rules for constructing proof trees.
+Here are the the rules for constructing proof trees with labeled assumptions\footnote{Essentially the constructs are directed acyclic graphs since assumptions with the same label are ``bind" and substitutable together but we will be cavalier with such a details}.
 First, the deductions using reflection on hypothesis are valid:
 \begin{mathpar}
-\begin{array}[b]{c}{ A_1 \true,\ldots,  A_i\true}\\{\vdots}\\{A_{j\in 1\dots i} \true}
+\begin{array}[b]{c}{ x_1:A_1 \true,\ldots,  x_i:A_i\true}\\{\vdots}\\{A_{j\in 1\dots i} \true}
+\end{array}
+\and
+\begin{array}[b]{c}{ x_1:A_1 \true, \ldots,   x_i:A_i\true}\\{\vdots}\\{\top\true}
 \end{array}
 \end{mathpar}
 
 \begin{mathpar}
-	\inferrule[$\wedge$ Intro]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\true  \end{array}}\\ {\begin{array}[b]{c} {\mathcal{E}} \\ B\true  \end{array}}}{A \wedge B \true}
+	\inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\true  \end{array}}\\ {\begin{array}[b]{c} {\mathcal{E}} \\ B\true  \end{array}}}{A \wedge B \true}
 	
 \end{mathpar}
 \begin{mathpar}
-	\inferrule[$\wedge$ Elim$1$]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\wedge B\true  \end{array}} }{A \true}
+	\inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\wedge B\true  \end{array}} }{A \true}
 	\and
-	\inferrule[$\wedge$ Elim$2$]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\wedge B\true  \end{array}} }{B \true}
+	\inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\wedge B\true  \end{array}} }{B \true}
 \end{mathpar}
 \begin{mathpar}
 	
+\end{mathpar}
+
+
+\begin{mathpar}
+	\inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A \true \end{array}} }{A\vee B \true}
+	\and
+	\inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ B\true  \end{array}} }{A\vee B \true}
+\end{mathpar}
+\begin{mathpar}
+	
+\end{mathpar}
+\begin{mathpar}
+	\inferrule[]{{\begin{array}[b]{c}  {\mathcal{D}} \\ A\vee B \true \end{array}} \\ {\begin{array}[b]{c} {A\true}\\ {\mathcal{E}} \\ C \true \end{array}}\\
+	{\begin{array}[b]{c} {B\true}\\ {\mathcal{F}} \\ C \true \end{array}		 }}{C\true}
+\end{mathpar}
+
+\begin{mathpar}
+	\inferrule[]{
+	{\begin{array}[b]{c}  {\mathcal{D}} \\ \bot \true \end{array}}}{C \true}
 \end{mathpar}
 %\begin{mathpar}
 %\inferrule*[]{\PrTri{D}} {\PrTri{E} }
@@ -318,8 +340,18 @@ First, the deductions using reflection on hypothesis are valid:
 %{\inferrule*[]{}{ \inferrule*[]	{\inferrule*[]{}{{D} \\ {E}}\\\\
 			%\inferrule*[]{}{\    A\\ \ \qquad %\llbracket   A\rrbracket}}{\Box   A }}}
 %\end{mathpar}
-
- \subsection{Linear representation of trees  with proof terms}
+\subsection{Properties of Intuitionistic Entailment Redux}
+Proof trees by their nature satisfy the properties of entailment in \ref{ssec:entail}. We will not bother with reflection and contraction. The first is trivial and the second can be shown by simple induction on the structure of trees and the proof highlights  that reflection is order irrelevant. Transitivity is granted by \textit{compositionality} and reflects the essence of hypothetical reasoning: proof trees of the appropriate proposition can be ``plugged in" for assumptions to create new valid trees. In the figure, if $\mathcal{D, E}$ are valid proof trees then their composition is valid. The proof is by induction on the structure of $\mathcal{D}$. 
+\begin{mdframed}
+	\begin{theorem}\label{thm:cmpha}
+		If {$\begin{array}{c}{ x:A }\\{\mathcal{D}}
+			\\{B \true}
+			\end{array}$}
+		and {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\end{array}$} are valid proof trees their composition denoted as {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\\{\mathcal{D}}\\{B\true}\end{array}$},  defined by substituting all occurrences of $x:A$ for $E$ in $\mathcal{D}$, is a valid proof tree for $B \true$. 
+	\end{theorem}
+\end{mdframed}
+\begin{mathpar}
+\subsection{Linear representation of trees  with proof terms}
 \vocab{IPL} can be viewed as a  logic for proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
 \inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\{\Turnsi {\Gamma} {\phi_2 \true}}} {\Turnsi {\Gamma} {  \phi_1 \wedge\phi_2 \true}}
