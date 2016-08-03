@@ -270,7 +270,7 @@ $\Gamma\vdash_{IPL} \phi \true$ iff for any \vocab{Heyting Algebra} $H$ we have 
 \end{theorem}
 \end{mdframed}
 
-\section{Proof trees and proof terms, proofs and programs}
+\section{From intuitionistic provability to proof trees}
 \vocab{IPL} can be viewed as a declarative axiomatization of proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
 	\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\{\Turnsi {\Gamma} {\phi_2 \true}}} {\Turnsi {\Gamma} {  \phi_1 \wedge\phi_2 \true}}
@@ -350,8 +350,8 @@ Proof trees by their nature satisfy the properties of entailment in \ref{ssec:en
 		and {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\end{array}$} are valid proof trees their composition denoted as {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\\{\mathcal{D}}\\{B\true}\end{array}$},  defined by substituting all occurrences of $x:A$ for $E$ in $\mathcal{D}$, is a valid proof tree for $B \true$. 
 	\end{theorem}
 \end{mdframed}
-\begin{mathpar}
-\subsection{Linear representation of trees  with proof terms}
+
+\section{Linear representation of trees  with proof terms: $\lambda$ calculus}
 \vocab{IPL} can be viewed as a  logic for proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
 \inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\{\Turnsi {\Gamma} {\phi_2 \true}}} {\Turnsi {\Gamma} {  \phi_1 \wedge\phi_2 \true}}
