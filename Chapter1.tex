@@ -341,7 +341,7 @@ First, the deductions using reflection on hypothesis are valid:
 			%\inferrule*[]{}{\    A\\ \ \qquad %\llbracket   A\rrbracket}}{\Box   A }}}
 %\end{mathpar}
 \subsection{Properties of Intuitionistic Entailment Redux}
-Proof trees by their nature satisfy the properties of entailment in \ref{ssec:entail}. We will not bother with reflection and contraction. The first is trivial and the second can be shown by simple induction on the structure of trees and the proof highlights  that reflection is order irrelevant. Transitivity is granted by \textit{compositionality} and reflects the essence of hypothetical reasoning: proof trees of the appropriate proposition can be ``plugged in" for assumptions to create new valid trees. In the figure, if $\mathcal{D, E}$ are valid proof trees then their composition is valid. The proof is by induction on the structure of $\mathcal{D}$. 
+Proof trees by their nature satisfy the properties of entailment in \ref{ssec:entail}. We will not bother with reflection and contraction. The first is trivial and the second can be shown by simple induction on the structure of trees with the proof highlighting  that reflection on hypothesis is order-irrelevant. Transitivity is established by \textit{compositionality} of proof trees and reflects the essence of hypothetical reasoning: proof trees of the appropriate proposition can be ``plugged in" for assumptions to create new valid trees.  
 \begin{mdframed}
 	\begin{theorem}\label{thm:cmpha}
 		If {$\begin{array}{c}{ x:A }\\{\mathcal{D}}
@@ -350,6 +350,8 @@ Proof trees by their nature satisfy the properties of entailment in \ref{ssec:en
 		and {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\end{array}$} are valid proof trees their composition denoted as {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\\{\mathcal{D}}\\{B\true}\end{array}$},  defined by substituting all occurrences of $x:A$ for $E$ in $\mathcal{D}$, is a valid proof tree for $B \true$. 
 	\end{theorem}
 \end{mdframed}
+\subsection{Equating Proof Trees}
+Having proof objects as first class citizens, permits for developing logics, essentially, as theories of (typed) equality among such objects. This idea was  stemmed from Gentzen's work on natural deduction and cut elimination and it is what gives to proofs  computational content. Here are the proposed  equalities for the proof relevant \vocab{IPL} proposed by Gentzen.
 
 \section{Linear representation of trees  with proof terms: $\lambda$ calculus}
 \vocab{IPL} can be viewed as a  logic for proof constructs. Take the introduction rule for conjunction as an example: 
