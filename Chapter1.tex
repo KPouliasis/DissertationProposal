@@ -280,7 +280,7 @@ The rule says, ``given the existence a proof of $\phi$ and a proof of $\psi$ fro
 
 We used the description ``declarative" because in this format \vocab{IPL} sequents $\Gamma\vdash \true $ do not describe how such existentials are realized. It is in essence a logic of ``proof relevant truth" but it does not involve the proofs themselves as first class objects. 
 
-An alternative presentation is to explicate proof constructs by directly providing a system of ``proof trees". Such, an approach was actually championed in Gentzen's natural deduction systems and is the necessary move to obtain proof calculi. Once we have proof explicit  proof objects (either as trees, or as we will, see as terms) the system is enriched with equality principles involving such objects. Such rules give computational value (``proof dynamics") to the constructs  and are the driver idea in the  ``Curry- Howard Isomorphism" and its extensions.
+An alternative presentation is to explicate proof constructs by directly providing a system of ``proof trees". Such, an approach was actually championed in Gentzen's natural deduction systems and is the necessary move to obtain proof calculi. Once we have proof explicit  proof objects (either as trees, or as we will, see as terms) the system is enriched with equality principles involving such objects. Such rules give computational value (``proof dynamics") to the constructs  and are the driver idea in the  ``Curry--Howard Isomorphism" and its extensions.
 
 Here we provide such a  formulation in proof trees of judgments together with the equality rules on trees, essentially following Gentzen. Proof trees of judgments have the following shape:
 
@@ -351,18 +351,49 @@ Proof trees by their nature satisfy the properties of entailment in \ref{ssec:en
 	\end{theorem}
 \end{mdframed}
 \subsection{Equating Proof Trees}
-Having proof objects as first class citizens, permits for developing logics, essentially, as theories of (typed) equality among such objects. This idea was  stemmed from Gentzen's work on natural deduction and cut elimination and it is what gives to proofs  computational content. Here are the proposed  equalities for the proof relevant \vocab{IPL} proposed by Gentzen.
+Having proof objects as first class citizens, permits for developing logics, essentially, as theories of (typed) equality among such objects. This idea was  stemmed from Gentzen's work on natural deduction and cut elimination and it is what gives to proofs  computational content. Here are the proposed  equalities for the proof relevant \vocab{IPL} introduced initially by Gentzen as the driver of the proof  cut elimination. We will be revisiting these very same equalities and reframe them as equalities among proof terms in the next section. Nevertheless, they can be expressed in proof tree form.  We show indicatively the equalities regarding the $\supset$ connective proofs reserving the rest for the more concise notation.
 
-\section{Linear representation of trees  with proof terms: $\lambda$ calculus}
-\vocab{IPL} can be viewed as a  logic for proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
-\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\{\Turnsi {\Gamma} {\phi_2 \true}}} {\Turnsi {\Gamma} {  \phi_1 \wedge\phi_2 \true}}
+	\begin{array}{c c c}
+	{\inferrule{
+	{\inferrule[]{
+		{\begin{array}[b]{c} x:A\\ {\mathcal{D}} \\ B \true \end{array}}}{A \supset B \true}}\\
+{\begin{array}{c}\mathcal{E}\\{A \true}\end{array}}
+}
+{ B \true}} & = &
+	
+			{\begin{array}[b]{c} \mathcal{E} \\ A \true \\ {\mathcal{D}} \\ B \true \end{array}} 
+
+
+\end{array}
 \end{mathpar}
 
-The rule says, ``given a proof of $\phi$ and a proof of $\psi$ from assumptions $\Gamma$, we should have a proof of $\phi\wedge\psi$ from assumptions $\Gamma$ at hand". 
-The simply typed lambda calculus makes this proof-tracking explicit by adding constructors and destructors on proof terms. Hypothetical assumptions are assigned unique variables as proof terms. The judgments of \vocab{IPL} are then transformed into judgments on proof terms. This is the well--known Curry--Howard Correspondence. 
-  $$\phi_1\  \true,\dots, \phi_n\  \true \vdash \phi\ \true\quad \rightleftharpoons  \quad x_1:\phi_1, x_2:\phi_2, \ldots x_n:\phi_n\vdash M:\phi$$
+\begin{mathpar}
+	\begin{array}{c c c}
+		{\inferrule{
+				{\inferrule[]{
+						{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B \true \end{array}}\\{\overline{x:A}}} { B \true}}}{A \supset B}
+			}
+			& = &
+		
+		{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B \true \end{array}}
+		
+		
+	\end{array}
+\end{mathpar}
 
+
+
+
+
+
+
+
+
+
+\section{Linear representation of trees  with proof terms: $\lambda$ calculus}
+Proof terms provide an alternative linear representation for proof trees. The simply typed lambda calculus and its equational system can, thus, be viewed as a calculus for proof trees and proof reductions for  intuitionistic logic. What's more, following the doctrine of proof relevance and of characterizing connectives by their proof reductions, i.e. working in the realm of Curry -- Howard Isomorphism, we hit two birds with one stone: we both develop proof relevant logics and we get typed programming languages that reflect their computational content. The ``simplest" language obtained within this program is the simply typed lambda calculus, but we will see that the same doctrine  extends to different logics with different judgmental constructs.
+  
 \subsubsection{Simply typed lambda calculus}
 \begin{mdframed}
 \textbf{Type Formation}
