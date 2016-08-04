@@ -269,7 +269,7 @@ $\Gamma\vdash_{IPL} \phi \true$ iff for any \vocab{Heyting Algebra} $H$ we have 
 \end{alignat*}
 \end{theorem}
 \end{mdframed}
-
+\chapter{Lambda Calculus With Types}\label{lambda}
 \section{From intuitionistic provability to proof trees}
 \vocab{IPL} can be viewed as a declarative axiomatization of proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
@@ -479,7 +479,7 @@ Proof terms provide an alternative linear representation for proof trees. The si
 
 \end{mdframed}
 
-\section{The computational view}
+\section{Operational (a.k.a ``term") Semantics}
 Given the formulation of the $\lambda$-calculus we can think of \emph{formulae-as-types} and \textit{proof terms-as-programs}. This enriches logic with a computational aspect(\emph{proof dynamics}) that is absent from other formulations. Dynamics stems from Gentzen's insight to give an equational system for proofs equipped with $\beta$$\eta$ rules for proof-tree conversion. These insights, give rise to $\lambda$-calculus dynamics if we devise an execution strategy (an \emph{operational semantics}) for program reduction that respects these rules. The correspondence between computations and Gentzen equational principles for proof terms is enlightened by specific metatheoretic results.
 
 \subsection{Definitional Equality}
