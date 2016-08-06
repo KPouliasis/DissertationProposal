@@ -478,46 +478,42 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \end{mathpar}
 
 \end{mdframed}
+\subsection{Definitional Equality: Proof tree equalities as term equalities}
 
-\section{Operational (a.k.a ``term") Semantics}
-Given the formulation of the $\lambda$-calculus we can think of \emph{formulae-as-types} and \textit{proof terms-as-programs}. This enriches logic with a computational aspect(\emph{proof dynamics}) that is absent from other formulations. Dynamics stems from Gentzen's insight to give an equational system for proofs equipped with $\beta$$\eta$ rules for proof-tree conversion. These insights, give rise to $\lambda$-calculus dynamics if we devise an execution strategy (an \emph{operational semantics}) for program reduction that respects these rules. The correspondence between computations and Gentzen equational principles for proof terms is enlightened by specific metatheoretic results.
-
-\subsection{Definitional Equality}
-
-We want to think about when two proofs $M:A$ and $M':A$ are the same. In the following  we elaborate Gentzen's principles introducing an equivalence relation called \emph{definitional equality} that respects these principles, denoted $M\equiv M':A$. We want definitional equality $\equiv$ to be the least congruence closed under the $\beta$ rules. We will define what this means:
+We want to think about when two proofs (resp. proof trees) $M:A$ and $M':A$ are the same. In the following  we elaborate Gentzen's principles introducing an equivalence relation called \emph{definitional equality} that respects these principles, denoted $M\equiv M':A$. We want definitional equality $\equiv$ to be the least congruence closed under the $\beta$ rules. We will define what this means:
 
 A \emph{congruence} is an equivalence relation (i.e. reflexive transitive and antisymmetric) that respects our operators as formulated below. 
 
 \begin{mdframed}
-\begin{mathpar}
-\inferrule*[right=R] 
-{ }
-{\Turnsi {\Gamma} {M\equiv M:\phi }}
-\and
-\inferrule*[right=S] 
-{\Turnsi {\Gamma} {  M\equiv M':\phi}}
-{\Turnsi {\Gamma} {M'\equiv M:\phi }}
-\and
-\inferrule*[right=T] 
-{{\Turnsi {\Gamma} {  M\equiv M':\phi}}\\
-{\Turnsi {\Gamma} {M'\equiv M'':\phi }}} {{\Turnsi {\Gamma} {  M\equiv M'':\phi} }}
-\end{mathpar}
-
+	\begin{mathpar}
+		\inferrule*[right=R] 
+		{ }
+		{\Turnsi {\Gamma} {M\equiv M:\phi }}
+		\and
+		\inferrule*[right=S] 
+		{\Turnsi {\Gamma} {  M\equiv M':\phi}}
+		{\Turnsi {\Gamma} {M'\equiv M:\phi }}
+		\and
+		\inferrule*[right=T] 
+		{{\Turnsi {\Gamma} {  M\equiv M':\phi}}\\
+			{\Turnsi {\Gamma} {M'\equiv M'':\phi }}} {{\Turnsi {\Gamma} {  M\equiv M'':\phi} }}
+	\end{mathpar}
+	
 \end{mdframed}
 
 For the equivalence relation to respect operators we  means that if $M\equiv M':A$, then that their image under any operator should be equivalent. In other words, we should be able to replace $M$ with $M'$ everywhere.For example:
 
 \begin{mdframed}
-\textbf{Congruence over $fst$}
-\begin{mathpar}
-
-\inferrule*[]
-{\Gamma \entails M\equiv M':A\wedge B}
-{\Gamma\entails \operatorname{fst}(M)\equiv\operatorname{fst}(M'):A}
-
-
-\end{mathpar}
-
+	\textbf{Congruence over $fst$}
+	\begin{mathpar}
+		
+		\inferrule*[]
+		{\Gamma \entails M\equiv M':A\wedge B}
+		{\Gamma\entails \operatorname{fst}(M)\equiv\operatorname{fst}(M'):A}
+		
+		
+	\end{mathpar}
+	
 \end{mdframed}
 
 \subsubsection{Inversion Principle}\label{ge:in}
@@ -528,31 +524,31 @@ The $\beta$ rules are as follows:
 
 
 \begin{mdframed}
-\begin{mathpar}
-
-\inferrule*[right=$\beta\wedge_1$] 
-{{\Turnsi {\Gamma} {  M:\phi_1}}\\
-{\Turnsi {\Gamma} {N :\phi_2 }}  } {{\Turnsi {\Gamma} {\operatorname{fst}(  \langle M,N\rangle)\equiv M:\phi_1} }}
-
-\and
-\inferrule*[right=$\beta\wedge_2$] 
-{{\Turnsi {\Gamma} {  M:\phi_1}}\\
-{\Turnsi {\Gamma} {N :\phi_2 }}} { {\Turnsi {\Gamma} {\operatorname{snd}(  \langle M,N\rangle)\equiv N:\phi_2} }}
-\and
-\inferrule*[right=$\beta\supset$] 
-{{\Gamma,x:A\vdash M:B}\\ {\Gamma\vdash N:A}}
-{\Gamma\vdash(\lambda x.M)(N)\equiv [N/x]M:B}
-\and
-\inferrule*[right=$\beta\vee_1$]
-{ {\Gamma,x
-:\phi_1\vdash N:\psi}\\{\Gamma,y:\phi_2 \vdash O:\psi}\\{\Gamma\vdash P:\phi_1} }
-{\Gamma\vdash  ({\text{case } inj_l(P) \text{ of } inj_l(x) \longmapsto N  |\  inj_r (y)\longmapsto O) \equiv[P/x]N: \psi}}
-\and
-\inferrule*[right=$\beta\vee_2$]
-{ {\Gamma,x
-:\phi_1\vdash N:\psi}\\{\Gamma,y:\phi_2 \vdash O:\psi}\\{\Gamma\vdash Q:\phi_2} }
-{\Gamma\vdash  ({\text{case } inr_r(Q) \text{ of } inj_l(x)  \longmapsto N  |\  inj_r(y) \longmapsto O) \equiv[Q/y]O: \psi}}
-\end{mathpar}
+	\begin{mathpar}
+		
+		\inferrule*[right=$\beta\wedge_1$] 
+		{{\Turnsi {\Gamma} {  M:\phi_1}}\\
+			{\Turnsi {\Gamma} {N :\phi_2 }}  } {{\Turnsi {\Gamma} {\operatorname{fst}(  \langle M,N\rangle)\equiv M:\phi_1} }}
+		
+		\and
+		\inferrule*[right=$\beta\wedge_2$] 
+		{{\Turnsi {\Gamma} {  M:\phi_1}}\\
+			{\Turnsi {\Gamma} {N :\phi_2 }}} { {\Turnsi {\Gamma} {\operatorname{snd}(  \langle M,N\rangle)\equiv N:\phi_2} }}
+		\and
+		\inferrule*[right=$\beta\supset$] 
+		{{\Gamma,x:A\vdash M:B}\\ {\Gamma\vdash N:A}}
+		{\Gamma\vdash(\lambda x.M)(N)\equiv [N/x]M:B}
+		\and
+		\inferrule*[right=$\beta\vee_1$]
+		{ {\Gamma,x
+				:\phi_1\vdash N:\psi}\\{\Gamma,y:\phi_2 \vdash O:\psi}\\{\Gamma\vdash P:\phi_1} }
+		{\Gamma\vdash  ({\text{case } inj_l(P) \text{ of } inj_l(x) \longmapsto N  |\  inj_r (y)\longmapsto O) \equiv[P/x]N: \psi}}
+		\and
+		\inferrule*[right=$\beta\vee_2$]
+		{ {\Gamma,x
+				:\phi_1\vdash N:\psi}\\{\Gamma,y:\phi_2 \vdash O:\psi}\\{\Gamma\vdash Q:\phi_2} }
+		{\Gamma\vdash  ({\text{case } inr_r(Q) \text{ of } inj_l(x)  \longmapsto N  |\  inj_r(y) \longmapsto O) \equiv[Q/y]O: \psi}}
+	\end{mathpar}
 \end{mdframed}
 
 \subsubsection{Unicity Principle}
@@ -562,30 +558,34 @@ Gentzen's Unicity Principles on the other hand capture the idea that ``intro is 
 The $\eta$ rules are given below:
 
 \begin{mdframed}
-\begin{mathpar}
-\inferrule*[right=$\eta\top$]{\Gamma\vdash M:\top}{\Gamma\vdash M\equiv \langle \ \rangle: \top} 
-\and
-
-\inferrule*[right=$\eta\wedge$]{\Gamma\vdash M\equiv \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\wedge B }{\Gamma\vdash M:A\wedge B}
-\and
-\inferrule*[right=$\eta\supset$]{\Gamma\vdash M:\phi\supset \psi}{\Gamma\vdash M\equiv \lambda x. M x: \phi\supset\psi} 
-\and
-\inferrule*[right=$\eta\vee$]
-{\Gamma,z
-:\phi_1 + \phi_2\vdash M:\psi\\\Gamma\vdash N:\phi_1 + \phi_2}
-{{
- \begin{tabular}[b]{ rl}
- $\Gamma\vdash M[N/z] \equiv \text{case }  N \text{ of }$  & $| inj_l(x) \mapsto M[inj_l(x)/z]$
-  \\
-   & $ inj_r (y)\mapsto M[inj_r(y)/z]) : \psi$
-  \\
- \end{tabular}
- }
-}
-
-\end{mathpar}
+	\begin{mathpar}
+		\inferrule*[right=$\eta\top$]{\Gamma\vdash M:\top}{\Gamma\vdash M\equiv \langle \ \rangle: \top} 
+		\and
+		
+		\inferrule*[right=$\eta\wedge$]{\Gamma\vdash M\equiv \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\wedge B }{\Gamma\vdash M:A\wedge B}
+		\and
+		\inferrule*[right=$\eta\supset$]{\Gamma\vdash M:\phi\supset \psi}{\Gamma\vdash M\equiv \lambda x. M x: \phi\supset\psi} 
+		\and
+		\inferrule*[right=$\eta\vee$]
+		{\Gamma,z
+			:\phi_1 + \phi_2\vdash M:\psi\\\Gamma\vdash N:\phi_1 + \phi_2}
+		{{
+				\begin{tabular}[b]{ rl}
+					$\Gamma\vdash M[N/z] \equiv \text{case }  N \text{ of }$  & $| inj_l(x) \mapsto M[inj_l(x)/z]$
+					\\
+					& $ inj_r (y)\mapsto M[inj_r(y)/z]) : \psi$
+					\\
+				\end{tabular}
+			}
+		}
+		
+	\end{mathpar}
 \end{mdframed}
 
+\section{Operational (a.k.a ``term") Semantics}
+Given the formulation of the $\lambda$-calculus we can think of \emph{formulae-as-types} and \textit{proof terms-as-programs}. This enriches logic with a computational aspect(\emph{proof dynamics}) that is absent from other formulations. Dynamics stems from Gentzen's insight to give an equational system for proofs equipped with $\beta$$\eta$ rules for proof-tree conversion. These insights, give rise to $\lambda$-calculus dynamics if we devise an execution strategy (an \emph{operational semantics}) for program reduction that respects these rules. The correspondence between computations and Gentzen equational principles for proof terms is enlightened by specific metatheoretic results.
+
+To show the the defined definitional equality is ``consistent" i.e. non-trivial amounts to showing that it can be modeled by 
 
 
 
