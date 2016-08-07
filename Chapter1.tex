@@ -583,13 +583,66 @@ The $\eta$ rules are given below:
 \end{mdframed}
 
 \section{Operational (a.k.a ``term") Semantics}
-Given the formulation of the $\lambda$-calculus we can think of \emph{formulae-as-types} and \textit{proof terms-as-programs}. This enriches logic with a computational aspect(\emph{proof dynamics}) that is absent from other formulations. Dynamics stems from Gentzen's insight to give an equational system for proofs equipped with $\beta$$\eta$ rules for proof-tree conversion. These insights, give rise to $\lambda$-calculus dynamics if we devise an execution strategy (an \emph{operational semantics}) for program reduction that respects these rules. The correspondence between computations and Gentzen equational principles for proof terms is enlightened by specific metatheoretic results.
+Given the formulation of the $\lambda$-calculus we can think of \emph{formulae-as-types} and \textit{proof terms-as-programs}. This enriches logic with a computational aspect(\emph{proof dynamics}) that is absent from other formulations. Dynamics stems from Gentzen's insight to give an equational system for proofs equipped with $\beta$$\eta$ rules for proof-tree conversion. These insights, give rise to $\lambda$-calculus dynamics if we devise an execution strategy (an \emph{operational semantics}) for program reduction that respects these rules. 
 
-To show the the defined definitional equality is ``consistent" i.e. non-trivial amounts to showing that it can be modeled by 
+The first step toward operational semantics is to break the symmetry of the definitional equivalence and construct a one-way reduction relation  on lambda terms. Towards this definition we first define the notion of a  \textit{redex}: 
+\begin{mdframed}
+\begin{definition}	
+\begin{itemize}
+\item A $\beta$-redex is every term of the form:  $$(\lambda x:\phi. N) M |  \operatorname{fst}\langle M, N \rangle| \operatorname{snd}\langle M, N \rangle $$
+\item  A $\eta$-redex is every term of the form:
+$$\lambda x: M x | \langle \operatorname{fst} M\operatorname{snd} M \rangle  $$    
+\end{itemize}
+\end{definition}	
+\end{mdframed}
+A \textit{normal form} is a term where no redex occurs. To make the
+term surrounding the redex explicit, we can use a \textit{term context}, i.e. a term with a single term hole, such as $\lambda x:[]$, $(e[])$, $[]e$, where  a hole can be substituted for a term to give a larger term. To be strict all single hole terms have the following diagram:
+$$H:= [\bullet]|\ (M[\bullet])|\  ([\bullet]M)|\ \lambda x:A. H|\  \langle H, M \rangle |\  \langle  M, H \rangle $$
 
+Now we have enough tools to define the \textit{(one-step) $\beta\eta$-reduction} between two terms can be defined on terms that include redexes as subterms as follows :
+\begin{mdframed}
+	\textbf{One-step $\mapsto_{\beta\eta}$  reduction}
+	\begin{mathpar}
+		\inferrule*[right=($\beta$)]{} {(\lambda x:\phi. N) M \mapsto [M/x]N }
+		\and
+		\inferrule*[right=($\beta$)] {}{\operatorname{fst}\langle M, N \rangle\mapsto M}
+		\and
+		\inferrule*[right=($\beta$)] {}{\operatorname{snd}\langle M, N \rangle\mapsto N}
+		\and
+		\inferrule*[right=($\eta$)]{}{\lambda x: M x\mapsto M}
+		\and
+		\inferrule*[right=($\eta$)]{} { \langle \operatorname{fst} M\operatorname{snd} M\rangle\mapsto M }  
+		\and
+		\inferrule*[right=(subterm)]{M\mapsto M^{'}}{H[M]\mapsto H[M^{'}]}
+	\end{mathpar}
+\end{mdframed}
 
+Now we can define the  reflexive, transitive closure of the previous relation as $\mapsto_{\beta\eta}^{*}$ to denote zero or more reduction steps. The following facts -- leading to a computational proof of consistency -- hold:
 
-
+\begin{mdframed}
+	\begin{theorem}	\textbf{Church -- Rosser for $\mapsto_{\beta\eta}$}
+		For every term $M$, if $M\mapsto_{\beta\eta} N_1$ and $M \mapsto_{\beta\eta} N_2$ then there exists $N^{'}$ s.t. $N_1 \mapsto N^{'}$ and $N_2\mapsto N^{'}$
+		
+	\end{theorem}	
+	\begin{theorem}	\textbf{Church -- Rosser for $\mapsto_{\beta\eta}^{*}$}
+		For every term $M$, if $M\mapsto_{\beta\eta}^{*} N_1$ and $M \mapsto_{\beta\eta}^{*} N_2$ then there exists $N^{'}$ s.t. $N_1 \mapsto N^{'}$ and $N_2\mapsto N^{'}$
+		
+	\end{theorem}	
+\end{mdframed}
+ The first consistency result for the equational system comes straight from the Church--Rosser properties. Since, it is  easy to show that for any terms $M$, $N$ s.t where $\Gamma\vdash M\equiv N: A$ based on the $\equiv$ axiomatization there exists a finite sequence of terms $N_0,\ldots, N_i$ such that $M\mapsto_{\beta\eta}^{*}N_0\mapsfrom_{\beta\eta}^{*} N_1\mapsto_{\beta\eta}^{*} N_2\mapsfrom_{\beta\eta}^{*}\ldots \mapsfrom_{\beta\eta} N_i$. Now we can obtain:
+ \begin{mdframed}
+ \begin{theorem}	\textbf{Definitional equality implies common contractum}
+ 	For any terms, $M$,$N$ if $\Gamma\vdash M\equiv N:A$ then there exists tern $L$ s.t. $M,N\mapsto_{\beta_\eta}^{} L$
+ 	
+ \end{theorem}
+\end{mdframed}
+ And as a result:
+ \begin{mdframed}	
+ \begin{theorem}	\textbf{Consistency of definitional equality of terms}
+ 	The definitional equality $\equiv$ is not trivial i.e. it won't equate any two terms.
+ \end{theorem}	
+\end{mdframed}
+Moving toward consistency of the 
 \subsection{Propositions as Types}
 
 
