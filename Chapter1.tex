@@ -625,14 +625,14 @@ Now we can define the  reflexive, transitive closure of the previous relation as
 		
 	\end{theorem}	
 	\begin{theorem}	\textbf{Church -- Rosser for $\mapsto_{\beta\eta}^{*}$}
-		For every term $M$, if $M\mapsto_{\beta\eta}^{*} N_1$ and $M \mapsto_{\beta\eta}^{*} N_2$ then there exists $N^{'}$ s.t. $N_1 \mapsto N^{'}$ and $N_2\mapsto N^{'}$
+		For every term $M$, if $M\mapsto_{\beta\eta}^{*} N_1$ and $M \mapsto_{\beta\eta}^{*} N_2$ then there exists $N^{'}$ s.t. $N_1 \mapsto_{\beta\eta}^{*} N^{'}$ and $N_2\mapsto_{\beta\eta}^{*} N^{'}$
 		
 	\end{theorem}	
 \end{mdframed}
  The first consistency result for the equational system comes straight from the Church--Rosser properties. Since, it is  easy to show that for any terms $M$, $N$ s.t where $\Gamma\vdash M\equiv N: A$ based on the $\equiv$ axiomatization there exists a finite sequence of terms $N_0,\ldots, N_i$ such that $M\mapsto_{\beta\eta}^{*}N_0\mapsfrom_{\beta\eta}^{*} N_1\mapsto_{\beta\eta}^{*} N_2\mapsfrom_{\beta\eta}^{*}\ldots \mapsfrom_{\beta\eta} N_i$. Now we can obtain:
  \begin{mdframed}
  \begin{theorem}	\textbf{Definitional equality implies common contractum}
- 	For any terms, $M$,$N$ if $\Gamma\vdash M\equiv N:A$ then there exists tern $L$ s.t. $M,N\mapsto_{\beta_\eta}^{} L$
+ 	For any terms, $M$,$N$ if $\Gamma\vdash M\equiv N:A$ then there exists tern $L$ s.t. $M,N\mapsto_{\beta\eta}^{*} L$
  	
  \end{theorem}
 \end{mdframed}
@@ -642,7 +642,69 @@ Now we can define the  reflexive, transitive closure of the previous relation as
  	The definitional equality $\equiv$ is not trivial i.e. it won't equate any two terms.
  \end{theorem}	
 \end{mdframed}
-Moving toward consistency of the 
+Moving toward consistency of the whole system (i.e. there is not term of type $\bot$), we prove a theorem for the existence of normal forms.
+\begin{mdframed}	
+\begin{theorem}	\textbf{Weak normalization theorem}
+For any term $M$, there exists a finite sequence of terms s.t. $M\mapsto_{\beta\eta}^{*}N_0\mapsfrom_{\beta\eta}^{*} N_1\mapsto_{\beta\eta}^{*} N_2\mapsfrom_{\beta\eta}^{*}\ldots \mapsfrom_{\beta\eta} N_i$ where $N_i$ is a $\beta\eta$ normal form.
+\end{theorem}	
+\end{mdframed}
+It is common place in metatheotic proofs for such systems that induction on the structure of the term does not ``go through''. Intuitively, a reduction can be ``enlarging" the term but, yet, it is doing progress based on a different kind of metric. We build this metric based on the following definitions and facts. The idea is that we can choose a reduction strategy such that the number of \textit{redexes of a specific type} (to be defined soon) reduce. Here are the steps towards the proof:
+
+
+\begin{mdframed}
+	\textbf{Definition}
+	The \textit{degree of a type $A$} is defined as follows:
+	\begin{itemize}
+		\item $\theta(P_i)=1$ if $P_i$ is atomic
+		\item $\theta(A\times B)=\theta(A \rightarrow B)= \theta(A)+\theta(B)+1$
+	\end{itemize}
+\end{mdframed}
+\begin{mdframed}
+	\textbf{Definition}
+	The \textit{degree of a redex} is defined as follows:
+	\begin{itemize}
+		\item  Given that the type of $\lambda x. M$ is of type $A\rightarrow B$ then $\theta(A\rightarrow B)$ then $d(\lambda x. M)N=\theta(A\rightarrow B)$
+		\item Similarly, $d(\pi\operatorname{fst}\langle M, N\rangle)=\theta(A\times B)$
+		where $A\times B$ is the type of $\langle M, N\rangle$
+		
+		\item Similarly for the other kinds of redexes.
+	\end{itemize}
+\end{mdframed}
+\begin{mdframed}
+	\textbf{Definition}
+	The \textit{degree of a term} $d(t)$ is defined as the supremum of the degrees of its redexes.
+\end{mdframed}
+Now we can prove the following facts:
+\begin{theorem}
+	\begin{mdframed}
+\begin{enumerate}
+	\item The degree of redex $r$ is strictly larger than the degree of its type $A$: 
+	$\theta(A)<d(r)$
+	\item The degree of a redex ($r$) seen as term ($t$)  can be smaller than its redex degree since it might include other redexes: $d(r)\le d(t)$.
+	\item The term resulting from a substitution $M[N/x]$  has degree : $d(M[N/x])\le max(d(M),d(N),\theta(A))$ where $A$ is the declared type of $x$ in the type context.
+\end{enumerate}
+	\end{mdframed}
+\end{theorem}
+Which give us the following fact that suggests the induction principle that succeeds toward the proof.
+\begin{mdframed}
+	\begin{theorem}
+If $M\mapsto M^{\prime}$ then $d(M)<d(N)$ and hence, if $M\mapsto^{+} N$ then $d(M)<d(N)$.
+\end{theorem}
+\end{mdframed}
+As a result we get a unique normalization theorem by induction on pairs $(d(M),k)$ where $k$ is the number of redexes with degree $d(M)$.
+\begin{mdframed}
+\begin{theorem}
+For every term $\Gamma\vdash M:A$ there exists a normalization strategy such that $M\mapsto_{\beta\eta}N$ and $N$ is a normal form.
+\end{theorem}
+\end{mdframed} 
+
+Combining with previous results we get:
+\begin{theorem}
+\begin{mdframed}
+There is no (closed) term $M$ for which $\vdash M:\bot$ 
+\end{mdframed}
+\end{theorem}
+For a proof suppose the opposite and obtain contradiction using the previous theorem since there is no way to obtain a normal form of a bottom type from the rules.  
 \subsection{Propositions as Types}
 
 
