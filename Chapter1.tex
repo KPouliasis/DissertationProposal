@@ -645,10 +645,10 @@ Now we can define the  reflexive, transitive closure of the previous relation as
 Moving toward consistency of the whole system (i.e. there is not term of type $\bot$), we prove a theorem for the existence of normal forms.
 \begin{mdframed}	
 \begin{theorem}	\textbf{Weak normalization theorem}
-For any term $M$, there exists a finite sequence of terms s.t. $M\mapsto_{\beta\eta}^{*}N_0\mapsfrom_{\beta\eta}^{*} N_1\mapsto_{\beta\eta}^{*} N_2\mapsfrom_{\beta\eta}^{*}\ldots \mapsfrom_{\beta\eta} N_i$ where $N_i$ is a $\beta\eta$ normal form.
+For any term $M$, there exists a finite sequence of terms s.t. $M\mapsto_{\beta\eta}N_0\mapsto_{\beta\eta} N_1\mapsto_{\beta\eta} N_2\mapsto_{\beta\eta}\ldots \mapsto_{\beta\eta} N_i$ where $N_i$ is a $\beta\eta$ normal form.
 \end{theorem}	
 \end{mdframed}
-It is common place in metatheotic proofs for such systems that induction on the structure of the term does not ``go through''. Intuitively, a reduction can be ``enlarging" the term but, yet, it is doing progress based on a different kind of metric. We build this metric based on the following definitions and facts. The idea is that we can choose a reduction strategy such that the number of \textit{redexes of a specific type} (to be defined soon) reduce. Here are the steps towards the proof:
+It is common place in metatheotic proofs for such systems that induction on the structure of the term does not ``go through''. Intuitively, a reduction can be ``enlarging" the term but, yet, it is doing progress based on a different kind of metric. We build this metric based on the following definitions and facts. The idea is that we can choose a reduction strategy such that the number of \textit{redexes of a specific type} (to be defined soon) reduce. Here are the steps towards the proof. We omit redexes related to disjunction but the proof extends to such cases pretty easily.
 
 
 \begin{mdframed}
@@ -691,20 +691,79 @@ Which give us the following fact that suggests the induction principle that succ
 If $M\mapsto M^{\prime}$ then $d(M)<d(N)$ and hence, if $M\mapsto^{+} N$ then $d(M)<d(N)$.
 \end{theorem}
 \end{mdframed}
-As a result we get a unique normalization theorem by induction on pairs $(d(M),k)$ where $k$ is the number of redexes with degree $d(M)$.
+As a result we get a weak  normalization theorem by induction on pairs $(d(M),k)$ where $k$ is the number of redexes with degree $d(M)$.
 \begin{mdframed}
 \begin{theorem}
-For every term $\Gamma\vdash M:A$ there exists a normalization strategy such that $M\mapsto_{\beta\eta}N$ and $N$ is a normal form.
+	\textbf{Weak Normalization Theorem}
+For every term $\Gamma\vdash M:A$ there exists a normalization strategy such that $M\mapsto_{\beta\eta}^{*}N$ and $N$ is a normal form.
 \end{theorem}
 \end{mdframed} 
 
 Combining with previous results we get:
 \begin{theorem}
 \begin{mdframed}
+\textbf{Consistency}
 There is no (closed) term $M$ for which $\vdash M:\bot$ 
 \end{mdframed}
 \end{theorem}
-For a proof suppose the opposite and obtain contradiction using the previous theorem since there is no way to obtain a normal form of a bottom type from the rules.  
+ Suppose the opposite and obtain a contradiction using the previous theorem: there is no way to obtain a normal form of a bottom type from the rules.  
+ 
+ A stronger result is the strong normalization theorem that says that \textit{every} strategy in normalizing. This result is important in concurrent implementations of reduction since it implies that the order in which redexes are consumed does not matter during the evaluation of  expression. 
+ %The strong normalization, as we will see, is effectively isomorphic (in  the usage of induction principles) with the proof of admissibility of cut for the sequent calculus formulation of the system. Again we sketch the basic steps toward the proof which is one intricate application of the mathematics of induction.
+ 
+ The important idea behind the technique - that generalizes to proof strong normalization for more complex calculi- is the concept of a reducibility predicate. Reducibility predicates give a stronger induction principle that is able to give the desired result as a lemma. Similarly with the weak normalization reducibility predicates are sets of terms classified by their type.
+ They are defined by induction on the structure of their type. We show strong normalization only for $\beta$ reduction but and only for the $\rightarrow, \times$ fragment of the calculus but all techniques generalize (see, e.g. PRAWITZ). 
+ 
+\begin{mdframed}
+	\textbf{Definition}
+	We define the predicate $Red_A$ for a type $A$ as follows and for closed terms $M$ as follows:
+	\begin{itemize}
+		\item $M\in Red_{P_i}$ iff $M$ is of atomic type $P_i$  and $M$ is normalizable. 
+		\item $M \in Red_{A\rightarrow B}$ iff $M$ is of type $A\rightarrow B$ and $\forall N. N \in Red_{A}\Longrightarrow (MN) \in Red_B$
+		
+		\item $M \in Red_{A\wedge B}$ iff $M$ is of type $A\wedge B$,  $\operatorname{fst}(M)\in Red_A$ and $\operatorname{snd}(M) \in Red_B$
+	%	\item $M in Red_{A\vee B}$ iff $\forall N_3, N_4 s.t.  N_1 \in Red_{A} implies N_3[N_1\x]\in Red_C and N_2 \in Red_{B} implies  N_4[N_2\y]\in Red_{C} the term $case M of inl(x) M[x]| inr(y)N[y] \in Red_{C}$		\
+		
+	\end{itemize}
+\end{mdframed}
+Reducibility has the important following properties below where  by \textit{neutral} we mean terms of the form $\langle M, N \rangle$, $\lambda x. M$ 
+\begin{theorem}
+	\begin{enumerate}
+		\item $M\in Red_A$ implies that $M$ is normalizable. 
+		\item $M \in Red_A$ and $M\mapsto_\beta^{*} N$ then $N\in Red_A$
+		\item If $M$ is neutral then,  $\forall N {\text s.t} M\mapsto^{\beta} N. N\in Red_A\Longrightarrow M \in Red_A $ 
+		\item  If $M$ is neutral and normal, then $M \in Red_A$
+	\end{enumerate}
+\end{theorem}
+The proof goes  by induction on the structure of type $A$.
+Now we are able to prove the following theorems:
+
+\begin{mdframed}
+	\begin{theorem}
+	\begin{itemize}
+		\item If $M,N$ are reducible then so is $\langle M, N \rangle$
+		\item For all reducible $M$ of type $A$ if $N[M/x]$ is reducible then so is $\lambda x. N$
+	\end{itemize}
+
+	\end{theorem}
+	\end{mdframed}
+
+These results suffice to show the following theorem:
+Given $x_1:A_1, \ldots, x_i: A_i\vdash M: A$ then and reducible terms $v_1\in Red_{A_1},\ldots v_i\in Red_{A_i}$ then  $M[v_1/x_1\ldots v_i/x_i]\in Red_A$ 
+Out of which we get:
+\begin{mdframed}
+ 	\begin{theorem}
+ 		\textbf{Strong Normalization Theorem}
+
+ 			Every term $\vdash M:A$ is strongly normalizing
+
+ 		
+ 	\end{theorem}
+ \end{mdframed}
+ 
+ 
+ 
+ 
 \subsection{Propositions as Types}
 
 
