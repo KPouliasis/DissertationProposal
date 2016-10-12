@@ -10,8 +10,8 @@ We provide standard metatheoretic results  and suggest a
 programming language  interpretation in  languages with foreign function interfaces (\textit{FFI}s).
 
 \section{Introduction: Necessity and Constructive Semantics}
-In his seminal ``Explicit Provability and Constructive Semantics'' \citelatex{Artemov2001} Artemov developed a constructive, proof-theoretic semantics for 
-\acs{BHK} proofs \citelatex{troelstra1988constructivism} 
+In his seminal ``Explicit Provability and Constructive Semantics'' \cite{Artemov2001} Artemov developed a constructive, proof-theoretic semantics for 
+\acs{BHK} proofs \cite{troelstra1988constructivism} 
 in what turned out to be the first development of a family of logics that we now call justification logic.
 The general idea, upon which we build our calculus, is that semantics of a deductive system $I$ can be viewed in a solely proof-theoretic manner 
 as mappings of proof constructs of $I$ into another proof system $J$ (which we call justifications).
@@ -21,10 +21,10 @@ As an example one could think  $I$  being  Heyting arithmetic and $J$ some  ``st
 %We recover them later and study  their relation  to  the Rule of Necessitation for our system.
 What's more,  such a semantic relation can be treated logically giving  rise to a modality of explicit necessity. Different sorts of necessity
 ($K$, $D$, $S4$, $S5$) have been offered  an explicit counterpart under the umbrella of justification logic. Some of them have been studied within a
-Curry--Howard setting \citelatex{ArtBon07LFCS}. Our paper
-focuses on  $K$ modality and  should be viewed as the  counterpart of \citelatex{Bellin2001} with justifications as we explain in \ref{relat}.
+Curry--Howard setting \cite{ArtBon07LFCS}. Our paper
+focuses on  $K$ modality and  should be viewed as the  counterpart of \cite{Bellin2001} with justifications as we explain in \ref{relat}.
 \subsection{Deductive Systems, Validity and Necessity}
-Following a framework championed by Lambek \citelatex{lambek1968deductive,lambek1969deductive}, let us  assume two deductive systems $I$ 
+Following a framework championed by Lambek \cite{lambek1968deductive,lambek1969deductive}, let us  assume two deductive systems $I$ 
 (with propositional universe $U_I$, 
 a possibly non-empty signature of axioms $\Sigma_I$ and an entailment relation $\Sigma_I;\Gamma\vdash_{I}A$) and $J$ 
 (resp. with  $U_J$, $\Sigma_J$ and $\Sigma_J;\Delta\vdash_J \phi$). We will be using Latin letters for the formulae of $I$ and Greek letters for the formulae of $J$.
@@ -53,7 +53,7 @@ Now we can define:
 		% $\llbracket  Con(A, B) \rrbracket_J = \llbracket\ Con\rrbracket (\llbracket A \rrbracket , \llbracket \ B \rrbracket$ where $\llbracket Con\rrbracket$ is a connective in $J$.
 		\item \textit{Structural interpretation of contexts}. For  $\Gamma$ contexts of the form $A_1,\ldots, A_n$:
 		$$\llbracket\Gamma \rrbracket=\llbracket A_1  \rrbracket,\ldots,  \llbracket A_n\rrbracket$$ (trivially empty contexts map to empty contexts. 
-		As in \citelatex{lambek1968deductive} they can be treated as 
+		As in \cite{lambek1968deductive} they can be treated as 
 		the $\top$ element).
 	\end{enumerate}
 \end{definition}
@@ -73,7 +73,7 @@ the above definition gives uniqueness vacuously. In a more refined approach wher
 translates to the requirement that if the set of (purely logical) arrows $Hom_I(\Gamma,A)$ is non empty  then $Hom_J(\llbracket\Gamma\rrbracket,\llbracket A\rrbracket_J)$ 
 cannot be empty (i.e. that $\llbracket\bullet \rrbracket_J$ can be extended to a functor). We leave a complete categorical semantics of our logic 
 for future work but we expect   a generalization of the 
-endofunctorial interpretations of $K$ modality appearing in \citelatex{Bellin2001},\citelatex{kavvos2016system}. 
+endofunctorial interpretations of $K$ modality appearing in \cite{Bellin2001,kavvos2016system}. 
 
 
 Examples of triplets ($I$, $J$, $\llbracket\bullet \rrbracket_J$) of logical systems that fall under the definition above are: any intuitionistic system mapped 
@@ -135,7 +135,7 @@ We can, easily, generalize to $\Box$ed contexts (of the form $\Box A_1, \ldots, 
 We read as ``Introducing $\Box B$ after eliminating $\Box A_1 \ldots \Box A_i $ crossing out (vectors of) labels $\vec{x}, \vec{s}$ ". 
 Interestingly, the same rule eliminates boxes  and introduces new ones. 
 This  is not surprising for $K$ modality (it is a left-right rule as we will see (\ref{seqcalc}).
-See also discussion in \citelatex{Bellin2001,bierman2000intuitionistic}). We will be referring to this rule  as ``$\Box$ Intro--After--Elim'' or, simply $\Box_{IE}$, from now on.
+See also discussion in \cite{Bellin2001,bierman2000intuitionistic}). We will be referring to this rule  as ``$\Box$ Intro--After--Elim'' or, simply $\Box_{IE}$, from now on.
 %Moreover, it has a very clear computational reading in our system which we will be explaining. In a nutshell, theorems of $K$ correspond to programs that consume (eliminate) congruences on subterms to construct construct congruences on larger terms. In that sense, the elim-intro mix is quite natural.
 
 Note that we define the $\Box$ connective negatively, yet (pure) introduction rules for the $\Box$ 
@@ -325,18 +325,17 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 	admissibility of this rule is directly related to the requirement of ``logical completeness of the interpretation'' i.e. preservation of logical theoremhood.  
 	In general, adding more connectives in $I$ would require additional specifications for the host theory to obtain necessitation.
 	
-	The steps of the proof are given in the Appendix, but this is essentially  the ``lifting lemma'' in justification logic \citelatex{Artemov2001}. 
+	The steps of the proof are given in the Appendix, but this is essentially  the ``lifting lemma'' in justification logic \cite{Artemov2001}. 
 	The proof fully depends on
 	the provability requirements imposed in the $\llbracket{\sf Prop_0}\rrbracket$ fragment.
-	\begin{restatable}[$\Box$Lifting Lemma]{lemma}{boxlift}
+	\begin{theorem}[$\Box$Lifting Lemma]
 		In {\sf Jcalc$^{-}$}, for every  $\Gamma,   A \in {\sf Prop_0}$ if  $\Gamma\vdash A$ then  $\llbracket \Gamma\rrbracket\vdash\llbracket A\rrbracket $ and, hence, $\Box\Gamma \vdash \Box   A$.
-	\end{restatable}
+	\end{theorem}
 	We get admissibility of necessitation as a lemma for $\Gamma$ empty:
-	\begin{restatable}[Admissibility of Necessitation]{lemma}{firstadm}
+%	\begin{theorem}[Admissibility of Necessitation]{lemma}
 		
-		For $  A \in {\sf Prop_0}$, if $\circ\vdash   A$ then $\circ\vdash \Box A$. 
-		
-	\end{restatable}
+%		For $  A \in {\sf Prop_0}$, if $\circ\vdash   A$ then $\circ\vdash \Box A$. 
+%	\end{threorem}
 	As a result:
 	\begin{theorem}[Completeness]
 		{\sf Jcalc$^{-}$} is complete with respect to the Hilbert style formulation of degree-$1$ intuitionistic $K$ modal logic. 
@@ -346,7 +345,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 	\label{gprinc}
 	Before we move on to show (Global) Soundness we provide evidence for the so called ``local soundness" and ``local completeness'' of the $\Box$ connective
 	following Gentzen's dictum. The local soundness and completeness for the $\supset$ connective 
-	is given elsewhere (e.g. \citelatex{bo:prawitz65a}) and in Gentzen's original \citelatex{gentzen1935untersuchungen}. Gentzen's program can be described with the following two slogans:\begin{itemize} \item[a.] Elim is left-inverse to Intro \item[b.] Intro is right-inverse to Elim\end{itemize}   
+	is given elsewhere (e.g. \cite{bo:prawitz65a}) and in Gentzen's original \cite{gentzen1935untersuchungen}. Gentzen's program can be described with the following two slogans:\begin{itemize} \item[a.] Elim is left-inverse to Intro \item[b.] Intro is right-inverse to Elim\end{itemize}   
 	Applied to the $\Box$ connective, the first principle says that introducing a $\Box   A$ (resp. many $\Box A_1, \ldots, \Box A_i$) only to eliminate it (resp. them) directly is redundant. 
 	In other words, the elimination rule cannot give you more data than what were inserted in the introduction rule(s)  (``elimination rules are not \textit{too} strong").
 	We show here the ``Elim-After-Singleton-Intro" sub-case. The exact same principle applies in the ``Elim-after-Intro''  of   multiple $\Box$s shown in the Appendix (\ref{redmult}).
@@ -451,9 +450,9 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			%\begin{proposition}
 			%$\centernot{\Rightarrow^{+}}\bot$
 			%\end{proposition}
-			\begin{restatable}[Consistency of {\sf Jcalc$^{-}$}]{theorem}{firstcon}
+			\begin{theorem}[Consistency of {\sf Jcalc$^{-}$}]{theorem}{firstcon}
 				$\centernot{\vdash}\bot$
-			\end{restatable}
+			\end{theorem}
 			
 			
 			
@@ -667,7 +666,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 							%\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
 						\end{mathpar}
 					\end{mdframed}
-					Using the reducibility candidates proof method \citelatex{citeulike:993095}) we show:
+					Using the reducibility candidates proof method \cite{citeulike:993095}) we show:
 					\begin{theorem}[Termination Under Small Step Reduction]
 						With $\rightarrow^{*}$ being the reflexive transitive closure of $\rightarrow$: for every closed term $M$ and $A \in {\sf Prop}$ if $\vdash M:A$ then there 
 						exists $N \ {\sf value}$ s.t. $\vdash N:A$ and  $M\rightarrow^{*} N$.
@@ -793,7 +792,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 						is total on types.
 						\item Introduction of  modal types is clearly relative to the $\llbracket\bullet \rrbracket$ function on types. 
 						It would be interesting to consider examples where   $\llbracket\bullet \rrbracket$ is realized by non-trivial mappings such as $\llbracket A\supset B \rrbracket= !A \multimap B$
-						from the embedding on intuitionistic logic to intuitionistic linear logic \citelatex{girard1987linear}.
+						from the embedding on intuitionistic logic to intuitionistic linear logic \cite{girard1987linear}.
 						That will  showcase an example of   modality that works when lifting to a completely different logic or, correspondingly, to an essentially
 						different computational model.
 						\item Finally, it should be clear from the operational semantics and this example that we did not demand any equalities (or, reduction rules)  
@@ -817,23 +816,22 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 					
 					\section{Related and Future Work}
 					\label{relat}
-					Directly related work with our calculus, in the same fashion that justification logic and LP \citelatex{Artemov2001} are related to modal logic, is \citelatex{Bellin2001}.  The work in \citelatex{Bellin2001} provides a calculus for explicit assignments (substitutions) which is actually a sub-case of 
-					{\sf Jcalc$^{-}$} with $\llbracket\bullet \rrbracket$ identity. This  sub-case  captures dynamic linking where the host language is the very same one; such need appears in languages with module mechanisms (i.e. implementation hiding and separate compilation within the very same language). In general, the judgmental approach to modality is heavily influenced by \citelatex{citeulike:5447115}. In a sense, our treatment of validity-as-explicit-provability also generalizes the approach there without having to commit to a ``factive" modality. Finally,  
-					important results on programming paradigms related to justification logic have been obtained in \citelatex{ArtBon07LFCS,bavera2015justification}. 
+					Directly related work with our calculus, in the same fashion that justification logic and LP \cite{Artemov2001} are related to modal logic, is \cite{Bellin2001}.  The work in \cite{Bellin2001} provides a calculus for explicit assignments (substitutions) which is actually a sub-case of 
+					{\sf Jcalc$^{-}$} with $\llbracket\bullet \rrbracket$ identity. This  sub-case  captures dynamic linking where the host language is the very same one; such need appears in languages with module mechanisms (i.e. implementation hiding and separate compilation within the very same language). In general, the judgmental approach to modality is heavily influenced by \cite{citeulike:5447115}. In a sense, our treatment of validity-as-explicit-provability also generalizes the approach there without having to commit to a ``factive" modality. Finally,  
+					important results on programming paradigms related to justification logic have been obtained in \cite{ArtBon07LFCS,bavera2015justification}. 
 					Immediate future developments would be to interpret modal formulas of higher degree under the same principles. 
 					This corresponds to dynamic linking in two or more steps (i.e., when the host becomes itself a client of another interface that is implemented dynamically in a third level and, so on). 
 					Some preliminary results towards this 
-					direction have been developed in \citelatex{Pouliasis201471}. 
+					direction have been developed in \cite{Pouliasis201471}. 
 					%\nocite{Pfenning2009a, Pfenning2009b}
 					
-					\bibliographystylelatex{plainnat}
-					\bibliographylatex{jcalcminustex}
+
 					
 					\appendix
 					
 					\label{appen}
-					\section{Appendix}
-					\subsection{Theorems}
+\chapter{Appendix}
+\subsection{Theorems}
 					
 					\begin{theorem}[Deduction Theorem for Validity Judgments]
 						\label{deduct}
@@ -855,12 +853,12 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 					\begin{proof}
 						The proof goes by induction on the derivations trivially for all the cases($\supset_{E_0}$ is treated using the ${\sf App}$ rule that internalizes Modus ponens). For the $\supset_{I_0}$ the previous theorem has to be used.
 					\end{proof}
-					\boxlift*
+
 					\begin{proof}
 						Assuming a derivation $\mathcal {D}$ ::$\Gamma\vdash   A$ from \ref{bracklift} there exists corresponding validity derivation $\mathcal{E}::\llbracket\Gamma\rrbracket\vdash\llbracket   A \rrbracket$. Using the two as premises in the $\Box_{IE}$ with $\Gamma := \Box \Gamma$ we obtain $\Box\Gamma\vdash\Box   A$.
 					\end{proof}
 					From the previous we get:
-					\firstadm*
+
 					%Let us show an inverse principle to the $\Box$ Lifting Lemma. We define for $A$ in {\sf Prop}:
 					%\begin{flalign*}
 					%\nonumber \downharpoonright P_i\ & =  P_i \\ \downharpoonright (A_1\supset A_2)&  =  \downharpoonright A_1 \supset \downharpoonright A_2 \\
@@ -1147,7 +1145,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 							From assumption $\Gamma \vdash A$ which by \ref{compannot} gives $\Gamma\vdash^{+} A\Uparrow$. By \ref{compseqcut} and Cut  Elimination we obtain $\Gamma\Rightarrow A$ which by  \ref{soundnseq} completes the proof.
 						\end{proof}
 						As a result we obtain:
-						\firstcon*
+
 						\begin{proof}
 							By contradiction, assume $\vdash\bot$ then $\Rightarrow \bot$ which is not possible.
 						\end{proof}
