@@ -1,0 +1,10 @@
+2011/
+*.aux
+*.log
+*.ps
+*.out
+*.blg
+*.toc
+*.gz
+*.bbl
+
