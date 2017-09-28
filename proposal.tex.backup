@@ -1,0 +1,73 @@
+\documentclass[12pt]{report}
+
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\usepackage{fancyvrb}
+\DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small}
+% Package for customizing page layout
+
+% \usepackage{fullpage}
+
+\input{macros}
+\usepackage{stmaryrd}
+\usepackage{proof-dashed}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage[utf8]{inputenc} 
+\usepackage{syntax}
+\usepackage{amsfonts}
+\usepackage{amssymb} 
+\usepackage{amsmath}
+%\usepackage{amsthm}
+\usepackage{mathpartir}
+
+\usepackage{setspace}
+\doublespacing
+\pagestyle{myheadings}
+%opening
+\title{Relating Justification Logic Modality and Type Theory in Curry--Howard fashion}
+\author{Konstantinos Pouliasis}
+
+\begin{document}
+
+\maketitle
+
+
+\begin{abstract}
+This thesis is a work in the intersection of Justification Logic and Curry--Howard isomorphism. Justification logic is a modal logic of knowledge with explicit evidence. Justification
+logics have been used to tackle traditional problems in proof theory (in relation to Godel's provability), philosophy (Gettier examples, Russels barn paradox) and  
+The
+Curry--Howard isomorphism is an understanding of logic that places logical in conjunction to type theory and (in modern undestandings of the Curry--Howard doctrine) category theory.
+The point being that understanding a system as a logic, a typed calculus and a language of a class of categories constitutes a useful discovery that can have many applications.
+The application that we are concerned with here is type systems for useful programming language constructions. 
+This work  is structured in two parts: 
+The first part is an update of my second examination paper and constitues a birds eye view into my research topics:  Logic, Constructive Modality and Type Theory.
+I will present the relevant systems syntactically and I will pause on the basic metatheoretic
+proof techniques which will be useful in the rest of the text and my thesis.
+In the second part, I will delineate the current state of my research in the area.
+I will propose  a modal type system that extends simple type theory with elements of justification logic and will argue about its computational significance. More specifically, I will show  
+that the obtained calculus characterizes  certain computational phenomena that abound in modern programming language semantics. 
+I will omit full metatheoretic
+results here but I will hint to  proof methods that can be adopted from the first part. Finally,  I will propose certain
+directions for future work; such developments together with the omitted metatheoretic results are expected to be the study of my dissertation thesis.
+This is a  paper accompanying my dissertation proposal and a partial requirement for my Phd candidacy under the supervision of Distinguished Professor Sergei Artemov at the Department of Computer Science of the Graduate Center, CUNY.
+\end{abstract}
+\tableofcontents
+\include{intro}
+\include{Chapter1}
+\include{chapter2}
+\include{chapter3}
+\include{Chapter4}
+
+
+
+
+
+\nocite{Pfenning2009a, Pfenning2009b}
+
+
+\bibliographystyle{plain}
+\bibliography{secondexam}
+
+\end{document}

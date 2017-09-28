@@ -26,7 +26,7 @@
 \doublespacing
 \pagestyle{myheadings}
 %opening
-\title{Lambda calculus and justification logic: A proposal}
+\title{Relating Justification Logic Modality and Type Theory in Curry--Howard fashion}
 \author{Konstantinos Pouliasis}
 
 \begin{document}
@@ -35,16 +35,29 @@
 
 
 \begin{abstract}
+This thesis is a work in the intersection of \ac{JL} and \ac{CHI}. Justification logic is an umbrella of modal logics of knowledge with explicit evidence. 
+Justification logics have been used to tackle traditional problems in proof theory (in relation to Godel's provability), philosophy (Gettier examples, Russels barn paradox). 
+The Curry--Howard isomorphism is an understanding of logic that places logical studies in conjunction to type theory and -- in current developments -- 
+category theory. The point being that the  understanding a system as a logic, as a typed calculus and as a language of a class of categories constitutes a useful discovery 
+that can have many applications.
+The application that we will be mainly concerned with is type systems for useful programming language constructions. 
 This work  is structured in two parts: 
-The first part is an update of my second examination paper and illustrates a  working understanding of my research topics: Justification Logic, Constructive Modality and Type Theory. I will present the relevant systems syntactically and I will pause on the basic metatheoretic
-proof techniques which will be useful in the rest of the text and my thesis.
-In the second part, I will delineate the current state of my research in the area.
-I will propose  a modal type system that extends simple type theory with elements of justification logic and will argue about its computational significance. More specifically, I will show  
+The first part (CHAPTERS x,y,x) is a revision of my second examination paper and constitues a bird's eye view into my research topics:  
+Logic, Constructive Modality and Type Theory. 
+The relevant systems are introduced syntactically together with main  metatheoretic proof techniques which will be useful in the rest of the thesis.
+The second part constitues my main contributions: I will propose  a modal type system that extends simple type theory (speaking from the logical side of the \ac{CHI}: 
+intuitionistic propositional logic) with elements of justification logic and will argue about its computational significance. More specifically, I will show  
 that the obtained calculus characterizes  certain computational phenomena that abound in modern programming language semantics. 
-I will omit full metatheoretic
-results here but I will hint to  proof methods that can be adopted from the first part. Finally,  I will propose certain
-directions for future work; such developments together with the omitted metatheoretic results are expected to be the study of my dissertation thesis.
-This is a  paper accompanying my dissertation proposal and a partial requirement for my Phd candidacy under the supervision of Distinguished Professor Sergei Artemov at the Department of Computer Science of the Graduate Center, CUNY.
+I will present full metatheoretic
+results obtained for this logic/ calculus using and extending techniques from the first part and will adjoin proofs in the Appendix.
+Finally, the fourth part is an exercise
+on an implementation of the calculus as a programming language to showcase the concept of \emph{proofs--as--programs}. To achieve this ``proof of concept'' result we define our 
+language together with its type system
+in the metaprogramming framework ''MAKAM', which we will discuss briefly, and we obtain a type chekcker for our calculus. Finally, we conclude this work with a small ``outro'' 
+where we discuss possibilities for future work and relations of the calculus with other current developments in the theory of functional programming.
+
+This is work is my thesis requirement for my Phd candidacy under the supervision of Distinguished Professor Sergei Artemov at the Department of 
+Computer Science of the Graduate Center, CUNY.
 \end{abstract}
 \tableofcontents
 \include{intro}
