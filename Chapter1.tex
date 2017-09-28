@@ -2,27 +2,53 @@
 \section{Intuitionism}\label{sec:intrui}
 In this Chapter, I will be presenting foundational work in the intersection of \emph{Intuitionistic Logic} and \emph{Type Theory}. The presentation is scaffolding following Prof. Robert Harper's lecture videos in \emph{Homotopy Type Theory}~\cite{HarperHOTT} and the accompanying notes by students of the class~\cite{HOTTNotes1}. I will often diverge to standard textbooks in the field ~\cite{Barendregt1984-BARTLC},~\cite{citeulike:993095},~\cite{Pierce:2002:TPL:509043} to present further important results. 
 \subsection{A bird's eye view}  
-In a nutshell, \emph{Intuitionistic mathematics}  is a program in foundations of mathematics  that extends \emph{Brouwer's program}~\cite{brouwer1975collected}.
-Brouwer, in an almost Kantian fashion, viewed mathematical reasoning as a human faculty and mathematics as a language of the ``creative subject'
-aiming to communicate mathematical concepts. The concept of \emph{algorithm} as a step--by--step constructive process is brought in the foreground in Brouwer's program. As a result, intuitionistic theories are amenable to computational interpretations. In the following I will be using the terms intutionistic and \emph{constructive} interchangeably.  
+In a nutshell, \emph{Intuitionistic mathematics}  is a program in foundations 
+of mathematics  that extends \emph{Brouwer's program}~\cite{brouwer1975collected}.
+Brouwer, in an almost Kantian fashion, viewed mathematical reasoning as a human faculty 
+and mathematics as a language of the ``creative subject"
+aiming to communicate mathematical concepts. 
+The concept of \emph{algorithm} as a step--by--step constructive process is brought in the 
+foreground in Brouwer's program. As a result, intuitionistic theories are amenable to 
+computational interpretations. In the following I will be using the terms intutionistic 
+and \emph{constructive} interchangeably.  
 
- For the purposes of this paper, the main diverging point of Brouwer's program, later explicated by Heyting ~\cite{heyting1966intuitionism} and Kolmogorov~\cite{kolmogorov1925principe}~\cite{artemov2004kolmogorov}, lies in the treatment of proofs. In contrast to classical approaches to foundations that treat proof objects as external to theories, the constructive approach treats proofs as the
- fundamental forms of construction and hence, as first class citizens. As a result, the constructive view of logic draws heavily from proof theory and Gentzen's developments~\cite{gentzen1970collected}. For the reader interested also in the philosophical implications  of constructive foundations and \emph{antirealism}, Dummet's treatment is a classic in the field~\cite{dummett2000elements}.    
+For the purposes of this paper, the main diverging point of Brouwer's program, 
+later explicated by Heyting ~\cite{heyting1966intuitionism} and Kolmogorov~\cite{kolmogorov1925principe}~\cite{artemov2004kolmogorov}, lies in the treatment of proofs. In contrast to classical approaches to foundations 
+that treat proof objects as external to theories, the constructive approach treats proofs 
+as the fundamental forms of construction and hence, as first class citizens. 
+As a result, the constructive view of logic draws heavily from proof theory
+and Gentzen's developments~\cite{gentzen1970collected}. 
+For the reader interested also in the philosophical implications  
+of constructive foundations and \emph{antirealism}, 
+Dummet's treatment is a classic in the field~\cite{dummett2000elements}.    
  
 
 
-It has to be emphasized that proofs in the intuitionistic approach  are treated as stand--alone and are not bound to formal systems (i.e the notion of proof \textit{precedes} that of a formal system). It is necessary, hence, to draw a distinction  between the notion of \emph{proof as construction} and the typical notion of \emph{proof in a formal system} ~\cite{Harper2013,Harper2012}.
+It has to be emphasized that proofs in the intuitionistic approach 
+ are treated as stand--alone and are not bound to formal systems 
+(i.e the notion of proof \textit{precedes} that of a formal system). 
+It is necessary, hence, to draw a distinction between the notion of 
+ \emph{proof as construction} and the typical notion of \emph{proof in a formal system} 
+ ~\cite{Harper2013,Harper2012}.
 
-  A formal proof
-is a proof given in a fixed formal system, such as the axiomatic theory of sets, and arises
+A \emph{formal proof}
+is a proof given in a fixed formal system, such as Peano Arithmetic, and arises
 from the application of the inductively defined rules in that system. Formal proofs can, thus, be viewed as strings or g\"{o}delizations of textual derivation in some fixed system. 
 
 Although every formal proof (in a specific system)
- is also a proof (assuming soundness of the system) the converse is not true.  This conforms with 
- G\"{o}del's Incompleteness Theorem, which precisely states that there
-exist true propositions (with a proof in \emph{some} formal system), but for which there cannot be given a formal proof within the formal system in question. This \emph{openness} of the nature of proofs is necessary for a foundational treatment of proofs that respects  G\"{o}delian phenomena.
+is also a proof (assuming soundness of the system) the converse is not true.  
+This conforms with G\"{o}del's Incompleteness Theorem, which precisely states that there
+exist true propositions (with a proof in \emph{some} formal system), but for which 
+there cannot be given a formal proof within the formal system in question. 
+This \emph{openness} of the nature of proofs is necessary for a foundational 
+treatment of proofs that respects  G\"{o}delian phenomena.
 
-Following the same line of thought, and adopting the doctrine of \emph{proof relevance} for obtaining true judgments, leads to another main difference of the constructive approach and the classical one i.e the (default) absence of the \emph{law of excluded middle}. Systems that rely on \emph{Martin-L\"{o}f Type Theory}~\cite{martin1984intuitionistic} do not necessarily exclude \emph{LEM} but they might permit its delimited usage, locally, in a proof. 
+Following the same line of thought, and adopting the doctrine of \emph{proof relevance} 
+for obtaining true judgments, leads to another main difference of the constructive 
+approach and the classical one i.e the (default) absence of the 
+\emph{law of excluded middle}. More specifically, systems that rely on \emph{Martin-L\"{o}f Type Theory
+}~\cite{martin1984intuitionistic} do not necessarily exclude \emph{LEM}
+ but they might permit its delimited usage, locally, in a proof. 
 
 
 \section{IPL}
@@ -171,8 +197,8 @@ The natural deduction system of \ac{IPL} is given below:
 								\end{mathpar}
 						\end{mdframed}
 
-\section{Order Theoretic Semantics: \vocab{Hayting Algebras}}\label{ha:ax}
-\vocab{IPL} viewed order theoretically gives rise to a \vocab{Hayting  Algebra(HA)}. To define \vocab{HA} we need the notion of a \emph{lattice}. For our purposes we define it as follows\footnote{One can take a lattice being a partial order. The same results hold with slight modifications.}: 
+\section{Order Theoretic Semantics: \vocab{Heyting Algebras}}\label{ha:ax}
+\vocab{IPL} viewed order theoretically gives rise to a \vocab{Heyting  Algebra(HA)}. To define \vocab{HA} we need the notion of a \emph{lattice}. For our purposes we define it as follows\footnote{One can take a lattice being a partial order. The same results hold with slight modifications.}: 
   
 
 \begin{mdframed}
