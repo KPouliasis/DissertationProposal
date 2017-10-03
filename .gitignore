@@ -7,6 +7,6 @@
 *.toc
 *.gz
 *.bbl
-*.div
+*.dvi
 *.fls
-*.fdb_latemk
+*.fdb_latexmk
