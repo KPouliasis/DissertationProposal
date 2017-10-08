@@ -1,0 +1,386 @@
+\section{Theorems}
+\begin{proposition}[Basic Facts about the type universe]
+\label{bftu}
+With $A, U$ metavariables ranging over the following grammar
+$$ A:= P_i |  A \supset  A |\Box  A | \llbracket A \rrbracket  $$
+and $$U:={\sf Prop_0}| {\sf Prop_1} | {\sf \llbracket Prop_0\rrbracket}$$
+\begin{enumerate}
+\item Given  any judgment of the scheme  $\begin{array}{c}
+         {\mathcal{ D}} \\
+           A \in U
+        \end{array}$ then $\mathcal{D}$ is the \textbf{unique} derivation of $ A \in U$. 
+
+From now on we will be omitting the type construction derivations and write, informally, $ A\in U$ (resp, $\Gamma\in U$) denoting the unique such derivation(s). 
+
+\item If $ A \in {\sf Prop}$ then one of the following holds exclusively : $ A \in {\sf Prop_0}$ or ${ A \in {\sf Prop_1}}$.
+\item If $A \in {\sf Prop}$ then $A \not\in\llbracket Prop_0\rrbracket$.
+\item If $\Box  A \in {\sf Prop}$ then $\Box  A \in {\sf Prop_1}$.
+\item If $\Box  A \in {\sf Prop_1}$ then $ A \in {\sf Prop_0}$.
+\item If $\Box  A \in {\sf Prop_1}$ then  $\llbracket  A\rrbracket \in { \llbracket {\sf Prop_0}\rrbracket}$.
+\item If $\llbracket  A \rrbracket \in U$ then $ U = { \llbracket {\sf Prop_0}\rrbracket } $ and $A\in {\sf Prop_0}$.
+
+\item If $A \in {\sf Prop_1}$ then $\llbracket A \rrbracket \not \in U$ for any $U$.
+\item If $ A$ is of the form $\Box\Box  A'$ then $ A\not\in U$ for any $U$.
+\item If $A\in U$ then $A$ cannot have any subformula of the form  $\Box\Box A'$. 
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+
+\begin{enumerate}
+\item By double induction on the structure of the formula and the structure of the appropriate derivations.
+\item For the exclusive argument by double induction on the structure of the formula and the structure of the appropriate derivations.
+\item By contradiction. If $A\in \llbracket{\sf Prop_0} \rrbracket$ then $A$ is of the form $\llbracket A' \rrbracket$. By induction on the derivations: if $A\in {\sf Prop_{0,1}}$ it cannot be of such form. Using item $1$ we arrive in contradiction.
+\item Trivially by case analysis.
+\item Directly by the previous item.
+\item Trivial by previous item.
+\item Trivial by case analysis on the derivation
+\item By contradiction. Using the previous item and item $2$.
+\item By contradiction. Assume that $\Box\Box A' \in U$ is derivable. The only rule that could have been applied is {\sf $BOX$} which requires a proof of the premise $\Box A'\in {\sf Prop_0}$. That is impossible based on previous item.
+\item By induction on the derivations $A\in U$ and using the -- standard -- definition of subformula relation.
+\end{enumerate}
+\end{proof}
+\begin{proposition}[Basic Facts on Context Wellformedness] 
+\label{bfcw}
+For every derived  judgment of the scheme $\mathcal{ CX}\vdash\mathcal{ WF}$ with $\mathcal{WF}:= {\sf wf}\  |\  {\sf \llbracket  wf \rrbracket }$ and $\mathcal{ CX}$ a metavariable ranging over lists of labeled formulae.
+\begin{enumerate}
+\item If $ \mathcal{ WF}= {\sf wf}$ then $\mathcal{CX}=\Gamma$ where, exclusively, either $\Gamma\in {\sf Prop}$ or $\Gamma=\bullet$, and $\Gamma\centernot\vdash \llbracket {\sf wf}\rrbracket$.
+\item If $ \mathcal{ WF}= {\sf\llbracket wf\rrbracket}$ then $\mathcal{CX}=\Delta$ where exclusively, either $\Delta\in {\sf \llbracket Prop_0\rrbracket}$ or $\Delta = \circ$,  and $\Delta\centernot\vdash {\sf wf}$.
+\item If $\mathcal{CX}= \Gamma, x:A$ then $ \mathcal{ WF}= {\sf wf}$, $A\in {\sf Prop}$ and,  $\Gamma\vdash {\sf wf}$.
+\item If $\mathcal{CX}= \Delta, s:A $ then $ \mathcal{ WF}= { \llbracket {\sf wf} \rrbracket}$, $A\in { \llbracket {\sf Prop_0}\rrbracket}$  and $\Delta\vdash{ \llbracket {\sf wf}\rrbracket}$.
+\item If $\mathcal{CX}=\llbracket \Gamma \rrbracket$ for some $\Gamma\vdash{\sf wf}$ then  $\mathcal{ WF}={\llbracket {\sf wf}\rrbracket}$ and either, $\Gamma = \bullet$ or $\Gamma \in {\sf Prop_0}$.
+%\in Prop$ and   
+%$Ctx\vdash WF$ is of the form $Ctx\vdash {\sf wf}$ with then $Ctx=\Gamma$ with $\Gamma \in Prop$ and $\Gamma\centernot $
+\end{enumerate}
+\end{proposition}
+\begin{proof}
+\begin{itemize}
+
+\item
+Items $1,2$ are trivial by case analysis on the derivations for context wellformedness. For items $3,4$ notice that $x,x_i$ labels can only be part of a ${\sf Prop}$ context and similarly for $s,s_1$ labels.
+\item
+By contradiction, assume $A\in\Gamma$ s.t. $A\not\in {\sf Prop_0}$ from $1$ it can only be $A\in {\sf Prop}$.
+Hence $A\in {\sf Prop_1}$ (using item $1$ in \ref{bftu}) but then $\llbracket A \rrbracket$ is not an element of any universe (using item $8$ in \ref{bftu}) and hence it cannot be in the co--domain of any well formed context.
+\end{itemize}
+\end{proof}
+\begin{lemma}[Guarded $\Box_{IE}$ rule application]
+	All instances of the $\Box_{IE}$  rule apply with context $\Gamma^{\prime}\in {\sf Prop_0}$.
+\end{lemma}
+\begin{proof}
+Trivially by the previous item.
+\end{proof}
+\begin{lemma}[Separation of Judgments]
+\label{spjp}
+For every judgment of the scheme $Ctx\vdash A$ with a derivation in JCalc one of the two holds exclusively:
+\begin{enumerate}
+\item (\textbf{${\sf Prop}$ Judgments}) $Ctx =\Gamma$  with $\Gamma\vdash {\sf wf}$ and $\Gamma,  A\in {\sf Prop}$
+or, \item(\textbf{${\sf\llbracket  Prop_0\rrbracket}$ Judgments}) $Ctx=\Delta$ with $\Delta\vdash {\sf \llbracket wf\rrbracket}$ and $\Delta,  A \in \llbracket {\sf Prop_0}\rrbracket$
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+By induction on the derivations of this scheme. Using some obvious inversion facts such as 
+if $\llbracket   A_1\supset   A_2\rrbracket \in \llbracket{\sf Prop_0}\rrbracket$ then $  A\supset   A_2\in {\sf Prop_0}$
+and whence, $  A_2 \in {\sf Prop_0}$ and $\llbracket   A_2 \rrbracket \in \llbracket {\sf Prop_0}\rrbracket$ and facts in \ref{bfcw}.
+\end{proof}
+\begin{theorem}[Deduction Theorem for Validity Judgments]
+	\label{deduct}
+With $\Delta\vdash \llbracket\sf wf\rrbracket$, if $\Delta, s:\llbracket   A\rrbracket \vdash\llbracket B \rrbracket $ then $\Delta \vdash\llbracket   A \supset B \rrbracket $. 
+\end{theorem}
+\begin{proof}
+The proof is essentially the deduction theorem for a Hilbert style formulation of the corresponding fragment of  propositional logic and we do not show it here for economy. Note that this theorem cannot be proven without the logical specification {\sf $Ax_1$, $Ax_2$}. I.e. it is exactly the requirements of the logical specification that ensure that all  interpretations  should adequately embed intuitionistic implication.
+\end{proof}
+\begin{lemma}[$\llbracket\cdot\rrbracket$Lifting Lemma]
+\label{bracklift}
+Given any wellformed context of assumptions $\Gamma \vdash {\sf wf}$ and $\Gamma,  A \in {\sf Prop_0}$ then $\Gamma\vdash   A \Longrightarrow \llbracket \Gamma\rrbracket \vdash \llbracket   A \rrbracket$. 
+\end{lemma}
+
+\begin{proof}
+The proof goes by induction on the derivations trivially for all the cases($\supset_E$ is treated using the ${\sf App}$ rule that internalizes Modus ponens). For the $\supset I$ the previous theorem has to be used.
+\end{proof}
+\begin{lemma}[$\Box$Lifting Lemma]
+\label{boxlift}
+For $\Gamma,   A \in {\sf Prop_0}$, then $\Gamma\vdash   A$ implies $\Box\Gamma \vdash \Box   A$.
+\end{lemma}
+\begin{proof}
+ Assuming a derivation $\mathcal {D}$ ::$\Gamma\vdash   A$ from \ref{bracklift} there exists corresponding validity derivation $\mathcal{E}::\llbracket\Gamma\rrbracket\vdash\llbracket   A \rrbracket$. Using the two as premises in the $\Box_{IE}$ with $\Gamma := \Box \Gamma$ we obtain $\Box\Gamma\vdash\Box   A$.
+\end{proof}
+From the previous we get:
+Let us show an inverse principle to the $\Box$ Lifting Lemma. We define for $A$ in {\sf Prop}:
+\begin{flalign*}
+\nonumber \downharpoonright P_i\ & =  P_i \\ \downharpoonright (A_1\supset A_2)&  =  \downharpoonright A_1 \supset \downharpoonright A_2 \\
+\downharpoonright \Box A & = \downharpoonright A
+\end{flalign*}
+And the lifting of the $\downharpoonright$ over $\Gamma\in {\sf Prop}$. We get:
+\begin{theorem}[Collapse $\Box$ Lemma] If $\Gamma\vdash A$ for $\Gamma,A \in {\sf Prop}$ then $\downharpoonright \Gamma\vdash \downharpoonright$ A.
+\end{theorem}
+\begin{theorem}[Weakening]
+For the N.D. system of JCalc, with $\Gamma,\Gamma^{\prime}\vdash \sf wf$ and $\Delta,\Delta^{'}\vdash\llbracket {\sf wf}\rrbracket $.
+\begin{enumerate}
+\item If  $\Gamma\vdash   A$ then $\Gamma,\Gamma'\vdash   A$.
+\item If  $\Delta\vdash \llbracket   A\rrbracket$ then $\Delta,\Delta^{'} \vdash \llbracket   A\rrbracket$.
+\end{enumerate}
+
+\end{theorem} 
+\begin{proof}
+By induction on derivations.
+\end{proof}
+\begin{theorem}[Contraction]
+For the N.D. system of JCalc, with $\Gamma,x:A,x':A,\Gamma'\vdash \sf wf$ and $\Delta,s:\llbracket A \rrbracket, s':\llbracket A\rrbracket,\Delta^{'}\vdash\llbracket {\sf wf}\rrbracket $.
+\begin{enumerate}
+\item If  $\Gamma,x:A,x':A,\Gamma'\vdash  B$ then $\Gamma,x:A,\Gamma'\vdash   B$.
+\item If  $\Delta,s:\llbracket A \rrbracket, s':\llbracket A\rrbracket,\Delta^{'}\vdash\llbracket B \rrbracket $ then $\Delta,s:\llbracket A \rrbracket, \Delta^{'} \vdash \llbracket   B\rrbracket$.
+\end{enumerate}  
+\end{theorem}
+\begin{proof}
+By induction on derivations.
+\end{proof}
+\begin{theorem}[Permutation]
+For the N.D. system of JCalc, with $\Gamma\vdash \sf wf$ and $\Delta\vdash\llbracket {\sf wf}\rrbracket $ and $\pi \Gamma$ and $\pi \Delta$ the collection of well-formed contexts of assumptions with the same co-domain of $\Gamma$, $\Delta$ we get
+\begin{enumerate}
+\item If  $\Gamma\vdash   A$ and $\Gamma'\in \pi{\Gamma}$ then $\Gamma'\vdash   A$.
+\item If  $\Delta\vdash \llbracket   A\rrbracket$ and $\Delta^{'}\in \pi \Delta$ then  $ \Delta'\vdash \llbracket   A\rrbracket$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+By induction on derivations.
+\end{proof}
+\begin{theorem}[Substitution Principle]
+The following hold for both kinds of judgments:
+\begin{enumerate}
+\item If  $\Gamma,x:A\vdash B$ and $\Gamma\vdash  A$ then $\Gamma\vdash B$ 
+\item If  $\Delta,s:\llbracket A \rrbracket \vdash \llbracket B\rrbracket$ and$\Delta\vdash  \llbracket A\rrbracket$ then  $\Delta\vdash\llbracket B\rrbracket$ 
+\end{enumerate}
+\end{theorem}
+All previous $9$ theorems can be stated for proof terms too. We should discuss the following:
+\begin{theorem}[Deduction Theorem / Emulation of $\lambda$ abstraction]
+	\label{deductterms}
+	With $\Delta\vdash \llbracket\sf wf\rrbracket$, if $\Delta, s:\llbracket   A\rrbracket \vdash {\sf j}:\llbracket B \rrbracket $ then there exists {\sf j'} s.t. $\Delta \vdash {\sf j'}:\llbracket   A \supset B \rrbracket $. 
+\end{theorem}
+\begin{lemma}[$\llbracket\cdot\rrbracket$Lifting Lemma for terms]
+\label{highorder}
+	If $\Gamma A \in {\sf Prop_0}$ and $\Gamma\vdash M: A$ then there exists ${\sf j}$ s.t. $\llbracket \Gamma\rrbracket \vdash {\sf j}:\llbracket   A \rrbracket$. 
+\end{lemma}
+In both theorems the existence of this ${\sf j,j'}$ is algorithmic following the induction proof. 
+\section{Linking on the function space}
+The above mentioned algorithms permit  for translating $\lambda$ abstractions to polynomials of $S,K$ combinators which is a standard result in the literature. We do not give the details here but the translation is  syntax driven as it can be seen by the inductive nature of the proofs.
+
+Henceforth, we can generalize the construction in \ref{dlinker} so that it permits for dynamic linking of functions of the client (with missing implementations) such as  $\mathtt{\lambda n:int. push\  n\  empty}$ dynamically given that the host actually implements a higher-order function space (that is it implements the combinators $S,K$ in, say, own lambda calculus $\lambda^{J}$). Given implementations of $\mathtt{push\_impl}$, $\mathtt{empty\_impl}$ the linker produces an application expression consisting of $\mathtt{push\_impl}$, $\mathtt{empty\_impl}$, $S$ and $K$.   The execution of the target expression will happen in the host after dereferencing  ${\sf push\_impl, empty\_impl}$ (dynamic part) and the combinators $S,K$ (constant part) as, say, lambdas (e.g. $K=\lambda^{J} x.\lambda^{J} y. x$).
+
+\section{Gentzen's reduction Principle for $\Box$(General)}
+\label{redmult}
+\mbox{\footnotesize
+	\begin{mathpar}
+		\inferrule*[right=$  I_{\Box B} E_{\Box   A}^{x,s}$]{
+			\inferrule*{}
+			{\inferrule*[]{}{ \inferrule*[]	{\inferrule*[]{}{\PrTri{$D_1$} \\ \PrTri{$E_1$}}\\\\
+						\inferrule*[]{}{ \ A_1\\ \ \qquad\ \ \  \llbracket   A_1\rrbracket}}{\Box   A_1 }}}\ldots 
+			{\inferrule*[]{}{ \inferrule*[]	{\inferrule*[]{}{\PrTri{$D_i$} \\ \PrTri{$E_1$}}\\\\
+						\inferrule*[]{}{\    A_i\\ \ \qquad \llbracket   A_i\rrbracket}}{\Box   A_i }}}
+			\quad
+			\inferrule*{}
+			{\inferrule*[vdots=1.0em, right=$\vec{x}$]{ }{ A_1\dots A_i}\\\\
+				\inferrule*[]{}{B}} 	   \qquad 
+			\inferrule*{}
+			{\inferrule*[vdots=1.0em, right=$\vec{s}$]{ }{\llbracket   A_1 \ldots A_i \rrbracket}\\\\
+				\inferrule*[]{}{\llbracket B\rrbracket}} 	
+		}
+		{\Box B} 
+	\end{mathpar}
+}
+$$\Longrightarrow_{R}$$
+\mbox{\footnotesize
+	\begin{mathpar}
+		\inferrule*[right=$I_{\Box B}$]{
+			\inferrule*{}
+			{\inferrule*[vdots=1.0em]{}{\PrTri{$D_1$}\ \PrTri{$D_i$} \\\\ A_1\ldots\ldots  \ \  A_i}\\\\
+				\inferrule*[]{}{B}}
+			\qquad 
+			\inferrule*{}
+			{\inferrule*[vdots=1.0em]
+				{}{\PrTri{$E_1$} \PrTri{$E_i$}\\\\\llbracket   A_1\ldots\ldots A_i\rrbracket}\\\\
+				\inferrule*[]{}{\llbracket B \rrbracket}} 
+		}{\Box B}
+		
+	\end{mathpar}
+}
+\section{Notes on the cut elimination proof and normalization of natural deduction}
+\label{norm}
+Standardly, we add the bottom type and elimination rule in the natural deduction and show that in Jcalc + $\bot$: $\centernot\vdash\bot$. The addition goes as follows:
+
+\begin{mathpar}
+\inferrule*[right= Bot] { } {\bot \in {\sf Prop_0}}	
+\and
+\inferrule*[right= $E_\bot$] {{\Gamma\vdash\bot }\\ A\in {\sf Prop}} {\Gamma \vdash A}
+\end{mathpar}
+Our proof strategy follows directly \cite{pfenning2004automated}. We construct an intercalation calculus \cite{sieg1998normal} corresponding to the ${\sf Prop}$ fragment  with the following two judgments:
+\begin{itemize}
+	\item[] $A\Uparrow$ for ``Proposition $A$ has normal deduction".
+	\item[] $A^\downarrow$ for ``Proposition $A$ is extracted from hypothesis".
+\end{itemize}
+This calculus is, essentially, restricting the natural deduction to canonical derivations. The $\llbracket {\sf judgments} \rrbracket$ are not annotated and are directly ported from the natural deduction since we observe consistency in ${\sf Prop}$. 
+The construction is identical to \cite{pfenning2004automated} (Chapter 3) for the ${\sf Hypotheses},{\sf Coercion},\supset, \bot$ cases, we add the $\Box$ case.
+\begin{mathpar}
+	\inferrule*[right=$\Gamma$-hyp]  {x: A\downarrow \in \Gamma^\downarrow}{ \Gamma^\downarrow\vdash^{-} A\downarrow}
+	\and
+	\inferrule*[right=$\downarrow\Uparrow$] {\Gamma^\downarrow\vdash^{-} A\downarrow}{\Gamma^\downarrow\vdash^{-} A \Uparrow}
+	\and
+	\inferrule*[right=$\supset$I$^{x}$] {\Gamma^\downarrow, x: A\downarrow\vdash^{-}  B\Uparrow} {\Gamma^\downarrow \vdash^{-}  A\supset  B\Uparrow}
+	\inferrule*[right=$\supset$E] {{\Gamma^\downarrow\vdash^{-} A\supset  B \downarrow}\\{\Gamma^\downarrow\vdash^{-}  A\Uparrow}} {\Gamma^\downarrow\vdash^{-}   B\downarrow}
+	%\and
+	%\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
+\and
+\inferrule*[right= $E_\bot$] {{\Gamma^{\downarrow}\vdash^{-}\bot\downarrow }\\ A\in {\sf Prop}} {\Gamma^{\downarrow}\vdash^{-} A\Uparrow}
+\and
+ 	\inferrule*[right=$\Box_{IE}$ ] {{\Gamma^\downarrow\vdash\Box \Gamma^{\prime}\downarrow}\\{\Gamma'^\downarrow\vdash A\Uparrow }\\ {\llbracket \Gamma^{\prime} \rrbracket\vdash \llbracket A \rrbracket}}{ {\Gamma^\downarrow\vdash \Box A\Uparrow }}
+ \end{mathpar}
+Where $\Gamma^\downarrow\vdash\Box \Gamma^{\prime}$ abbreviates $\forall A_i\in \Gamma'. \ \Gamma^{\downarrow}\vdash\Box A_i\downarrow$.
+We prove simultaneously by induction:
+\begin{theorem}[Soundness of Normal Deductions]
+The following hold:
+\begin{enumerate}
+\item If $\Gamma^\downarrow\vdash^{-} A\Uparrow$ then $\Gamma\vdash A$, and
+\item If $\Gamma^\downarrow\vdash^{-} A\downarrow $ then $\Gamma\vdash A$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Simultaneously by induction on derivations.
+\end{proof}
+It is easy to see that this restricted proof system $\centernot\vdash^{-} \bot\Uparrow$. It is hard to show its completeness to the non-restricted natural deduction ($\vdash + \bot_E$ of Jcalc) directly. For that reason we add a rule to make it complete ($\vdash^{+}$) preserving soundness and get a system of Annotated Deductions. We show the correspondence of the restricted system ($\vdash^{-}$) to a cut-free sequent calculus (${\sf JSeq}$), the correspondence of the extended system ($\vdash^{+}$) to ${\sf Jseq + Cut}$ and show cut elimination.\footnote{ In reality, the sequent calculus formulation is built exactly upon intuitions on the intercalation calculus. We refer the reader to the references.}
+
+To obtain completeness we add the rule:
+ \begin{mathpar}
+ 	\inferrule*[right=$\Uparrow\downarrow$] {\Gamma^\downarrow\vdash A\Uparrow} {\Gamma^\downarrow\vdash A\downarrow }
+ \end{mathpar}
+We define $\vdash^{+} :=\   \ \ \vdash^{-} {\sf with} {\ \sf \Uparrow\downarrow}{\sf Rule}$.
+We show:
+\begin{theorem}[Soundness of Annotated Deductions]
+	The following hold:
+	\begin{enumerate}
+		\item If $\Gamma^\downarrow\vdash^{+} A\Uparrow$ then $\Gamma\vdash A$, and
+		\item If $\Gamma^\downarrow\vdash^{+} A\downarrow $ then $\Gamma\vdash A$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	As previous item.
+\end{proof}
+
+\begin{theorem}[Completeness of Annotated Deductions]
+	\label{compannot}
+	The following hold:
+	\begin{enumerate}
+		\item If $\Gamma\vdash A$ then, $\Gamma\downarrow\vdash^{+} A\Uparrow$, and
+		\item If $\Gamma\vdash A$, then $\Gamma\downarrow\vdash^{+} A\downarrow$.
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	By induction over the structure of the $\Gamma\vdash A$ derivation.
+\end{proof}
+
+Next we move with devising a sequent calculus formulation corresponding to normal proofs $\Gamma^{\downarrow}\vdash^{-}A\Uparrow$. The calculus that is given in the main body of this theorem. We repeat it here for completeness.
+\begin{mdframed}[nobreak=true,frametitle={\footnotesize Sequent Calculus ($\llbracket {\sf Prop_0} \rrbracket$)}]
+	$$\begin{array}{l r}
+	\Delta \Rightarrow \llbracket A\rrbracket:= & \exists \Delta'\in \pi(\Delta)\ \text{s.t} \   
+	\Delta'\vdash \llbracket A \rrbracket \end{array}$$
+	where $\pi(\Delta)$ is the collection of wellformed  $\llbracket {\sf Prop_0} \rrbracket$ contexts $\Delta'\vdash \llbracket {\sf wf}\rrbracket$  with some permutation of the multiset $\Delta$ as co--domain.
+\end{mdframed} 
+
+
+\begin{mdframed}[nobreak=true,frametitle={\footnotesize Sequent Calculus ({\sf Prop})}]
+	\mbox{\small
+		\begin{mathpar}
+			\inferrule*[right=$Id$] { }{\Gamma, A  \Rightarrow A }
+			
+			\inferrule*[right=$\supset_L$] {{\Gamma, A\supset B, B \Rightarrow  C }\\ {\Gamma, A\supset B \Rightarrow A}} {\Gamma, A\supset B \Rightarrow  C}
+			\and
+			\inferrule*[right=$\supset_R$] {\Gamma, A \Rightarrow  B} {\Gamma \Rightarrow A\supset B}
+			\and
+			\inferrule*[right=$\bot_L$] { } {\Gamma, \bot \Rightarrow A}
+			\and
+			\inferrule*[right=$\Box_{LR}$] {{\Box\Gamma',\Gamma'\Rightarrow A}\\{\llbracket\Gamma'\rrbracket\Rightarrow \llbracket A \rrbracket } \\{\Gamma \in{\sf Prop}}}{\Gamma,\Box\Gamma'\Rightarrow \Box A}
+			%\inferrule*[right=$\supset$E] {{\Turn {\Gamma} { A\supset  B}}\\{\Turn {\Gamma} { A}}} {\Turn {\Gamma} {   B}}
+			%\and
+			%\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
+		\end{mathpar}}
+		%Where the  rule $\Box_{LR}$corresponds to $\Box_{IE}$ and relates the two kinds of sequents 
+	\end{mdframed}
+We want to show correspondence of the sequent calculus  w.r.t normal proofs ($\vdash^{-}$).  Two lemmas are required to show soundness. 
+\begin{lemma}[Substitution principle for extractions]
+The following hold:
+\begin{enumerate}
+\item If $\Gamma_1^\downarrow, x:A^\downarrow,\Gamma_2^\downarrow\vdash^{-} B\Uparrow$ and\\$\Gamma_1^\downarrow\vdash^{-} A\Uparrow$ then  $\Gamma_1^\downarrow,\Gamma_2^\downarrow\vdash^{-} B\Uparrow$
+\item  If $\Gamma_1^\downarrow, x:A^\downarrow,\Gamma_2^\downarrow\vdash^{-} B\downarrow$ and $\Gamma_1^\downarrow\vdash^{-} A\downarrow$ then $\Gamma_1^\downarrow,\Gamma_2^\downarrow\vdash^{-} B\Uparrow$    
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+Simultaneously by induction on the derivations $A\downarrow$ and $A\Uparrow$.
+\end{proof}
+And making use of the previous we can show, with ($\downharpoonright A$ defined previously):
+\begin{lemma}[Collapse principle for normal deductions]
+The following hold:
+\begin{enumerate}
+		\item If $\Gamma^\downarrow,\vdash^{-}  A\Uparrow$ then $\downharpoonright\Gamma^\downarrow\vdash^{-} \downharpoonright A\Uparrow$   and,
+		\item If $\Gamma^\downarrow\vdash^{-} A\downarrow$ then  $\downharpoonright\Gamma^\downarrow\vdash^{-} \downharpoonright A\downarrow$   
+	\end{enumerate}
+\end{lemma}
+Using the previous lemmas and by induction we can show :
+\begin{theorem}[Soundness of the Sequent Calculus] 
+	\label{soundnseq}
+If   $\Gamma\Rightarrow B$ then $\Gamma^\downarrow\vdash^{-} B\Uparrow$.
+
+	
+\end{theorem}
+\begin{theorem}[Soundness of the Sequent Calculus with Cut] 
+	
+	If   $\Gamma\Rightarrow^{+} B$ then $\Gamma^\downarrow\vdash^{+} B\Uparrow$.
+\end{theorem}
+
+Next we define the $\Gamma\Rightarrow^{+} A$ as $\Gamma\Rightarrow A$ plus the rule:
+\begin{mathpar}
+\inferrule*[right=Cut]{{\Gamma\Rightarrow^{+} A}\\{\Gamma,A\Rightarrow^{+}B}}{\Gamma\Rightarrow^{+}B}
+\end{mathpar}
+\begin{proof}
+As before. The cut rule case is handled by the $\Uparrow\downarrow$ and substitution for extractions principle showcasing that the correspondence of the cut rule to the coercion from normal to extraction derivations.
+\end{proof}
+Standard structural properties (\textit{Weakening, Contraction}) to show completeness. We do not show these here but they hold.
+\begin{theorem}[Completeness of the Sequent Calculus] 
+	\label{compseqcalc}
+	The following hold:
+	\begin{enumerate}
+		\item If   $\Gamma^\downarrow\vdash^{-} B\Uparrow$ then $\Gamma\Rightarrow B$ and,
+		\item 	If $\Gamma^\downarrow \vdash^{-} A\downarrow$ and $\Gamma,A\Rightarrow B$ then $\Gamma\Rightarrow B$   
+	\end{enumerate}
+\begin{proof}
+	Simultaneously by induction on the given derivations making use of the structural properties.
+\end{proof}
+Similarly we show for the extended systems.
+\begin{theorem}[Completeness of the Sequent Calculus with Cut] The following hold:
+	\label{compseqcut}
+	\begin{enumerate}
+		\item If   $\Gamma^\downarrow\vdash^{+} B\Uparrow$ then  $\Gamma\Rightarrow^{+} B$ and,
+		\item 	If $\Gamma^\downarrow \vdash^{+} A\downarrow$ and $\Gamma,A\Rightarrow^{+} B$ then $\Gamma\Rightarrow^{+} B$.   
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	As before. The extra case is handled by the Cut rule.
+\end{proof}
+\end{theorem}
+After establishing the correspondence of $\vdash^{-}$ with $\Rightarrow$ and of $\vdash^{+}$ with $\Rightarrow^{+}$ we move on with:
+\begin{theorem}[Admissibility of Cut]
+	If $\Gamma\Rightarrow A$ and $\Gamma,A\Rightarrow B$ then $\Gamma\Rightarrow B$.
+\end{theorem}
+The proof is by triple induction on the structure of the formula, and the given derivations and we leave it for a technical report. This gives easily:
+\begin{theorem}[Cut Elimination]
+	If $\Gamma\Rightarrow^{+}A$ then $\Gamma\Rightarrow A$.
+	
+\end{theorem}
+Which in turn gives us:
+\begin{theorem}[Normalization for Natural Deduction]
+	\label{normalization}
+	If $\Gamma\vdash A$ then $\Gamma^{\downarrow}\vdash^{-} A\Uparrow$
+\end{theorem}
+\begin{proof}
+	From assumption $\Gamma \vdash A$ which by \ref{compannot} gives $\Gamma\vdash^{+} A\Uparrow$. By \ref{compseqcut} and Cut  Elimination we obtain $\Gamma\Rightarrow A$ which by  \ref{soundnseq} completes the proof.
+\end{proof}
+As a result we obtain:
+\begin{proof}
+	By contradiction, assume $\vdash\bot$ then $\Rightarrow \bot$ which is not possible.
+\end{proof}

@@ -1,0 +1,731 @@
+\documentclass[11pt]{entcs} 
+\usepackage{prentcsmacro}
+\usepackage[utf8]{inputenc} 
+\usepackage{syntax}
+\usepackage{amsfonts}
+\usepackage{amssymb} 
+\usepackage{amsmath}
+%\usepackage{amsthm}
+\usepackage{mathpartir}
+\usepackage{bussproofs}
+
+\newcommand{\Turn}[2]
+	{ {#1}\vdash_{\textbf{\sf IPC}}  {#2}}
+\newcommand{\TurnTwo}[2]
+	{ {#1}\vdash_{\textbf{\sf J}}  {#2}}
+\newcommand{\TurnT}[2]
+	{ \Delta_0;{#1}\vdash  {#2}}
+\newcommand{\TurnTT}[2]
+	{ \Delta_0;{#1}\vdash_{\sf JC_1}  {#2}}
+\newcommand{\Turnj}[1]
+	{ \Delta_0\vdash_{\sf J_0}  {#1}}
+\newcommand{\Turnjc}[3]
+    { {#1};{#2}\vdash_{\textbf{\sf JC}}  {#3}}
+
+\usepackage{graphicx} % support the \includegraphics command and options
+
+
+%%% PACKAGES
+\usepackage{booktabs} % for much better looking tables
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{paralist} % very flexible & customisable lists (eg. enumerate/itemize, etc.)
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{subfig} % make it possible to include more than one 
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
+\pagestyle{fancy} % options: empty , plain , fancy
+\renewcommand{\headrulewidth}{0pt} % customise the layout...
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\thepage}\rfoot{}
+
+%\newtheorem{theorem}{Theorem}
+
+
+\begin{document}
+\begin{frontmatter}
+
+
+\title{J-Calc: A typed lambda calculus for Intuitionistic Justification Logic}
+
+\author{Konstantinos Pouliasis\thanksref{K}\thanksref{email}\thanksref{all}}
+\address{Department of Computer Science\\
+The Graduate Center at City University of New York, \\
+NY, USA}
+\thanks[K]{This research is part of Konstantinos Pouliasis' Phd study as a Enhanced Chancellor Fellow at the Graduate Center of the City University of New York under the supervision of Prof. Sergei Artemov. He is indebted to Prof. Sergei Artemov's advisement and guidance during his academic journey.} 
+\thanks[email]{Email:
+\href{mailto:Kpouliasis@gc.cuny.edu} 
+{\texttt{\normalshape
+        Kpouliasis@gc.cuny.edu}}}
+
+
+
+\author{Giuseppe Primiero\thanksref{g}\thanksref{coemail}\thanksref{all}} 
+\address{Department of Computer Science\\ 
+Middlesex University\\
+United Kingdom}
+
+
+
+\thanks[g]{This research was conducted while Giuseppe Primiero was a Post-Doctoral Fellow of the Research Foundation Flanders (FWO) at the Centre for Logic and Philosophy of Science, Ghent University Belgium. He gratefully acknowledges the financial support.}
+                \thanks[coemail]{Email:
+    \href{mailto:G.Primiero@mdx.ac.uk} {\texttt{\normalshape
+        G.Primiero@mdx.ac.uk}}}
+
+\thanks[all]{Both authors are indebted to the constructive comments of the anonymous referees of the Intuitionistic Modal Logic and Applications Workshop, 2013.}
+
+ \begin{abstract}
+In this paper we offer a system J-Calc that can be regarded as a typed $\lambda$-calculus for the $\{\rightarrow, \bot\}$ fragment of Intuitionistic Justification Logic. We offer different interpretations of J-Calc, in particular, as a two phase  proof system in which we proof check the validity of deductions of a  theory $T$ based on deductions from a stronger theory $T'$ and computationally as a type system for separate compilations. We establish some first metatheoretic results.
+\end{abstract}
+
+\begin{keyword}
+Typed $\lambda$-calculus, Justification Logic, Modular Programming.
+\end{keyword}
+
+
+\end{frontmatter}
+
+\section{Introduction}
+
+A plausible reading of  G\"{o}del's incompleteness results (\cite{citeulike:713002})  is that the notion of ``validity" diverges from that of ``truth within a specific theory": given a theory that includes enough arithmetic, there are statements whose validity can only be established in a theory of larger proof-strength.  This phenomenon can be shown even with non-G\"{o}delian arguments in the relation e.g.  between ${\sf I\Delta_0}$ and ${\sf I\Sigma_1}$ arithmetic \cite{parikh:existence}, ${\sf I\Sigma_1}$ and {\sf PA}, {\sf PA} and {\sf ZF},  etc. \cite{Smith05anintroduction,Buss199879}. The very same issues arise in automated theorem proving. A good example is given by type systems and interactive theorem provers (e.g. Coq, Agda) of the typed functional paradigm. In such systems, when termination of functions has to be secured, one might need to invoke stronger proof principles. 
+The need for reasoning about two kinds of proof objects within a type system is apparent most of all when one wants to establish non-admissibility results for a theory $T$ that can, in contrast, be proved in some stronger $T'$. The type system, then, has to reconcile the existence of  a proof object of some type $\phi$ in some $T'$  and a proof object of type $\neg \exists s. Prov_{T}(s,\phi)$ that witnesses the non-provability of  $\phi$ (in $T$). 
+
+In this work, we argue that the explicit modality of Justification Logic \cite{DBLP:conf/jelia/Artemov08} can be used to axiomatize relations between objects of two different calculi such as those mentioned above.  It is well known that the provability predicate can be axiomatized using a modality \cite{citeulike:214701}, \cite{ArtBek05HPL}. The Logic of Proofs {\sf LP} \cite{Art94APAL} goes further and provides explicit proof terms (\textit{proof polynomials}) to inhabit judgments on validity. By translating reasoning in Intuitionistic Propositional Calculus ({\sf IPC}) to classical proofs, {\sf LP} obtains a classical semantics for {\sf IPC} through a modality (inducing a {\sf BHK} semantics). In this paper we axiomatize the relation between the two kinds of proof objects explicitly, by creating a modal type theory that reasons about bindings or linking of objects from two calculi: a lower-level theory $T$, formulated as ${\sf IPC}$ with Church-style $\lambda$-terms representing intuitionistic proof objects; and a higher-level, possibly stronger and classical (co-)theory $T^\prime$ fixed as foundational, with \textit{justifications} expressing its proof objects. The axiomatization of such a (co-)theory follows directly the proof system of Justification Logic (here restricted to its applicative $K$-fragment) and is used to interpret classically (meaning \textit{truth-functionally}) the constructions of the intuitionistic natural deduction. The underlying principle of our linking system is as follows: $$constructive\ \  necessity= admissible \ \ validity = truth\  (in\  T) + validity\  (in\  T')$$ 
+
+Necessity of a true (in $T$) proposition $P$ is, thus, sensitive to the existence of a proof (witnessed by a justification) of its intended interpretation within $T'$. We assume an interpretation function on types $Just$ that maps the type universe of $T$ into the type universe of $T'$.  We employ judgments of the kind $M:P$ (read as ``$M$ is a proof of type $P$ in $T$'') that represent truths in $T$ and  judgments of the kind $j:{\sf Just}\  P$ (to be read as "$j$ is a justification of the interpretation of $P$ in $T^\prime$") that represent truth in $T'$ (validity). Incorporating them, the principle can be rewritten in a judgmental fashion: $$M:P + j: {\sf Just}\  P \Rightarrow {\sf \Box^{j}}P\ true$$ Notice that the $\Box$-types are indexed by justifications (${\sf\Box^{j}}P$) being sensitive to the interpretation ($T^{\prime}$) chosen.   
+To complete the picture we need canonical elements of ${\sf \Box^{j}}$-types. Naturally, witnesses of this kind are \textit{links} between proof objects from $T$ and $T'$ with corresponding types ($P$ and ${\sf Just \ P}$). For that reason we  introduce a \textit{linking witness} constructor {\sf $Link$}. This is how necessity is introduced: by proof-checking deductions of $T$ with deductions of $T'$,  we reason constructively about admissibility of valid (via $T'$) statements in $T$.
+The principle thus becomes: 
+
+$$M:P + j: {\sf Just}\   P \Rightarrow Link(M,j):{\sf \Box^{j}}P$$
+We show how this principle is admissible in our system.
+
+A possible application of the presented type theory can be a refined type system for programming languages with modular programming constructs or external function calls as we show in section \ref{sec:module}. In these kinds of languages (e.g. of the {\sf ML} family) a program or module can call for external definitions that are implemented elsewhere (in another module or, even in another language)\footnote{See \cite{Harper98programmingin}.}. We can read functions within $\Box$-types indexed by justifications as  linking  processes for such languages that perform  the mapping of well--typed constructs importing and using module signatures into their residual programs. By residual programs we mean programs where all instances of module types and  function calls are replaced by (i.e. \textit{linked} to) their actual implementations, which remain hidden in the module. We show with a real example how, with slight modifications, our type system can find a natural application in this setting. Here we focus on the type system itself and not on its operational semantics. 
+
+
+The backbone of this work is the idea of representing the proof theoretic semantics for {\sf IPC} through modality that stems from \cite{Art01BSL},\cite{Art02CSLI}.  An operational approach to  modality related to this work can be found in \cite{Art95TR}. The modularity of {\sf LP}, i.e. its ability to realize other kinds of modal reasoning with proper changes in the axiomatization of proof polynomials, was shown with the development of the family of Justification Logics \cite{DBLP:conf/jelia/Artemov08}. This ability is easily seen to be preserved here. Our work incorporates the rich type system and modularity of Justification Logic within the proofs-as-programs doctrine. For that reason, we obtain an  extension of the Curry-Howard correspondence (\cite{Sorensen98lectureson}, \cite{citeulike:993095}) and adopt the judgmental approach of Intuitionistic Type Theory (\cite{inp:martin-loef79a}, \cite{martin-lof84:inttt}, \cite{citeulike:5251552}, \cite{citeulike:2310446}, \cite{awodey:kripke}). Our system borrows from other modal calculi developed  within the judgmental approach  (e.g. \cite{citeulike:5447115}, \cite{Goubault-Larrecq96oncomputational},\cite{Benaissa99logicalmodalities} and especially \cite{Bellin01extendedcurry-howard} for the modal logic {\sf K}). A main difference of our system with those systems, as well as with previous $\lambda$-calculi for {\sf LP} (\cite{AA00}, \cite{ArtBon07LFCS}) is that our type system  hosts a two-kinded typing relation for proof objects of corresponding formulae. It can be viewed as an attempt to add proof terms for validity judgments as presented in \cite{citeulike:5447115}.  The resulting type system adopts dependent typing (\cite{citeulike:4846}, \cite{Norell08dependentlytyped}) to relate the two kinds of proof objects with modality.  The construction of the type universe as well as of justificational terms draws a lot from ideas in \cite{Artemov:2012:OJL:2317882.2317912}  and from \cite{FittingManuscript-FITTLO}. Extending typed modal calculi with additional (contextual) terms of dependent typing can be also found in \cite{Nanevski:2008:CMT:1352582.1352591}. 
+
+
+
+\section{A road map for the type system}
+
+
+The present system can be viewed as a calculus of reasoning in three interleaving phases.
+%
+Firstly, reasoning about proof objects in the implicational fragment of an intuitionistic theory $T$ in absence of any metatheoretic assumptions of validity, introduced in Section \ref{sec:IPC}. This calculus is formalized by the turnstile $\Gamma\vdash_{\sf IPC}$\footnote{One could alternatively use an additional constant symbol {\sf null} and write ${\sf null};\Gamma\vdash_{\sf IPC}$ to denote reasoning  purely in $T$ and, thus, in absence of any metatheoretic environment.}  where $\Gamma$ contains assumptions on proofs of sentences in $T$. The underlying logic is intuitionistic, the system corresponding to the implicational fragment of  simply typed lambda calculus.
+%
+Secondly, reasoning with justifications, corresponding to reasoning  about proof objects in some fixed foundational system: the (co-)theory $T'$, introduced in Section \ref{sec:J}. We suppose that $T'$ provides the intended semantics for the intuitionistic system $T$. The corresponding turnstile is $\Delta \vdash_{\sf J}$. Abstracting from any specific metatheory, all that matters  from a  purely logical point of view is that the theory of the interpretation should -- at least -- include as much logic as the implicational fragment of $T$ and it should satisfy some minimal conditions for the  provability predicate  of $T$. 
+%
+Finally, reasoning  about existence of \textit{links} between proof objects in the implicational fragment of \textit{both} axiomatic systems, introduced in Section \ref{sec:J-Calc}. This mode of reasoning is axiomatized within the full turnstile $\Delta;\Gamma\vdash_{\sf JC}$. The core of this system is  the $\Box$-Introduction rule, which allows to express constructive reasoning on linking existence. The idea is -- ignoring contextual reasoning for simplicity -- that linking a construction in $T$ with a justification of its corresponding type in $T'$ we obtain a proof of a constructive (or, admissible in $T$) validity. The rule in full (i.e. including contexts) corresponds to the construction of a link for a compound term based on existing link on its subterms.   
+The full turnstile $\Gamma; \Delta\vdash$ is, hence, a modal logic that ``zips'' mutual reasoning between the two calculi. Within this framework we obtain a computational reading for justification logic restricted to $K$ modal reasoning. Before presenting this mutual reasoning at any arbitrary level of nesting (i.e. arbitrary modal types), we first introduce ${\sf JCalc_1}$ which is a restriction of the type universe up to ${\sf 1}$ level of $\Box$-nesting.
+
+ 
+We fix a countable universe of propositions ($P_i$) that corresponds to  sentences of $T$. The elements of this universe can be inhabited either by constructions or justifications. We  will need, accordingly, two kinds of inhabitation relations for each proposition. We will be writing $M:\phi$ for a construction $M$ of type $\phi$ in $T$. We will be writing {$j: {\sf  Just}\  \phi$}  to express the fact that  {$j$} is a justification (proof in $T'$) of the proposition $\phi$. When there is no confusion we will be abbreviating this by {\sf $j:: \phi$}. A construction in $M:\phi$ in $T$ does not entail its necessity: to this aim, a corresponding justification {$j: {\sf  Just}\  \phi$} from $T'$ has to be obtained. Vice versa, the justification ($j$) of $\phi$ in $T'$ alone entails its validity but not its admissibility in $T$ (\textit{constructive  necessity}). This is expressed by the proposition -- type ${\sf \Box^{j}\phi}$. A construction of ${\sf \Box^{j}\phi}$ can be obtained only when the (weaker) theory $T$ actually ``responds" with a construction $M$ of the type $\phi$ to the valid fact $\phi$ known from $T'$ by deducing $j$. Hence, once (and only if) we have $j:: \phi$ then ${\sf\Box^{j}\phi}$ can be regarded as a well formed proposition. The  stronger theory might be able to judge about ${\sf\Box^{j}\phi}$ (given $j::\phi$) and prove e.g, $u::{\sf\Box^{j}\phi}$. In that case $T'$ ``knows"  that $\phi$ is admissible in $T$. In other words, when reasoning with justifications, the universe of types  is \textit{contextual}. To speak about  an admissible (or, constructive) necessity of a proposition we require the existence of a corresponding proof object $j$ in $T'$ that establishes its validity. 
+
+\section{Reasoning without foundational assumptions: {\sf IPC}}\label{sec:IPC}
+
+Reasoning about the implicational fragment of the constructive theory ($T$), without formulating provability statements, is done within the implicational fragment of the simply typed lambda calculus. We start by giving the grammar for the metavariable $\phi$ used in the rules.
+
+\begin{displaymath}
+\phi:= P_i | \phi \rightarrow \phi
+\end{displaymath}
+%
+The calculus is presented by introducing: the universe of types {$\sf Prop_0$}; rules for constructing well-formed contexts of simple propositional assumptions $\Gamma_0$; the rules governing $\vdash_{{\sf IPC}}$.
+
+
+\begin{mathpar}
+\infer*[right=Atom$_0$] { } {P_i \in {\sf Prop_0}}
+\and
+\infer*[right=Impl$_0$] {{\phi_1 \in {\sf Prop_0 }}\\ {\phi_2 \in {\sf Prop_0}}} {\phi_1\rightarrow\phi_2\in {\sf Prop_0}}
+\end{mathpar}
+
+
+
+\begin{mathpar}
+\infer*[right=Nil$_0$] { } {\Turn {\sf nil} {\sf wf}}
+\and
+\infer*[right=$\Gamma_0$-Exp] {{\Turn {\Gamma_0} {\sf wf} } \\ {\phi \in {\sf Prop_0}}} {\Turn {\Gamma_0 , x:\phi} {\sf wf}}
+\end{mathpar}
+
+
+\begin{mathpar}
+\infer*[right=$\Gamma$-Refl] {{\Turn {\Gamma_0} {\sf wf}}\\ {x:P_i \in \Gamma_0}}{\Turn {\Gamma_0} {x:P_i}}
+\end{mathpar}
+\begin{mathpar}
+\infer*[right=$\rightarrow$I] {\Turn {\Gamma_0, x:\phi_1} {M:\phi_2}} {\Turn {\Gamma_0} {\lambda  x:\phi_1 . \   M : \phi_1\rightarrow \phi_2}}
+\and
+\infer*[right=$\rightarrow$E] {\Turn {\Gamma_0} {M:\phi_1\rightarrow\phi_2}\\{\Turn {\Gamma_0} {M':\phi_1}}} {\Turn {\Gamma_0} {  (M  M'):\phi_2}}
+\end{mathpar}
+
+
+\section{Reasoning in the Presence of Foundations: A calculus of Justifications {\sf J}}\label{sec:J}
+
+Reasoning in the presence of minimal foundations corresponds  to reasoning on the existence of  proof objects in the foundational theory  $T'$. The minimal foundational assumptions from the logical point of view is that $T'$ ``knows" at least as much logic as $T$ does. 
+The more non-logical axioms in $T$, the more the specifications $T'$ should satisfy (one needs stronger foundations to justify stronger theories). Abstracting from any particular $T$ and $T'$, and assuming only that $T$ incorporates minimal logic, the  specifications 
+about existence of proofs in  $T'$ are:
+
+\begin{itemize}
+\item{to have ``enough" types to provide -- at least -- an intended interpretation of every type $\phi$ of $T$ to a unique type ${\sf Just}\ \phi$. In other words a subset of the types of $T'$ should serve as interpretations of types in $T$;}
+\item{to have -- at least -- proof objects for all the instances of the axiomatic characterization of the {\sf IPC} fragment described above;\footnote {If we extend our fragment we should extend our specifications accordingly but this can be easily done directly as in full justification logic. We choose to remain within this fragment for economy of presentation.}}
+\item{to include some modus ponens rule which translates as: the existence of  proof objects of types $\sf Just \ (\phi\rightarrow \psi)$ and  of type ${\sf Just\  \phi}$ in $T'$ should imply the existence of a proof object of the type ${\sf Just\  \phi}$. }
+\end{itemize}
+
+\subsection{Minimal Justification Logic {\sf J-\sf Calc${_1}$}}\label{subsec:J-Calc1}
+
+Under these minimal requirements, we develop a minimal justification logic that is able to realize modal reasoning as reasoning on the existence of links between proofs of $T$ and $T'$. We first realize modal reasoning restricted to formulae of degree (i.e. level of $\Box$-nesting) $1$. Such a calculus will be used as a base to build a full modal calculus with justifications for formulae of arbitrary degree.  Here is the grammar for the metavariables appearing below:
+\begin{flalign*}
+\phi :=  & P_i | {\sf\Box^{j}}\phi| \phi_1 \rightarrow\phi_2  \\
+j:= & s_i| C| j_1*j_2  \\
+t:=& x_i| \lambda x_i:\phi. t| Js::\phi.t\\
+C:= & {\sf K}[\phi_1,\phi_2]| {\sf S}[\phi_1,\phi_2,\phi_3]| C_1*C_2 \\
+{\sf \pi}:= & \Pi s::\phi_1. \  \phi_2| \Pi s::\phi_1.\ {\sf \pi} \\
+{\sf T} :=& \phi|{\sf Just}\ \phi| \pi\\
+s:= & s_i  \\
+x:=&x_i\\
+\end{flalign*}
+
+\subsubsection{\sf Reasoning on minimal foundations ${\sf J_0}$}\label{subsec:J0} 
+
+Reasoning about such a minimal metatheory is axiomatized in its own turnstile ($\vdash_{J_0}$).\footnote{ This is the part of the calculus that corresponds directly to the algebra of justifications restricted to the applicative fragment.} Henceforth, judgments on the justificational type universe of {\sf J$_0$} (corresponding to formualae in the (co-)theory $T'$) together with ${\sf wf}$ predicate for  $\Delta_0$ contexts go as follows: 
+
+\begin{mathpar}
+\infer*[right=Nil] { } {{\sf nil}\vdash_{\sf J_0} {\sf wf}}
+\and
+\infer*[Right=Simple] {{\Turnj   {\sf wf}}\\{\Turnj {\phi \in {\sf Prop_0}} {\sf }}}{\Turnj {} {{\sf Just}\  \phi \in {\sf jtype_0}}}
+\and
+\infer*[right=$\Delta_0$-App] {{\Turnj {{ \sf Just}\ \phi \in {\sf jtype_0}}}\\{s \not \in \Delta_0}} {\Delta_0, s::\phi\vdash_{\sf J_0} {\sf wf}}
+\and
+\infer*[right=$\Delta_0$-Refl] {{\Turnj     {\sf wf}} \\{s::\phi \in \Delta}} {\Turnj {s::\phi}}
+\end{mathpar}
+%
+We add logical constants to satisfy the requirement that {\sf J$_{0}$} includes an axiomatic characterization of -- at least -- a fragment of ${\sf IPC}$. Following justification logic,  we  define a signature of polymorphic constructors including {$\sf K$}, {$\sf S$} from combinatory logic. The values of those constructors are axiomatic constants  that witness existence of proofs in $T'$ of all instances of the corresponding logical validities. This axiomatic characterization of intuitionistic logic in  {\sf J$_{0}$} together with  rule scheme {$\sf Times$} (\textit{applicativity of justifications}) satisfy the minimal requirement for $T'$ to reason logically.  
+
+\begin{mathpar}
+\infer*[Right={\sf K}]  {\Turnj {{\sf Just} \ \ \phi_1\rightarrow\phi_2\rightarrow\phi_1 \in {\sf jtype_0}}}   {\Turnj  {{\sf K}[\phi_1,\phi_2]:: \phi_1\rightarrow\phi_2\rightarrow\phi_1}}
+\and
+\infer*[Right={\sf S}]  {\Turnj {{\sf Just} \ \ (\phi_1\rightarrow \phi_2\rightarrow \phi_3)\rightarrow (\phi_1\rightarrow \phi_2)\rightarrow (\phi_1\rightarrow \phi_3)\in {\sf jtype_0}}}  {\Turnj  {{\sf S}[\phi_1,\phi_2,\phi_3]:: (\phi_1\rightarrow \phi_2\rightarrow \phi_3)\rightarrow (\phi_1\rightarrow \phi_2)\rightarrow (\phi_1\rightarrow \phi_3)}}
+\end{mathpar}
+\begin{mathpar}
+\infer*[Right={\sf Times}]  {{\Turnj  { j_2 :: \phi_1\rightarrow \phi_2}}\\  {\Turnj { j_1::\phi_1}}} {\Turnj {j_2*j_1::\phi_2}}
+\end{mathpar}
+%
+
+
+
+
+
+
+
+\subsubsection{Zipping: {\sf J-Calc}$_1={\sf IPC}+ {\sf J}_0+\Box{\sf-Intro}$}\label{sec:jcalc1}
+In this section we introduce {\sf J-Calc$_1$} for reasoning on the existence of  links i.e. constructions that witness the existence of proofs both in {\sf IPC} ($T$) and {\sf $J_0$} ($T'$). By constructing a link we have a proof of a constructive necessity of a formula, showing that it is true and valid. Links have types of the form ${\sf\Box^{j}\phi}$ where $j$ is a justification of the appropriate type. {\sf J-Calc$_1$} realizes modal logic theoremhood in $K$ up to degree $1$ (i.e. formulae where its subformula includes up to $1$ level of $\Box$). 
+
+We start by importing well-formedness judgments for contexts and justificational types ($\Delta_0$Wf, JustWf respectively), and for the Prop$_{1}$ universe and its contexts: 
+
+\begin{mathpar}
+\infer*[right=$\Delta_{0}$Wf]  {\Turnj  {\sf wf}}  {\TurnTT{\sf nil} {\sf wf}}
+\and
+\infer*[right=Just$_{0}$Wf] { {\TurnTT {\Gamma_1} {\sf wf}} \\{\Turnj  {j ::  \phi}}}  {\TurnTT {\Gamma_1} { {j:: \phi}}}
+\and
+\infer*[right=Prop$_1$-Intro] {  {\phi \in {\sf Prop_0 }} \\ {\TurnTT {\Gamma_1} { j::\phi}}} {\TurnTT {\Gamma_1} {\Box^{j}\phi \in {\sf Prop_1}}}
+\and
+\infer*[right=$\Gamma_1$-App] { {\TurnTT{\Gamma_1} {\phi \in \sf \{Prop_0,Prop_1\}}}  \\ {x\not\in\Gamma_1}} {\TurnTT {\Gamma_1, x:\phi} { {\sf wf}}}
+\end{mathpar}
+\bigskip
+
+From justifications of formulas in ${\sf Prop_0}$, we can reason about their admissibility in $T$. Hence, $\Gamma_1$ might include assumptions from the sorts ${\sf Prop_0}$ and ${\sf Prop_1}$. For the inhabitation of ${\sf Prop_0, Prop_1}$, we first accumulate intuitionistic reasoning extended to the new type universe (${\sf Prop_1}$), adapting the rules from Section \ref{sec:IPC}:
+\bigskip
+
+\begin{mathpar}
+\infer*[right=$\Gamma_1$-Refl] {{\TurnTT  {\Gamma_1} {\sf wf}}\\ {x:\phi \in \Gamma_1}} {\TurnTT {\Gamma_1} {x:\phi}}
+
+\and
+\infer*[right=$\rightarrow$I] {\TurnTT {\Gamma_1, x:\phi_1} {M:\phi_2}} {\TurnTT {\Gamma_1} {\lambda  x:\phi_1 . \   M : \phi_1\rightarrow \phi_2}}
+\and
+\infer*[right=$\rightarrow$E] {\TurnTT {\Gamma_1} {M:\phi_1\rightarrow\phi_2}\\{\TurnTT {\Gamma_1} {M':\phi_1}}} {\TurnTT {\Gamma} {  (M  M'):\phi_2}}
+\end{mathpar}
+%
+For relating the two calculi, a lifting rule is formulated for turning strictly ${\sf Prop_0}$ judgments to judgments on proof links (${\sf Prop_1}$). In the rule,  the $\downharpoonright$-operator ensures that  context list $\downharpoonright\Gamma$ includes assumptions strictly in ${\sf Prop_0}$. 
+The operator $\downharpoonright$ can be viewed as the opposite of \textit{lift} operation applied on context lists  erasing one level of boxed assumptions at the top level as described below.
+ \begin{align}
+\nonumber \downharpoonright\Gamma\  :=\textbf{match $\Gamma $\ with} \\
+&\nonumber   {\sf nil} \Rightarrow {\sf  nil}\\
+&\nonumber|\ \Gamma', x_i^{\prime}:\Box^{j} \phi_i\Rightarrow\ \downharpoonright \Gamma' ,\  x_i:\phi_i\\
+&\nonumber|{\Gamma',\_}\Rightarrow {\downharpoonright\Gamma'} 
+\end{align}
+A corresponding iterative \textit{let-binding} construct ($let^{*}$) is introduced simultaneously with the context lifting. The purpose of the iterative let binding is to extract the target(s) ($T'$ terms) of existing links on subterms ($x_1\ldots x_n$) of some composite term $M$ in $T$ and compose them to the target of the whole term $M$ creating its residual. We show the operation of this construct in the example from section \ref{sec:module}.
+ 
+\begin{align}
+\nonumber let^{*}\ \Gamma\  :=\\ 
+\nonumber\textbf{match $\Gamma $\ with} \\
+&\nonumber   {\sf nil} \Rightarrow {let\  ()= ()}\\
+&\nonumber|\ \Gamma', x_i^{\prime}:\Box^{j} \phi_i\Rightarrow\ (let^{*}\ \Gamma')  \ in\  let \ link  (x_i,j_i)=x_i^{\prime}\\
+&\nonumber|{\Gamma',\_}\Rightarrow {let^{*}\ \Gamma'} 
+\end{align}
+
+The $\Box$-Introduction rule goes as follows:
+{\begin{mathpar}
+\infer*[right=$\Box$-Intro]{{   ;\downharpoonright \Gamma_1\vdash_{\sf JC_1} M:\phi}\\
+{\Delta_0;\Gamma_1\vdash_{\sf JC_1} {j::\phi}}\\
+%{\Delta_0;\Gamma_1\vdash_{\sf JC_1} {\sf wf}}
+}
+{\Delta_0;\Gamma_1\vdash_{\sf JC_1} (let^{*}\   \Gamma) \ in \  link  \ (M,j) : \Box^{j}\phi}
+\end{mathpar}}
+%
+
+Finally, under empty $\Gamma_1$, we are permitting abstraction from a non-empty $\Delta_0$. The resulting abstractions ($J-$terms), as we will see, are the inhabitants of modal types and correspond to linking processes. Their typing is, naturally, of $\Pi$-kind since the typing of a link is sensitive to its target code. We introduce $\Pi$-formation and inhabitation rules:
+\bigskip
+
+\begin{mathpar}
+\infer*[right=$\Pi$ type$_0$] { {\Delta_0,s::\phi_1;  \vdash_{\sf JC_1}\phi_2 \in \sf \{Prop_0,Prop_1\}}}   { {\Delta_0;  \vdash_{\sf JC_1}\Pi s::\phi_1.\phi_2 \in \Pi}}
+\and
+\infer*[right=$\Pi$ type$_1$] { {\Delta_0,s::\phi_1;  \vdash_{ \sf JC_1}\pi \in \Pi}}   { {\Delta_0;  \vdash_{\sf JC_1}\Pi s::\phi_1.\pi \in \Pi}}
+\end{mathpar}
+{\begin{mathpar}
+\infer*[right=$\Pi$-Intro]{  \Delta_0,s::\phi ;\vdash_{\sf JC_1} t:{\sf T}}
+{\Delta_0;\vdash_{\sf JC_1} {J s::\phi.\ t: \Pi s::\phi. {\sf T}}}
+\and
+\infer*[right=$\Pi$-Elim]{{  \Delta_0 ;\vdash_{\sf JC_1} t:{\Pi s::\phi. {\sf T}}}\\{\Delta_0;
+\vdash_{\sf JC_1}j::\phi}}
+{\Delta_0;\vdash_{\sf JC_1} {\ (t \ j): {\sf T[s:=j]}}}
+\end{mathpar}} 
+
+\section{Computational Motivation: A type system for separate compilation}\label{sec:module}
+
+In this section, we show how J-Calc can be viewed as a type system for program generation in typed languages that support separate compilation (modular programming or external function calls). These languages follow the client/ sever approach to programming: client code, can refer to code definitions implemented by the server elsewhere; the server can be some module or even another language providing the required function calls, but it needs not know the details of the implementation (\textit{encapsulation}).  A challenge in such a system is to provide a mechanism of separate compilation such that the client (or, source) code is compiled independently of changes in the implementation of the server. In what follows we present J-Calc as a type system for linking processes in such a setting. Following our language: the constructs of $T$ represent here client (or source) expressions and constructs of $T'$ represent target (or server) code expressions. Our linking by way of the $\Box$-Intro rule linking processes generators that consume different implementations from the server and link them with constructs of the source. 
+We show, following a textbook example for modules, that our type system provides the abstraction required for such a language so that client code needs to be compiled once and only, independently of the different implementations that the server module might provide.
+
+\subsection{Producing generic code}
+As an example, we will use  ML-like module  definitions.  We start with a definition of a module's public signature (i.e. the operations provided by the server to the client). Here  we provide the signature for a stack of integers.
+\bigskip
+
+\begin{verbatim}
+module type INTSTACK =
+            sig
+            type intstack
+            val Empty: intstack
+            val push : int->intstack->intstack
+            val pop: int->intstack->intstack
+end;;
+\end{verbatim}
+\bigskip
+
+This signature can be implemented in various ways but our goal is to produce generic code from compiling source code only once. We take for example the source code expression  $\mathtt{\vdash_{}(push \ 2 \ Empty):intstack}$ and show  step-by-step the construction of generic code following our calculus. First we factorize the usage of the signature by rewriting the term:
+
+\begin{flalign*}
+& \mathtt{\downharpoonright \Gamma= x_1:int\rightarrow intstack\rightarrow intstack,x_2:intstack\vdash (x_1 \ 2\  x_2):intstack} &
+\end{flalign*}
+
+Secondly, we assume implementations of ``missing'' code in the validity context, i.e.
+\begin{flalign*}
+& \mathtt{\Delta=s_1::int\rightarrow intstack\rightarrow intstack,s_2::intstack\vdash s1*2*s_2::intstack}&
+\end{flalign*}
+
+Using the $\Box$-Intro rule we obtain:
+\begin{flalign*}
+& \mathtt{\Delta;\Gamma= x_1^{\prime}:\Box^{s_1}(int\rightarrow intstack\rightarrow intstack), x_2^{\prime}: \Box^{s_2}intstack\vdash} & \\
+& \mathtt{ let\ link(x_1,s_1)=x_1^{\prime}\ in} & \\
+& \mathtt{ let\  link(x_2,s_2) = x_2^{\prime} \ in} &\\ 
+& \mathtt{link(x_1\ 2 \ x_2, s_1*2*s_2):\Box^{s_1*2*s_2}intstack} &
+\end{flalign*}
+Finally, abstracting we get a linking process generator of typing that is sensitive to the different implementations provided by the server:
+\begin{flalign*}
+& \mathtt{\vdash  Js_1.Js_2.\ \lambda x_1^{\prime}.\lambda x_2^{\prime}. \ let^{*}\ \Gamma\  in\  link(x_1 \ 2 \ x_2,\ s_1*2*s_2)} &  
+\end{flalign*}
+
+of type: \begin{flalign*}
+\mathtt{\Pi s_1. \Pi s_2. \Box^{s_1}} & \mathtt{(int\rightarrow intstack \rightarrow intstack)\rightarrow \Box^{s_2}intstack \rightarrow \Box^{s_1*2*s_2}intstack  } &
+\end{flalign*}
+where 
+\begin{flalign*}
+\mathtt{let^{*}\ \Gamma=^{def}} & \mathtt{let\ link(x_1,s_1)=x_1^{\prime}\ in\ let\ link(x_2,\ s_2) = x_2^{\prime}} &\\
+\end{flalign*}
+  
+\subsection{Providing implementations}
+The server might provide different implementations of the $instack$ module signature. The two textbook approaches use lists or arrays of integers. Given different implementations, the initial source code has different computational value since the links that it induces change. Schematically:  
+\begin{flalign*}
+& \mathtt{push}\xrightarrow{\mathtt{link}}  \texttt{Cons}\!:\!\Box^{\texttt{Cons}}(\texttt{int}\rightarrow \texttt{intstack}\rightarrow \texttt{intstack}) &\\
+& \mathtt{Empty}\xrightarrow{\mathtt{link}} 
+\texttt{[]} \!:\!\Box^{\texttt{[]}}\texttt{intstack} &\\
+& \mathtt{push\ 2\ Empty}\xrightarrow{\mathtt{link}}  \texttt{Cons}\ 2\ \texttt{[]}\!:\!\Box^{\texttt{Cons*2*[]}}\texttt{intstack} &
+\end{flalign*}
+\begin{flalign*}
+& \mathtt{ push} \xrightarrow{\mathtt{link}} \texttt{Addarr}\!:\!\Box^{\texttt{Addarr}}(\texttt{int}\rightarrow \texttt{intstack}\rightarrow \texttt{intstack}) &\\
+& \mathtt{Empty} \xrightarrow{\mathtt{link}}\texttt{create()}\!:\!\Box^{\texttt{create()}}\texttt{intstack} &\\
+& \mathtt{push\ 2\ Empty} \xrightarrow{\mathtt{link}} \texttt{Addarray}\ 2\ \texttt{create()}
+\!:\!\Box^{\texttt{Addarr*2*create()}}\texttt{intstack} &
+\end{flalign*}
+Both cases are captured by the generic code we produced giving us the ability of \textit{separate compilation} of source and implementation. In the first case we have:
+ \begin{verbatim}
+Just[intstack]=List,
+Just[push]= Cons,
+Just[Empty]=[]
+\end{verbatim}
+From which we obtain using $\Box-$Intro the following: 
+\begin{flalign*}
+&\mathtt{\vdash link(Empty,\texttt{[]}):\Box^{\texttt{[]}}intstack} \\
+&\mathtt{\vdash link(push,\texttt{Cons}):\Box^{\texttt{Cons}}(int\rightarrow intstack\rightarrow intstack)}
+\end{flalign*}
+Finally, using linking process generator obtained in the previous section and under standard operational semantics for application ($\beta$-reduction) and $let$-binding evaluation we link the source code to its residual program using the $\texttt{list}$ implementation:
+\begin{flalign*}
+&\mathtt{\vdash link(push \ 2 \ Empty, \texttt{Cons*2*[]}): \Box^{\texttt{Cons*2*[]}}intstack}&
+\end{flalign*}
+\bigskip
+
+Analogously, using the exact same code generator, closing $\Delta$ with implementations 
+\begin{verbatim}
+Just[intstack]= Array
+Just[push]= addarr
+Just[Empty]= create()
+\end{verbatim}
+We obtain the links: 
+\begin{flalign*}
+& \mathtt{\vdash link(push,\texttt{addarr}):\Box^{\texttt{addarr}}(int\rightarrow intstack\rightarrow intstack)} &\\
+& \mathtt{\vdash link(Empty, \texttt{create()}):\Box^{\texttt{create()}}intstack} &
+\end{flalign*}
+And from the previous generic judgment under standard operational semantics for application ($\beta$-reduction) and $let$-binding evaluation we link the source code to its residual program using the $\texttt{Array}$ implementation:
+\begin{flalign*}
+& \mathtt{\vdash link(push \ 2 \ Empty, \texttt{addarr * 2 * create()}):\Box^{\texttt{addarr*2* create()}}\texttt{intstack}} &
+\end{flalign*}
+Note that the client code does not need to recompile. Our generic code construction provides the expressive means to evaluate source \textit{contextually} given different implementations of the module signature. 
+
+
+
+\section{The Full Calculus: J-Calc}\label{sec:J-Calc}
+
+{\sf J-Calc$_1$} motivates the generalization to modal reasoning of arbitrary nesting: {{\sf J-Calc}. To allow such generalization, we need justifications of types of the form ${\sf Just\  \Box^{j}\phi}$. Let us revise: If $\phi$ is a proposition (or, a sentence in the language of $T$), then ${\sf Just\ \phi}$ corresponds to the intended interpetation of $\phi$ in some (co-)theory $T'$. In {\sf J-Calc$_1$} we could reason logically about the constructive admissibility of (valid according to $T'$) facts of $T$. The existence of a link of a proof in $T$ with an existing proof of the same type in $T'$ would lead to constructions of a type of the form $\Box^{j}\phi$ with $\phi$ a simple type. To get modal theoremhood of degree ${\sf 2}$ or more we have to assume that $T'$ can express the existence of such links in itself. That is to say that $T'$ can express the provability predicates both of $T$ \textit{and} of itself. Hence, supposing that $j::\phi$, we can read a justification term of type ${{\sf Just}\  \Box^{\sf j}\phi}$ as a witness of a proof in $T'$ of the fact $\exists x. Proof_T(x, \underline{\phi}) \wedge \exists x. Proof_{T'}(x, \  \underline{{\sf Just\  \phi}}) $ expressed in $T'$. 
+We will specify which of those types $T'$ is expected to \textit{capture} by introducing additional appropriate constants. Having this kind of justifications we can obtain ${\sf Prop_i}$ for any finite $i$ as slices of a type universe in a mutual inductive construction. Schematically: $ {\sf Prop_0\Rightarrow Just \ Prop_0\Rightarrow \ Prop_1 \Rightarrow Just\ Prop_1}$ and so on. This way we obtain full minimal  justification logic. As different kinds of judgments are kept separated by the different typing relations, we do not need to provide distinct calculi as we did for {\sf J-Calc$_1$} but we provide one ``zipped" calculus directly. \footnote {In fact, adjoining $\Gamma$ contexts when reasoning within justifications is pure weakening so we could have kept those judgments separated in a single--context $\vdash$ relation. We gain something though: we can squeeze two premises ($\Delta\vdash j::\phi$, $\Delta;\Gamma\vdash{\sf wf}$) to a single one ($\Delta;\Gamma\vdash j::\phi$).}
+
+\subsection{Justificational (Validity) Judgments}
+\label{sec:propjtype1}
+The justificational type system has to include: judgments on the wellformedness of contexts ({$\sf wf$});\footnote{ Analogous treatments of judgments on the validity of contexts can be found e.g. in \cite{Norell08dependentlytyped}.} judgments on what $T'$  can reason about ($\sf jtype$)  under the requirement that it is a metatheory of $T$; judgments on the construction of the justificational type universe ({\sf jtype}) and minimal requirements about its inhabitation (i.e, \textit{a  minimal signature of  logical constants}). The grammar of terms is the same as in section \ref{subsec:J-Calc1}, the difference now is that the restrictions on the $Prop$ universe are dropped. 
+
+%
+We introduce progressively: formation rules for {\sf Prop}; the formation rule for {\sf jtype}; rules to build well-formed contexts of propositions and justifications (where we will be abbreviating using the following equational rule: 
+${\sf nil}, s_1::\phi_1, s_2::\phi_2, \ldots =^{def} s_1::\phi_1, s_2::\phi_2, \ldots $
+).
+
+
+\begin{mathpar}
+\inferrule*[right=NIL]
+	{ }
+	{\Turnjc {\sf nil}{\sf nil}{\sf wf} }
+\and
+\infer*[right=Atom] { \Turnjc {\Delta} {\Gamma} {\sf wf}}  { \Turnjc {\Delta} {\Gamma} {P_i \in {\sf Prop}}} 
+
+\and
+\infer*[right=Impl] {{\Turnjc {\Delta} {\Gamma} \phi_1 \in {\sf Prop}}\\ {\Turnjc \Delta {\Gamma} \phi_2 \in {\sf Prop}}} {\Turnjc {\Delta} {\Gamma}\phi_1\rightarrow\phi_2\in {\sf  Prop}}
+\and
+\infer*[right=Box] {{\Turnjc  {\Delta} {\Gamma} {{  j::\phi}}}}  {\Turnjc {\Delta} {\Gamma}{\Box^{j} \phi} \in {\sf Prop}}
+\and
+\infer*[right=Jtype] {\Turnjc   {\Delta} {\Gamma}{\phi \in {\sf Prop}}}{\Turnjc {\Delta} {\Gamma}{{\sf Just}\  \phi \in {\sf jtype}}}
+\and
+\inferrule*[right=$\Delta$-App]   {{\Turnjc {\Delta} {\Gamma} {{\sf Just \ \phi}\in {\sf jtype}}} \\{s \not \in \Delta }} {\Turnjc {\Delta, s:: \phi}{\Gamma} {\sf wf}}
+\and
+\infer*[right=$\Gamma$-App] { {\Turnjc {\Delta}{\Gamma} {\phi \in \sf Prop}}\\  {x\not\in\Gamma}} {\TurnT {\Gamma, x:\phi} { {\sf wf}}}
+\end{mathpar}
+%
+
+
+\subsubsection{${\sf Prop}$ Inhabitation}
+Here is the first part of logical propositional reasoning of the system.
+
+\begin{mathpar}
+\infer*[right=$\Gamma$-Refl] {{\Turnjc {\Delta} {\Gamma} {\sf wf}}\\ {x:\phi \in \Gamma}} {\Turnjc {\Delta}{\Gamma} {x:\phi}}
+
+\end{mathpar}
+\begin{mathpar}
+\infer*[right=$\rightarrow$I] {\Turnjc {\Delta} {\Gamma, x:\phi_1} {M:\phi_2}} {\Turnjc {\Delta} {\Gamma} {\lambda  x:\phi_1 . \   M : \phi_1\rightarrow \phi_2}}
+\and
+\infer*[right=$\rightarrow$E] {\Turnjc {\Delta} {\Gamma} {M:\phi_1\rightarrow\phi_2}\\{\Turnjc {\Delta}{\Gamma} {M':\phi_1}}} {\Turnjc {\Delta}{\Gamma} {  (M  M'):\phi_2}}
+\end{mathpar}
+
+
+\subsubsection{${\sf jtype}$ Inhabitation}
+
+
+
+
+Now we move to the core of the system. In the judgments below we provide the constructions of canonical elements of justificational types (${\sf jtype}$). The judgments reflect  the minimal requirements for $T'$ to be a metatheory of some $T$ as presented  in Section \ref{subsec:J0} together with specifications on internalizing proof links reasoning in itself. More specifically, we demand that $T'$ can \textit{capture} reasoning on links (between proof objects of $T$ and itself) \textit {within} itself and also, internalize modus ponens of $T$.  To capture these provability conditions we add the constant constructors ${\sf !}$ (\textit{bang}) and  ${\sf Kappa}$. Although introduction of links is axiomatized in the next section, the judgments concerning the ${\sf !}$ and ${\sf Kappa}$ constructors should be viewed in conjunction with $\Box-Intro$. They witness the fact that $T'$ internalizes modus ponens (of $T$)  and linking existence  (again of $T$).  
+
+
+\begin{mathpar}
+\infer*[right=K]  {\Turnjc  {\Delta} {\Gamma} {{\sf Just} \ \ \phi_1\rightarrow\phi_2\rightarrow\phi_1 \in {\sf jtype}}}   {\Turnjc {\Delta} {\Gamma}{{\sf K}[\phi_1,\phi_2]:: \phi_1\rightarrow\phi_2\rightarrow\phi_1}}
+\and
+\infer*[right=S]  {\Turnjc {\Delta }{\Gamma} {{\sf Just} \ \ (\phi_1\rightarrow \phi_2\rightarrow \phi_3)\rightarrow (\phi_1\rightarrow \phi_2)\rightarrow (\phi_1\rightarrow \phi_3)\in {\sf jtype}}}  {\Turnjc {\Delta} {\Gamma} {{\sf S}[\phi_1,\phi_2,\phi_3]:: (\phi_1\rightarrow \phi_2\rightarrow \phi_3)\rightarrow (\phi_1\rightarrow \phi_2)\rightarrow (\phi_1\rightarrow \phi_3)}}
+\and
+\infer*[right=Times]  {{\Turnjc {\Delta } {\Gamma} { j_2 :: \phi_1\rightarrow \phi_2}}\\  {\Turnjc {\Delta} {\Gamma}  { j_1::\phi_1}}} {\TurnTwo{\Delta} {j_2*j_1::\phi_2}}
+\and
+\infer*[right=Bang]  {\Turnjc {\Delta }{\sf nil} { M: \Box^{\sf C}\phi}} {\Turnjc{\Delta}{\Gamma} {! C::{\sf \Box^{C}}\phi}}
+\and
+\infer*[right=Kappa] {{\Turnjc {\Delta} {\Gamma} {\sf Just}\ {\Box^{ \sf j'}\phi_1\in {\sf jtype} }}\\ {\Turnjc {\Delta }{\Gamma} {{\sf Just}\ \ \Box^{\sf j}(\phi_1 \rightarrow \phi_2)\in {\sf jtype}}}}
+{\Turnjc {\Delta}{\Gamma} { {\sf Kappa} [j, j',\phi_1,\phi_2]: :   \Box^{ \sf j}(\phi_1 \rightarrow \phi_2)\rightarrow \Box^{\sf  j'}\phi_1\rightarrow \Box^{ \sf j*j'} \phi_2 }}
+\end{mathpar}
+
+
+
+
+\subsection{Proof Links}\label{sec:propjtype2}
+
+Our next task is to formulate the main rule for the $K$ modality as a lifting rule for going from reasoning about constructions to reasoning about admissibility of validities via proof linking. 
+To reflect the modal axiom $K$ in Natural Deduction we have to obtain a rule that reflects the following provability principle: 
+
+\begin{mathpar}
+\infer*[right=$\Box$-Intro] {{\phi_1\  {\sf true}, \ldots,  \phi_n\  {\sf true} \vdash \phi\  {\sf true}} \\{\phi_1\  {\sf valid} , \ldots,  \phi_n\ {\sf valid} \vdash \phi\ {\sf valid}}}
+{\Box \phi_1\ {\sf true},  \ldots,  \Box \phi_n \ {\sf true}, \ldots \vdash \Box\phi \ {\sf true}} 
+\end{mathpar}
+
+We proceed with giving inhabitants analogously to what was explained in Section \ref{sec:jcalc1}:\footnote{We prefer this to the mouthful but equivalent:
+\begin{mathpar}
+\infer*[right=$\Box$-Intro]
+{
+{\Delta; x_1:\phi_1, \ldots,  x_i:\phi_i \  \ as \ \Gamma\vdash M:\phi}\\
+{\forall \phi_i \in \Gamma. \ \Delta';{\sf nil}\vdash  j_i::\phi_i} 
+\\
+{\Delta';{\sf nil}\vdash  j::\phi} \\
+{\Delta';x_1:\Box^{j_1}\phi_i, \ldots, \Box^{j_i}\phi_i\vdash {\sf wf}}
+}
+{\Delta';x_1:\Box^{j_1}\phi_i, \ldots, \Box^{j_i}\phi_i\vdash  
+JBox \ j: \Box^{\sf j}\phi}
+\end{mathpar}
+
+}
+\begin{mathpar}
+\infer*[right=$\Box$-Intro]
+{
+{\Delta;   \downharpoonright \Gamma\vdash_{\sf JC} M:\phi}\\
+{\Delta;\Gamma\vdash_{\sf JC}j::\phi}
+}
+{\Delta;\Gamma\vdash_{\sf JC} 
+(let^{*}\   \Gamma) \ in \  link  \ (M,j): \Box^{ j}\phi}
+\end{mathpar}
+
+
+
+Finally, abstraction from $\Delta$ contexts over empty $\Gamma$ contexts applies in the extended type universe:
+
+{\begin{mathpar}
+\infer*[right=$\Pi$-Intro]{  \Delta,s::\phi ;\vdash_{\sf JC} t:{\sf T}}
+{\Delta;\vdash_{\sf JC} {J s::\phi.\ t: \Pi s::\phi. {\sf T}}}
+\and
+\infer*[right=$\Pi$-Elim]{{  \Delta ;\vdash_{\sf JC} t:{\Pi s::\phi. {\sf T}}}\\{\Delta_0;
+\vdash_{\sf JC}j::\phi}}
+{\Delta;\vdash_{\sf JC} {\ (t \ j): {\sf T[s:=j]}}}
+\end{mathpar}} 
+
+
+
+
+\section{Further Results and Conclusions}\label{sec:Meta}
+
+Standard meta-theoretical results can be proven for  {\sf J-Calc}. We just mention here that the iterative $let$ operator satisfies standard commutativity with the substitution rule for justifications and that structural rules can be proven. We will be skipping the index in $\vdash_{\sf JC}$.
+
+\begin{theorem}[Weakening]
+{\sf J-Calc} satisfies Weakening in both modes of reasoning:
+
+\begin{enumerate}
+\item If $\Delta; {\sf nil}\vdash j::\phi$, and $\Delta; {\Gamma}\vdash{\sf wf} $ then, $\Delta; \Gamma \vdash j::\phi$.
+\item If $\Delta; \Gamma \vdash j::\phi$, then $\Delta, s::\phi'; \Gamma \vdash j::\phi$, with $s$ fresh.
+\item If $\Delta; {\Gamma} \vdash M:\phi$, then $\Delta; \Gamma, x\!:\!\phi' \vdash M:\phi$, with $x$ fresh.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+For all items by structural induction on the derivation trees  of the two kinds of constructions. The proof of the first is vacuous since $\Gamma$ contexts are irrelevant in justification formation. As a result, its inverse can also be shown.
+\end{proof}
+\begin{theorem}[Contraction]
+{\sf J-Calc} satisfies Contraction:
+
+\begin{enumerate}
+\item If $\Delta, s::\phi, t::\phi; {\sf nil} \vdash j::\phi'$, then $\Delta, u::\phi; {\sf nil} \vdash j[s\equiv t/u]::\phi'$.
+\item If $\Delta, s::\phi, t::\phi; \Gamma\vdash {\sf wf}$, then, $\Delta,u::\phi; \Gamma[s\equiv t/u]\vdash {\sf wf}$.
+\item If $\Delta, s::\phi, t::\phi; \Gamma\vdash M:\phi'$, then, $\Delta,u::\phi; \Gamma[s\equiv t/u]\vdash M[s\equiv t/u]:\phi'[s\equiv t/u]$.
+\item If $\Delta; \Gamma, x:\phi, y:\phi \vdash M:\phi'$, then $\Delta; \Gamma, z:\phi \vdash M[x\equiv y/z]:\phi'$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+First item by structural induction on the derivation trees of justifications (validity judgments). Note, as mentioned in the previous theorem, that it can be shown for arbitrary $\Gamma$. For the second, nested induction on the structure of context $\Gamma$ (treated as list) and the complexity of formulas. Vacuously in the {\sf nil} case. For the non-empty case: case analysis on the complexity of the head formula using the inductive hypothesis on the tail. Cases of interest are with $\Box^{\sf s}\phi$ or $\Box^{\sf t}\phi$ as subformulae. Use the previous item and judgments for ${\sf wf }$ contexts. For the third and the fourth, again by structural induction on the derivation.
+\end{proof}
+
+In a similar fashion we can show the more general:
+
+\begin{theorem}[Preservations of Types under Substitution]
+{\sf J-Calc} preserves types under substitution and simultaneous substitution:
+\begin{enumerate}
+\item {If $\Delta;\Gamma,x:\phi\vdash t:{\sf T}$, and $\Delta;\Gamma\vdash M :\phi$ then $\Delta;\Gamma\vdash t[x/M]:{\sf T}$}
+\item{
+ If $\Delta, s::\phi,\Delta';\Gamma\vdash t:{\sf T}$, and $\Delta;\vdash j::\phi$ then $\Delta,\Delta'[s/j];\Gamma[s/j]\vdash t[s/j]:{\sf T}[s/j]$}
+\end{enumerate}
+\end{theorem}
+
+We additionally mention that the calculus satisfies \textit{permutation} for both contexts $\Delta$ and $\Gamma$ with the restriction that the permutations in $\Delta$ should not break the chain of dependencies. Lastly, we mention here that under standard ${let}$-binding evaluation and application as $\beta$-reduction within a dependently typed framework, a small step operational semantics has been developed and progress and preservation can be shown.
+
+For future work, we plan to extend the computational relevance of the full calculus ({\sf JCalc}) by establishing its connection with higher-order module systems (e.g. where module signatures can refer to other module signatures which, in turn, are implemented by a third module). Linking processes in such systems would utilize our type system in full. Cut-elimination results are currently under development.
+
+%
+\begin{thebibliography}{10}
+
+\bibitem{Benaissa99logicalmodalities}
+Zine~El abidine Benaissa, Eugenio Moggi, Walid Taha, and Tim Sheard.
+\newblock Logical modalities and multi-stage programming.
+
+\bibitem{AA00}
+Jesse Alt and Sergei Artemov.
+\newblock Reflective $\lambda$-calculus.
+\newblock Technical Report CFIS 2000-06, Cornell University, 2000.
+
+\bibitem{Art94APAL}
+Sergei~N. Artemov.
+\newblock Logic of proofs.
+\newblock {\em Annals of Pure and Applied Logic}, 67(1--3):29--59, May 1994.
+
+\bibitem{Art95TR}
+Sergei~N. Artemov.
+\newblock Operational modal logic.
+\newblock Technical Report MSI 95--29, Cornell University, December 1995.
+
+\bibitem{Art01BSL}
+Sergei~N. Artemov.
+\newblock Explicit provability and constructive semantics.
+\newblock {\em Bulletin of Symbolic Logic}, 7(1):1--36, March 2001.
+
+\bibitem{Art02CSLI}
+Sergei~N. Artemov.
+\newblock Unified semantics for modality and {$\lambda$}-terms via proof
+  polynomials.
+\newblock In Kees Vermeulen and Ann Copestake, editors, {\em Algebras, Diagrams
+  and Decisions in Language, Logic and Computation}, volume 144 of {\em CSLI
+  Lecture Notes}, pages 89--118. {CSLI} {P}ublications, Stanford, 2002.
+
+\bibitem{DBLP:conf/jelia/Artemov08}
+Sergei~N. Artemov.
+\newblock Justification logic.
+\newblock In {\em JELIA}, pages 1--4, 2008.
+
+\bibitem{Artemov:2012:OJL:2317882.2317912}
+Sergei~N. Artemov.
+\newblock The ontology of justifications in the logical setting.
+\newblock {\em Stud. Log.}, 100(1-2):17--30, April 2012.
+
+\bibitem{ArtBek05HPL}
+Sergei~N. Artemov and Lev~D. Beklemishev.
+\newblock Provability logic.
+\newblock In D.~M. Gabbay and F.~Guenthner, editors, {\em Handbook of
+  Philosophical Logic, 2nd Edition}, volume~13, pages 189--360. Springer, 2005.
+
+\bibitem{ArtBon07LFCS}
+Sergei~N. Artemov and Eduardo Bonelli.
+\newblock The intensional lambda calculus.
+\newblock In Sergei~N. Artemov and Anil Nerode, editors, {\em Logical
+  Foundations of Computer Science, International Symposium, {LFCS}~2007, {N}ew
+  {Y}ork, {NY}, {USA}, {J}une~4--7, 2007, Proceedings}, volume 4514 of {\em
+  Lecture Notes in Computer Science}, pages 12--25. Springer, 2007.
+
+\bibitem{awodey:kripke}
+Steven Awodey and Florian Rabe.
+\newblock {K}ripke {S}emantics for {Martin-L\"{o}f}'s {E}xtensional {T}ype {T}heory.
+\newblock In {\em TLCA'09}, pages 249--263, 2009.
+
+\bibitem{citeulike:4846}
+Gilles Barthe and Thierry Coquand.
+\newblock {An Introduction to Dependent Type Theory}.
+\newblock {\em Lecture Notes in Computer Science}, pages 1--41.
+
+\bibitem{Bellin01extendedcurry-howard}
+Gianluigi Bellin, Valeria de~Paiva, and Eike Ritter.
+\newblock Extended curry-howard correspondence for a basic constructive modal
+  logic.
+\newblock In {\em Proceedings of Methods for Modalities}, 2001.
+
+\bibitem{citeulike:214701}
+George~S. Boolos.
+\newblock {\em {The Logic of Provability}}.
+
+\bibitem{Buss199879}
+Samuel~R. Buss.
+\newblock Chapter ii first-order proof theory of arithmetic.
+\newblock In Samuel~R. Buss, editor, {\em Handbook of Proof Theory}, volume 137
+  of {\em Studies in Logic and the Foundations of Mathematics}, pages 79 --
+  147. Elsevier, 1998.
+
+\bibitem{FittingManuscript-FITTLO}
+Melvin Fitting.
+\newblock The logic of proofs, semantically.
+\newblock \textit{Annals of Pure and Applied Logic}, vol. 132(1), pp. 1-25, 2005.
+
+
+\bibitem{citeulike:993095}
+Jean~Y. Girard, Paul Taylor, and Yves Lafont.
+\newblock {\em {Proofs and types}}.
+\newblock Cambridge University Press, New York, NY, USA, 1989.
+
+\bibitem{citeulike:713002}
+Kurt G\"{o}del.
+\newblock {\em {On Formally Undecidable Propositions of Principia Mathematica
+  and Related Systems}}.
+\newblock Dover Publications, April 1992.
+
+\bibitem{Goubault-Larrecq96oncomputational}
+Jean Goubault-Larrecq.
+\newblock On computational interpretations of the modal logic {S4}.
+\newblock Technical report, Institut fur Logik, Komplexit\"at und Deduktionssysteme, Universitat, 1996.
+
+\bibitem{Harper98programmingin}
+Robert Harper.
+\newblock {\em Programming in Standard ML}.
+\newblock 1998.
+
+\bibitem{inp:martin-loef79a}
+Per Martin-L{\"o}f.
+\newblock {Constructive Mathematics and Computer Programming}.
+\newblock In {\em 6-th International Congress for Logic, Methodology and
+  Philosophy of Science, 1979}, pages 153--175. North--Holland, 1982.
+
+\bibitem{martin-lof84:inttt}
+Per Martin-L\"{o}f.
+\newblock {\em {Intuitionistic Type Theory}}.
+\newblock Bibliopolis, Naples, 1984.
+
+\bibitem{citeulike:5251552}
+Per Martin-L\"{o}f.
+\newblock {On the Meanings of the Logical Constants and the Justifications of
+  the Logical Laws}.
+\newblock {\em Nordic Journal of Philosophical Logic}, 1(1):11--60, May 1996.
+
+\bibitem{Nanevski:2008:CMT:1352582.1352591}
+Aleksandar Nanevski, Frank Pfenning, and Brigitte Pientka.
+\newblock Contextual modal type theory.
+\newblock {\em ACM Trans. Comput. Logic}, 9(3):23:1--23:49, June 2008.
+
+\bibitem{citeulike:2310446}
+Bengt Nordstrom, Kent Petersson, and Jan~M. Smith.
+\newblock {\em {Programming in Martin-L\"{o}f's Type Theory: An Introduction}}.
+\newblock Oxford University Press, USA, July 1990.
+
+\bibitem{Norell08dependentlytyped}
+Ulf Norell.
+\newblock Dependently typed programming in {A}gda.
+\newblock In {\em Lecture Notes from the Summer School in Advanced Functional
+  Programming}, 2008.
+
+\bibitem{parikh:existence}
+Rohit Parikh.
+\newblock Existence and feasibility in arithmetic.
+\newblock {\em J. Symb. Log.}, pages 494--508, 1971.
+
+\bibitem{citeulike:5447115}
+Frank Pfenning and Rowan Davies.
+\newblock {A judgmental reconstruction of modal logic}.
+\newblock {\em Mathematical. Structures in Comp. Sci.}, 11(04):511--540, August
+  2001.
+
+\bibitem{Smith05anintroduction}
+Peter Smith.
+\newblock An introduction to {G}\"odel's theorems, Cambridge University Press, 2007.
+
+\bibitem{Sorensen98lectureson}
+Morten Heine~B. Sørensen and Pawel Urzyczyn.
+\newblock {\em Lectures on the {C}urry-{H}oward Isomorphism}, volume 149 of
+  {\em Studies in Logic and the Foundations of Mathematics}.
+\newblock Elsevier, 2006.
+
+\end{thebibliography}
+
+\end{document}
+
