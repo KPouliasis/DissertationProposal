@@ -1,5 +1,5 @@
 \documentclass[12pt]{report}
-
+\usepackage[toc,page]{appendix}
 \usepackage{lmodern}
 \usepackage{microtype}
 
@@ -19,9 +19,10 @@
 \usepackage{amsfonts}
 \usepackage{amssymb} 
 \usepackage{amsmath}
-%\usepackage{amsthm}
+%\usepackage{amsmath, amsthm, amssymb}
+\usepackage{amsthm}
 \usepackage{mathpartir}
-
+\usepackage{appendix}
 \usepackage{setspace}
 \doublespacing
 \pagestyle{myheadings}
@@ -69,6 +70,10 @@ Computer Science of the Graduate Center, CUNY.
 \include{Chapter4}
 \include{depjcalc}
 \include{makamimpl}
+\appendix
+\appendixpage
+\addappheadtotoc
+\include{appendix}
 
 
 
