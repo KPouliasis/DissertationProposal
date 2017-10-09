@@ -1,6 +1,7 @@
 \chapter{Intuitionistic Logic}\label{intui}
 \section{Intuitionism}\label{sec:intrui}
-In this Chapter, I will be presenting foundational work in the intersection of \emph{Intuitionistic Logic} and \emph{Type Theory}. The presentation is scaffolding following Prof. Robert Harper's lecture videos in \emph{Homotopy Type Theory}~\cite{HarperHOTT} and the accompanying notes by students of the class~\cite{HOTTNotes1}. I will often deviate to standard textbooks in the field ~\cite{Barendregt1984-BARTLC},~\cite{citeulike:993095},~\cite{Pierce:2002:TPL:509043} to present further important results. 
+In this Chapter, I will be presenting foundational work in the intersection of \emph{Intuitionistic Logic} and \emph{Type Theory}. 
+The presentation is scaffolding following Prof. Robert Harper's lecture videos in \emph{Homotopy Type Theory}~\cite{HarperHOTT} and the accompanying notes by students of the class~\cite{HOTTNotes1}. I will often deviate to standard textbooks in the field ~\cite{Barendregt1984-BARTLC},~\cite{citeulike:993095},~\cite{Pierce:2002:TPL:509043} to present further important results. 
 \subsection{A bird's eye view}  
 In a nutshell, \emph{Intuitionistic mathematics}  is a program in foundations 
 of mathematics  that extends \emph{Brouwer's program}~\cite{brouwer1975collected}.
@@ -198,12 +199,14 @@ The natural deduction system of \ac{IPL} is given below:
 						\end{mdframed}
 
 \section{Order Theoretic Semantics: \vocab{Heyting Algebras}}\label{ha:ax}
-\vocab{IPL} viewed order theoretically gives rise to a \vocab{Heyting  Algebra(HA)}. To define \vocab{HA} we need the notion of a \emph{lattice}. For our purposes we define it as follows\footnote{One can take a lattice being a partial order. The same results hold with slight modifications.}: 
+\vocab{IPL} viewed order theoretically gives rise to a \vocab{Heyting  Algebra(HA)}. 
+To define \vocab{HA} we need the notion of a \emph{lattice}.
+ For our purposes we define it as follows\footnote{One can take a lattice being a partial order. The same results hold with slight modifications.}: 
   
 
 \begin{mdframed}
 \textbf{Definition:}
-A \textit{lattice} is a \emph{pre--order} with finite meets and joins.
+A \textit{lattice} is a non-empty \emph{pre--order} with finite meets and joins.
 \end{mdframed}
 In addition, we define \emph{bounded lattice} as follows: 
 \begin{mdframed}
