@@ -17,9 +17,11 @@ in what turned out to be the first development of a family of logics that we now
 The general idea, upon which we build our calculus, is that semantics of a deductive system $I$ can be viewed in a solely proof-theoretic manner 
 as mappings of proof constructs of $I$ into another proof system $J$ (which we call justifications).
 As an example one could think  $I$  being  Heyting arithmetic and $J$ some  ``stronger'' system 
-(e.g. a classical axiomatization of Peano arithmetic, a classical or intuitionistic set theory etc). % In Artemov's work $I$ is assumed to be
-%based on intuitionistic logic and $J$  on classical logic. %We, initially,  mute such assumptions to focus exclusively on the mechanics of necessity in this framework.
-%We recover them later and study  their relation  to  the Rule of Necessitation for our system.
+(e.g. a classical axiomatization of Peano arithmetic, a classical or intuitionistic set theory etc). 
+ In Artemov's work $I$ is assumed to be
+based on intuitionistic logic and $J$  on classical logic. 
+We, initially,  mute such assumptions to focus exclusively on the mechanics of necessity in this framework.
+We recover them later and study  their relation  to  the Rule of Necessitation for our system.
 What's more,  such a semantic relation can be treated logically giving  rise to a modality of explicit necessity. Different sorts of necessity
 ($K$, $D$, $S4$, $S5$) have been offered  an explicit counterpart under the umbrella of justification logic. Some of them have been studied within a
 Curry--Howard setting ~\cite{ArtBon07LFCS}. Our paper
@@ -31,7 +33,8 @@ a possibly non-empty signature of axioms $\Sigma_I$ and an entailment relation $
 (resp. with  $U_J$, $\Sigma_J$ and $\Sigma_J;\Delta\vdash_J \phi$). We will be using Latin letters for the formulae of $I$ and Greek letters for the formulae of $J$.
 We will be omitting the $\Sigma$ signatures when they are not relevant.
 
-For the  entailment relations of the two systems we require the following elementary principles:
+For the  entailment relations of the two systems we require the following elementary principles\footnote{We are not excluding other connectives but by imposing
+such minimal requirements we show that ``necessity'' ($\Box$) connective can be treated generically and orthogonally of the presence of other connectives}:
 \begin{enumerate}
 	\item \textit{Reflexivity}. In both relations $\Gamma$ and $\Delta$ are multisets of formulas (contexts) that enjoy reflexivity:
 	$$A \in \Gamma \Longrightarrow \Gamma\vdash_{I}A$$ $$\phi \in \Delta \Longrightarrow \Delta\vdash_{J}\phi$$
@@ -69,12 +72,12 @@ Now we can define:
 	there exists a corresponding (purely logical) validation $\llbracket\mathcal{D}\rrbracket$ in $J$.
 	i.e. $$\forall \mathcal{D}. \ \mathcal{D}:\Gamma\vdash_I A \Longrightarrow \exists \llbracket\mathcal{D}\rrbracket: \llbracket \Gamma\vdash A\rrbracket_J$$
 \end{definition}
-Note, that we require existence but not uniqueness. Nevertheless, if we treat deductive systems  in a proof irrelevant manner as preorders 
+\footnote{Note, that we require existence but not uniqueness. Nevertheless, if we treat deductive systems  in a proof irrelevant manner as preorders 
 the above definition gives uniqueness vacuously. In a more refined approach where $I$ and $J$ are viewed as  categories of proofs  the above ``logical completeness''  
 translates to the requirement that if the set of (purely logical) arrows $Hom_I(\Gamma,A)$ is non empty  then $Hom_J(\llbracket\Gamma\rrbracket,\llbracket A\rrbracket_J)$ 
 cannot be empty (i.e. that $\llbracket\bullet \rrbracket_J$ can be extended to a functor). We leave a complete categorical semantics of our logic 
 for future work but we expect   a generalization of the 
-endofunctorial interpretations of $K$ modality appearing in \cite{Bellin2001,kavvos2016system}. 
+endofunctorial interpretations of $K$ modality appearing in \cite{Bellin2001,kavvos2016system}.} 
 
 
 Examples of triplets ($I$, $J$, $\llbracket\bullet \rrbracket_J$) of logical systems that fall under the definition above are: any intuitionistic system mapped 
@@ -83,6 +86,10 @@ and $\tilde{\vee}$ are classical connectives, the opposite direction under doubl
 an  intuitionistic system  mapped to another intuitionistic system (i.e. a mapping of atomic formulas of $I$ to atomic formulas of $J$ extended naturally to the intuitionistic connectives 
 or, simply, the identity mapping) etc.  A vacuous validation  (when $\llbracket\bullet  \rrbracket_J$ maps everything to $\top$) gives another example. 
 
+The main thesis that is exposed in this chapter is that this notion of ``double proof'' (reasoning about proofs that exists in two related systems) 
+provides for an understanding of necessity in proof theoretic terms. In addition, we argue, 
+that this is the driver of (at least) the simplest
+form of necessity ($K$) that appears in justification logic (\textit{necessity as internalization}).
 We will focus on the case where $I$ (the propositional part of our logic) is based on the implicative fragment of intuitionistic logic and show how justification logic
 provides for an axiomatization of such logically complete interpretations $\llbracket\bullet\rrbracket_J$ of  implicative intuitionistic logic.
 In what follows we provide  a natural deduction for
@@ -93,7 +100,7 @@ of basic necessity that relates the two deductions by internalizing  a  notion o
 
 We aim for a reading of necessity that internalizes a notion of ``double proof''  in two deductive systems.
 Motivated by the discussion and definitions in the previous section we will treat the notion of interpretation abstractly -- as a function symbol on types -- 
-and axiomatize in accordance. Schematically we want:
+and axiomatize in accordance. Intuitively we want:
 $$\Box  A\  {\sf true} :=  A\ {\sf true}\   \& \ A\ {\sf valid} = A{\sf\  true\  in\  I}\  \& \  \llbracket  A \rrbracket \ {\sf true\  in\  J}$$
 We will be dropping indexes $I$, $J$ since they can be inferred by the different kinds of assumption  contexts. In addition, we  omit signatures 
 $\Sigma$ since they do not offer anything from a logical perspective.
@@ -137,7 +144,8 @@ We read as ``Introducing $\Box B$ after eliminating $\Box A_1 \ldots \Box A_i $ 
 Interestingly, the same rule eliminates boxes  and introduces new ones. 
 This  is not surprising for $K$ modality (it is a left-right rule as we will see (\ref{seqcalc}).
 See also discussion in \cite{Bellin2001,Bierman2000}). We will be referring to this rule  as ``$\Box$ Intro--After--Elim'' or, simply $\Box_{IE}$, from now on.
-%Moreover, it has a very clear computational reading in our system which we will be explaining. In a nutshell, theorems of $K$ correspond to programs that consume (eliminate) congruences on subterms to construct construct congruences on larger terms. In that sense, the elim-intro mix is quite natural.
+%Moreover, it has a very clear computational reading in our system which we will be explaining. 
+%In a nutshell, theorems of $K$ correspond to programs that consume (eliminate) congruences on subterms to construct construct congruences on larger terms. In that sense, the elim-intro mix is quite natural.
 
 Note that we define the $\Box$ connective negatively, yet (pure) introduction rules for the $\Box$ 
 connective are  derivable. 
@@ -157,13 +165,22 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	\end{itemize}
 	%The former judgments could be viewed as a "Hilbert-style" encoding of the underlying intuitionistic one. Justification logic uses a combinatory calculus (extended with classical combinators) to represent logical principles (constants) in this second level. We follow the same route, obtaining a Curry Howard Correspondance for Justification logic under this new ``necessity as double proof" doctrine. 
 	\subsection{Natural Deduction for Jcalc$^{-}$}
+	The treatment of necessity in the previous section is completely orthogonal to the underlying systems \
+	(it just assumes the basic requirements stated for the behavior \llbracket\dot\rrbracket). In this section
+	we will provide a full calculus and in congruence with justification logic we will assume that the underlying systems
+	($I$)  
+
 	Following type theory conventions,  we first provide rules underlying type construction, then  rules for  well-formedness of (labeled) assumption contexts and rules  introducing and eliminating connectives. 
-	The rules below should be obvious except for small caveat. On the one hand, the type universe of $U_I$ and the proof trees of $I$ are 
+	The rules below should be obvious except for small caveat.
+	 On the one hand, the type universe of $U_I$ and the proof trees of $I$ are 
 	inductively defined as usual; on the other 
 	hand, the host theory $J$ (its corresponding universe, connectives and  proof trees) is  ``black boxed''. What we actually axiomatize are the properties that all
 	(logic preserving) interpretations of $I$ should conform to, independently of the specifics of the host theory. 
 	Validity judgments should thus be read  as specifications
-	of provability  (existence of proofs) of any candidate $J$.
+	of provability  (existence of proofs) of any candidate $J$. 
+	
+	When we write $\llbracket \Gamma\rrbracket\vdash\llbracket\phi\rrbracket$ it reads as there exists derivation
+	$\mathcal{D}$ : $\Delta\rrbracket\vdash_{J}\psi\rrbracket$ s.t. $\Delta=\llbracket\Gamma\rrbracket$ and $\psi = \llbracket \phi\rrbracket$ )
 	
 	We use ${\sf Prop_0}$  to denote  the type universe of $I$ and $\llbracket \sf Prop_0\rrbracket $ to denote its image under an interpretation, ${\sf Prop_1}$ denotes   modal (``boxed'') types
 	and ${\sf Prop}$  the union of ${\sf Prop_0, Prop_1}$. We write $P_k$ with $k$ ranging in some subset of natural numbers to denote atomic propositions in $I$. 
@@ -415,9 +432,9 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				
 			\end{mathpar}
 		}
-	%These equalities are of importance since they dictate (together with the corresponding principles for the $\supset$, $\wedge$ connectives) the proof dynamics of the calculus. 
-	%The proof term assignment and the corresponding computational ($\beta$-)rules  are directly instructed by these reduction principles. We see that eliminating (using) an introduced $\Box$ 
-	%corresponds to double substitution in the corresponding judgments. 
+	These equalities are of importance since they dictate (together with the corresponding principles for the $\supset$, $\wedge$ connectives) the proof dynamics of the calculus. 
+	The proof term assignment and the corresponding computational ($\beta$-)rules  are directly instructed by these reduction principles. We see that eliminating (using) an introduced $\Box$ 
+	corresponds to double substitution in the corresponding judgments. 
 	
 	Dually, the second principle says eliminating a $\Box A$ , should give enough information to directly reintroduce it (``elimination rules are not \textit{too weak}"). This is an expansion principle.
 	
@@ -504,8 +521,9 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			%\end{mathpar}
 			
 			%Finally, we have the rule that relates judgments of truth to judgments of validity explained in the beginning of this section.
-			
-			\chapter{The computational side of Jcalc $^{-}$}
+			\section{Order theoretic semantics}
+
+\chapter{The computational side of Jcalc $^{-}$}
 			In this section we add proof terms to represent natural deduction constructions. The  meaning of these terms emerges naturally from Gentzen's principles that give reduction (computational $\beta$-rules) and expansion (i.e. extensionality $\eta$-rules) equalities for the each construct. We focus on the new constructs of the calculus that emerge from the judgmental interpretation of the $\Box$ connective as explained in 
 			section \ref{lsjcalc}.
 			
