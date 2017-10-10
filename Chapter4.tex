@@ -531,7 +531,87 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			motivating the reading of necessity as ``double-proof under a map''.
 			As a result, it is unsuprising the the calculus is amenable to order theoretic sematics.
 			We present them in this section.
+
+			In order to progress we first define the notion of a \vocab{semi-Heyting  Algebra(semi-HA)}. 
+			To define \vocab{semi-HA} we need the notion of a \emph{(meet) semi-lattice}.
+			  
 			
+			\begin{mdframed}
+			\textbf{Definition:}
+			A \textit{(meet) semi-lattice} is a non-empty \emph{partial order} (i.e. reflexive, antisymmetric and transitive) 
+			with finite meets.
+			\end{mdframed}
+			In addition, we define \emph{meet semi-lattice} as follows: 
+			\begin{mdframed}
+			\textbf{Definition:}
+			A \textit{bounded lattice} $(L,\le)$ is a lattice that additionally has 
+			a greatest element $1$, which satisfies
+			
+			$x \le 1$ for every $x$ in $L$
+			\end{mdframed}
+			Finally, we can define \emph{semi-HA}:
+			
+			\begin{mdframed}
+			\textbf{Definition:}
+			A \textit{HA} is a bounded (meet) semi-lattice $(L,\le, 1)$ 
+			s.t. for every $a,b\in L$ there exists an \textit{exponential} 
+			(we name it $a\supset b$) 
+			with the properties: 
+			\begin{enumerate}
+			\item $a\wedge a\supset b\le b $
+			\item $x$ is the greatest such element
+			\end{enumerate}
+			\end{mdframed}
+			\subsubsection{Axiomatization of HAs}
+			We can axiomatize the meet (i.e. greatest lower bound)($\wedge$) of $\phi,\psi$ for any  lower bound $\chi$.
+			\begin{mdframed}
+			\begin{mathpar}
+			  \infer{\phi \conj \psi \leq \phi}{
+				}
+			  \and
+			  \infer{\phi \conj \psi \leq \psi}{
+				} 
+			\end{mathpar}
+			\begin{equation*}
+			  \infer{\chi \leq \phi \conj \psi}{
+				\chi \leq \phi & \chi \leq \psi} 
+			\end{equation*}
+			\end{mdframed}
+			
+			We can axiomatize the existence of a greatest element as follows:
+			\begin{mdframed}
+			\begin{equation*}
+			  \infer{\chi \leq 1}{
+				} 
+			\end{equation*}
+			which says that $1$ is the greatest element.
+			\end{mdframed}
+			Finally, to axiomatize \emph{semi-HAs} we require the existence of exponentials for every $\phi$, $\psi$ as follows:
+			
+			\begin{mdframed}
+			\begin{mathpar}
+			  \infer{\phi \wedge  (\phi\supset \psi)\leq\psi}{
+				} 
+				\and
+				\infer{\chi\leq\phi\supset\psi}{\phi\wedge\chi\leq\psi}
+			\end{mathpar}
+			\end{mdframed}
+			
+			In addition, given two \emph{semi-HAs}, we are interested in order preserving 
+			functions (functors) $f$ that also preserve prodcucts and exponentials: 
+			\begin{mdframed}
+				\begin{mathpar}
+				  \infer{\phi \wedge  (\phi\supset \psi)\leq\psi}{
+					} 
+					\and
+					\infer{\chi\leq\phi\supset\psi}{\phi\wedge\chi\leq\psi}
+				\end{mathpar}
+				\end{mdframed}
+	
+			Order theoretic models of  Jcalc $^{-}$ are triplets consisting of:
+			\begin{itemize}
+			\end{itemize}
+
 
 \chapter{The computational side of Jcalc $^{-}$}
 			In this section we add proof terms to represent natural deduction constructions. The  meaning of these terms emerges naturally from Gentzen's principles that give reduction (computational $\beta$-rules) and expansion (i.e. extensionality $\eta$-rules) equalities for the each construct. We focus on the new constructs of the calculus that emerge from the judgmental interpretation of the $\Box$ connective as explained in 
