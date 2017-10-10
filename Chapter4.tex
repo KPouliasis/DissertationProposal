@@ -166,9 +166,11 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	%The former judgments could be viewed as a "Hilbert-style" encoding of the underlying intuitionistic one. Justification logic uses a combinatory calculus (extended with classical combinators) to represent logical principles (constants) in this second level. We follow the same route, obtaining a Curry Howard Correspondance for Justification logic under this new ``necessity as double proof" doctrine. 
 	\subsection{Natural Deduction for Jcalc$^{-}$}
 	The treatment of necessity in the previous section is completely orthogonal to the underlying systems \
-	(it just assumes the basic requirements stated for the behavior \llbracket\dot\rrbracket). In this section
-	we will provide a full calculus and in congruence with justification logic we will assume that the underlying systems
-	($I$)  
+	(it just assumes the basic requirements stated for the behavior $\llbracket\dot\rrbracket$). 
+	In this section we will provide a full calculus and in congruence with justification logic we will
+	assume that the underlying system ($I$) is a fragment of intuitionistic logic (the `negative' to be precise).
+	The host theory $J$ can still remain unspecified, but the choice of $I$ informs for some specifications (to preserve
+	completeness of logical deductions).   
 
 	Following type theory conventions,  we first provide rules underlying type construction, then  rules for  well-formedness of (labeled) assumption contexts and rules  introducing and eliminating connectives. 
 	The rules below should be obvious except for small caveat.
@@ -177,7 +179,7 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	hand, the host theory $J$ (its corresponding universe, connectives and  proof trees) is  ``black boxed''. What we actually axiomatize are the properties that all
 	(logic preserving) interpretations of $I$ should conform to, independently of the specifics of the host theory. 
 	Validity judgments should thus be read  as specifications
-	of provability  (existence of proofs) of any candidate $J$. 
+	of provability (existence of proofs) of any candidate $J$. 
 	
 	When we write $\llbracket \Gamma\rrbracket\vdash\llbracket\phi\rrbracket$ it reads as there exists derivation
 	$\mathcal{D}$ : $\Delta\rrbracket\vdash_{J}\psi\rrbracket$ s.t. $\Delta=\llbracket\Gamma\rrbracket$ and $\psi = \llbracket \phi\rrbracket$ )
@@ -194,13 +196,15 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 				\and
 				\inferrule*[right=Top] { } {\top \in {\sf Prop_0}}
 				\and
+				\inferrule*[right=Conj] {{ A \in {\sf Prop_i }}\\ { B \in {\sf Prop_j}}} {  A \wedge B \in {\sf Prop_{max(i,j)}} } 
 				%\inferrule*[right=Bot] { } {\bot \in {\sf Prop_0}} 
 				%\and
+				\and
 				\inferrule*[right=Box] { A \in{\sf Prop_{0} }} {\Box  A\in{\sf Prop_{1}} }
+				%\and
+				%\inferrule*[right= Arr] {{ A \in {\sf Prop_{i} }}\\ { B \in {\sf Prop_{j}}}} { A\supset  B\in {\sf Prop_{max(i,j)}}}
 				\and
-				\inferrule*[right= Arr$_0$] {{ A \in {\sf Prop_0 }}\\ { B \in {\sf Prop_0}}} { A\supset  B\in {\sf Prop_{0}}}
-				\and
-				\inferrule*[right= Arr$_1$] {{ A \in {\sf Prop_1 }}\\ { B \in {\sf Prop_1}}} { A\supset  B\in {\sf Prop_{1}}}
+				\inferrule*[right= Arr] {{ A \in {\sf Prop_i }}\\ { B \in {\sf Prop_j}}} { A\supset  B\in {\sf Prop_{max(i,j)}}}
 				\and
 				\inferrule*[right=Brc] { A \in {\sf Prop_0 }} {\llbracket  A\rrbracket \in {\sf \llbracket Prop_{0}\rrbracket}}
 				%\and
@@ -522,6 +526,12 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			
 			%Finally, we have the rule that relates judgments of truth to judgments of validity explained in the beginning of this section.
 			\section{Order theoretic semantics}
+			This chapter started by introducing 
+			mappings between deductive systems and 
+			motivating the reading of necessity as ``double-proof under a map''.
+			As a result, it is unsuprising the the calculus is amenable to order theoretic sematics.
+			We present them in this section.
+			
 
 \chapter{The computational side of Jcalc $^{-}$}
 			In this section we add proof terms to represent natural deduction constructions. The  meaning of these terms emerges naturally from Gentzen's principles that give reduction (computational $\beta$-rules) and expansion (i.e. extensionality $\eta$-rules) equalities for the each construct. We focus on the new constructs of the calculus that emerge from the judgmental interpretation of the $\Box$ connective as explained in 

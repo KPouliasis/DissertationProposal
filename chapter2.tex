@@ -2,7 +2,9 @@
 \section{From intuitionistic provability to proof trees}
 \vocab{IPL} can be viewed as a declarative axiomatization of proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
-	\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\{\Turnsi {\Gamma} {\phi_2 \true}}} {\Turnsi {\Gamma} {  \phi_1 \wedge\phi_2 \true}}
+	\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\
+	{\Turnsi {\Gamma} {\phi_2 \true}}} {\Turnsi {\Gamma} 
+	{  \phi_1 \wedge\phi_2 \true}}
 \end{mathpar}
 
 The rule says, ``given the existence a proof of $\phi$ and a proof of $\psi$ from assumptions $\Gamma$, there exists a proof of $\phi\wedge\psi$ from assumptions $\Gamma$ at hand ".
