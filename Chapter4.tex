@@ -544,7 +544,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			In addition, we define \emph{meet semi-lattice} as follows: 
 			\begin{mdframed}
 			\textbf{Definition:}
-			A \textit{bounded lattice} $(L,\le)$ is a lattice that additionally has 
+			A \textit{bounded (meet) semi-lattice} $(L,\le)$ is a (meet) semi-lattice that additionally has 
 			a greatest element $1$, which satisfies
 			
 			$x \le 1$ for every $x$ in $L$
@@ -553,7 +553,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			
 			\begin{mdframed}
 			\textbf{Definition:}
-			A \textit{HA} is a bounded (meet) semi-lattice $(L,\le, 1)$ 
+			A \textit{semi-HA} is a bounded (meet) semi-lattice $(L,\le, 1)$ 
 			s.t. for every $a,b\in L$ there exists an \textit{exponential} 
 			(we name it $a\supset b$) 
 			with the properties: 
@@ -562,7 +562,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\item $x$ is the greatest such element
 			\end{enumerate}
 			\end{mdframed}
-			\subsubsection{Axiomatization of HAs}
+			\subsubsection{Axiomatization of semi-HAs}
 			We can axiomatize the meet (i.e. greatest lower bound)($\wedge$) of $\phi,\psi$ for any  lower bound $\chi$.
 			\begin{mdframed}
 			\begin{mathpar}
@@ -598,19 +598,41 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\end{mdframed}
 			
 			In addition, given two \emph{semi-HAs}, we are interested in order preserving 
-			functions (functors) $f$ that also preserve prodcucts and exponentials: 
+			functions (functors) $F$ that also preserve products and exponentials: 
 			\begin{mdframed}
-				\begin{mathpar}
-				  \infer{\phi \wedge  (\phi\supset \psi)\leq\psi}{
-					} 
-					\and
-					\infer{\chi\leq\phi\supset\psi}{\phi\wedge\chi\leq\psi}
-				\end{mathpar}
-				\end{mdframed}
-	
-			Order theoretic models of  Jcalc $^{-}$ are triplets consisting of:
-			\begin{itemize}
-			\end{itemize}
+				\begin{enumerate}
+				\item{$F(\phi \wedge\psi) = F(\phi)\wedge(F(\psi))$} 
+				\item{$F(\phi\supset\psi}) = F(\phi) \supset F(\psi)$}
+				\end{enumerate}
+			\end{mdframed}
+			
+			For the order theoretic models of  Jcalc $^{-}$ the following structures (triplets) 
+			are of interest. We define a $J$-triplet as follows:
+			\begin{mdframed}
+				\textbf{Definition}
+				
+			\begin{enumerate}
+			\item A semi-Hayting algebra $HA$
+			\item A partial order $J$
+			\item A function order preserving function $F$ from $HA$ to $J$ s.t.
+			\begin{enumerate}
+				\item The image $F(HA)$ forms a semi-Heyting Algebra
+				\item $F$ preserves products and exponentials
+			\end{enumerate}
+			\end{enumerate}
+		\end{mdframed}
+
+			Given a $J$-triplet we define the pair algebra of $\Box^{F}HA$ as follows:
+			\begin{mdframed}
+				\textbf{Definition}
+				
+			\begin{enumerate}
+				\item Elements are pairs $\langle A, FA\rangle$ (name them $\Box^{F}A$) where $A\in HA$ and $FA$ its image
+				\item For every two elements  $\Box^{F}A$, $\Box^{F}B$:
+				$$\Box^{F}A \le_\Box^{F}B \Box^{F}B \text{iff} A\le{HA}B \text{and} FA\le_J FB $$ 
+			\end{enumerate}
+		\end{mdframed}
+
 
 
 \chapter{The computational side of Jcalc $^{-}$}
