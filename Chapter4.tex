@@ -178,7 +178,7 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	(it just assumes the basic requirements stated for the behavior $\llbracket\dot\rrbracket$). 
 	In this section we will provide a full calculus and in congruence with justification logic we will
 	assume that the underlying system ($I$) is a fragment of intuitionistic logic (the `negative' to be precise).
-	The host theory $J$ can still remain unspecified, but the choice of $I$ informs for some specifications (to preserve
+	The host theory $J$ can still remain unspecified, but the choice of $I$ informs for some specifications ( in order to preserve
 	completeness of logical deductions).   
 
 	Following type theory conventions,  we first provide rules underlying type construction, then  rules for  well-formedness of (labeled) assumption contexts and rules  introducing and eliminating connectives. 
@@ -239,20 +239,20 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	(with appropriate renaming of variables -- e.g. $x_i\rightsquigarrow s_i$). For the vacuous case  when $\Gamma$  is  empty 
 	we require $\llbracket\circ \rrbracket = \dagger$ to be well formed.
 	
-	% \begin{mdframed}[nobreak=true,frametitle={\footnotesize Judgments on Context Wellformedness}]
-	% \mbox{\footnotesize
-	% \begin{mathpar}
-	% \inferrule*[right=\small{Nil}] { }{\Turn {\circ} {\sf wf}}
-	% \and
-	% \inferrule*[right=$\Gamma$-Ext] { {\Gamma\in {\sf Prop_0}}\\ { A \in {\sf Prop_0}} \\{x\not\in \Gamma}}{{\Gamma, x: A}\in {\sf Prop_0}}
-	% \and
-	% %\and
-	% %\inferrule*[right=\small{Nil}] { } {\Turn {\circ} {\sf\llbracket wf\rrbracket}}
-	% \inferrule*[right=$\llbracket$\small{ Nil} $\rrbracket$]{ }{\Turn {\dagger= \llbracket \circ \rrbracket} {\sf\llbracket wf\rrbracket}}
-	% \and
-	% \inferrule*[right=$\llbracket\Gamma\rrbracket$] { {  \Gamma  \in {\sf  Prop_0}}} {\llbracket \Gamma \rrbracket \in { \llbracket \sf Prop_0 \rrbracket}}
-	% \end{mathpar}}
-	%\end{mdframed}
+	\begin{mdframed}[nobreak=true,frametitle={\footnotesize Judgments on Context Wellformedness}]
+	\mbox{\footnotesize
+	\begin{mathpar}
+	\inferrule*[right=\small{Nil}] { }{\Turn {\circ} {\sf wf}}
+	\and
+	\inferrule*[right=$\Gamma$-Ext] { {\Gamma\in {\sf Prop_0}}\\ { A \in {\sf Prop_0}} \\{x\not\in \Gamma}}{{\Gamma, x: A}\in {\sf Prop_0}}
+	\and
+	%\and
+	%\inferrule*[right=\small{Nil}] { } {\Turn {\circ} {\sf\llbracket wf\rrbracket}}
+	\inferrule*[right=$\llbracket$\small{ Nil} $\rrbracket$]{ }{\Turn {\dagger= \llbracket \circ \rrbracket} {\sf\llbracket wf\rrbracket}}
+	\and
+	\inferrule*[right=$\llbracket\Gamma\rrbracket$] { {  \Gamma  \in {\sf  Prop_0}}} {\llbracket \Gamma \rrbracket \in { \llbracket \sf Prop_0 \rrbracket}}
+	\end{mathpar}}
+	\end{mdframed}
 	%Certain basic facts about well formed contexts are shown in the appendix \ref{bfcw}. 
 	In the following entry we define proof trees (in turnstile representation) of the intuitionistic source theory $I$.  For all following rules we assume $\Gamma, A,B \in {\sf Prop_0}$:
 	\begin{mdframed}[nobreak=true,frametitle={\footnotesize Judgments on Truth  $\Gamma, A,B \in {\sf Prop_0}$ }]
@@ -735,13 +735,35 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				\end{theorem}
 			\begin{proof}
 				To prove soundness we got by induction on the derivations. For the ${\sf Prop_0}$
-				the proof is well-known. For the ${\sf Prop_1}$ part of the calculus again by induction.
+				the proof is well-known. 
+				For the ${\sf Prop_1}$ part of the calculus again by induction.
 				Reflexion, of contexts is trivial. For the axiomatic cases, it is a well known result
 				that in any Heyting algebra (and thus in $F(HA)$ of any Jcalc algebra) 
-				elements of the shape of the axiomatic combinators are equivalent to $\top$.
+				elements of the shape of the axiomatic combinators are equivalent (equiprovable) to $\top$.
 				For example in any Heyting algebra  we have $\top\le A^{B^A}$ 
-				(using the definition of exponentials twice from the fact $\top\times A\times B\le A$).
-				The other cases of the induction are also trivial e.g. for the rule
+				(using the definition of exponentials twice from the fact $\top\times A\times B\le A$) and as a result 
+				$\Gamma^+\leq\phi^{*}$ for any $\Gamma\in {\sf Prop_0}$.
+				For the modus ponens rule by the induction hypothesis and the definition of exponentials.
+				The interesting part of the proof is the $\Box$ rule which we present again here for readability:
+				\begin{mdframed}[nobreak=true, frametitle={\footnotesize Judgments on Necessity with $\Gamma\in {\sf Prop_1} \text{,{\ \sf length}}(\Gamma)=i\text{,\ }
+					\ 1\le k\le i  \text{\ and, }\Gamma^{\prime},A, A_k,  B\in {\sf Prop_0}$ }]
+				\mbox{\footnotesize
+					\begin{mathpar}
+						
+						\inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i}$]{{(\forall  A_i \in \Gamma'. \ \Turn {\Gamma}{\Box  A_i})}\\{\Turn {\Gamma'} { B}}\\{\Turn {\llbracket \Gamma' \rrbracket} {\llbracket  B\rrbracket} }} {\Turn {\Gamma}\Box  B}
+
+					\end{mathpar}}
+				\end{mdframed}
+				
+				By the induction hypothesis we have $(\Gamma^{'})^{+}\le B^{*}$
+				and $(\llbracket\Gamma^{'}\rrbracket)^{+}\le FB^{*}$ or equivalently by the properties of $F$
+				$F(\Gamma^{'})^{+}+\le F(B^{*})$ which gives $\Box^F{\Gamma^{'}^{+}}\le \Box^F B$
+				Additionally from induction hypothesis, for every $A_i$ in $\Gamma^{+}\Box^F A_i$
+				and by the product definition $\Gamma^{+}\le\Gamma^{'}^{+}$ and thus
+				$\Gamma^{+}\le\Box^F B*$.
+
+				For the inverse we create a Lindenbaum construction. Create the free Jcalc algebra
+				as follows: 
 
 
 			\end{proof}
