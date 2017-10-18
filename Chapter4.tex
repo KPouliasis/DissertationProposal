@@ -287,6 +287,12 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 					\and
 					\inferrule*[right=  Ax$_3$]{ {  A,B, C \in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\supset (B \supset C) \supset ((  A\supset B) \supset (  A \supset C))\rrbracket}
 					\and
+					\inferrule*[right = Ax$_4$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\supset (B \supset A\wedge B) \rrbracket}
+					\and
+					\inferrule*[right = Ax$_5$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\wedge B \supset A  \rrbracket}
+					\and
+					\inferrule*[right = Ax$_6$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\wedge B \supset B  \rrbracket}
+					\and					
 					\inferrule*[right=MP] {{\Turn {\Delta} { \llbracket  A \supset  B \rrbracket}}\\ {\Turn{\Delta} {\llbracket  A \rrbracket}}}{\Turn {\Delta} {\llbracket  B\rrbracket}}
 				\end{mathpar}}
 			\end{mdframed}
@@ -707,13 +713,13 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				the extension of any map of atomic $\prop$s to elements of $HA$ and $(+)$ 
 				is defined inductively on the length of $\Gamma$ as follows
 				\begin{alignat*}{2}
-					(\top)* &&\quad= \top_J\\
-					(A\wedge B \in Prop_0)*  &&\quad = & A*\times_{HA}B*\\
+					(\top)* &&\quad= & \quad\top_J\\
+					(A\wedge B \in Prop_0)*  &&\quad = & \quad  A*\times_{HA}B*\\
 					(A\supset B \in Prop_0)*  &&\quad = & B*^{A*}\\
 					(\llbracket A\rrbracket)* && \quad = & FA*\\
-					(\Box A)* &&\quad = & \Box^F A* \\
-					(\Box A\supset \Box B)*  &&\quad = & \Box^F B*^{\Box^F A}\\
-					(\Box A\wedge\Box B)*  &&\quad = & \Box^F A*\times{\Box^F B}\\
+					(\Box A)* &&\quad = & \quad\Box^F A* \\
+					(\Box A\supset \Box B)*  &&\quad = & \quad\Box^F B*^{\Box^F A}\\
+					(\Box A\wedge\Box B)*  &&\quad = & \quad\Box^F A*\times{\Box^F B}\\
 				\end{alignat*}
 				
 				\begin{alignat*}{2}
@@ -729,7 +735,15 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				\end{theorem}
 			\begin{proof}
 				To prove soundness we got by induction on the derivations. For the ${\sf Prop_0}$
-				the proof is well-known. For the ${\sf Prop_1}$ part of the calculus, 
+				the proof is well-known. For the ${\sf Prop_1}$ part of the calculus again by induction.
+				Reflexion, of contexts is trivial. For the axiomatic cases, it is a well known result
+				that in any Heyting algebra (and thus in $F(HA)$ of any Jcalc algebra) 
+				elements of the shape of the axiomatic combinators are equivalent to $\top$.
+				For example in any Heyting algebra  we have $\top\le A^{B^A}$ 
+				(using the definition of exponentials twice from the fact $\top\times A\times B\le A$).
+				The other cases of the induction are also trivial e.g. for the rule
+
+
 			\end{proof}
 			To prove soundness and compl
 			\begin{theorem}[Soundness and Completeness]
