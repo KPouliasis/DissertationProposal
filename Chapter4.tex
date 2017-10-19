@@ -580,8 +580,9 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			As a result, it is unsuprising the the calculus is amenable to order theoretic sematics.
 			We present them in this section.
 
-			In order to progress we first define the notion of a \vocab{semi-Heyting  Algebra(semi-HA)}. 
-			To define \vocab{semi-HA} we need the notion of a \emph{(meet) semi-lattice}.
+			In order to progress we first define the notion of a 
+			\vocab{semi-Heyting  Algebra (semi-HA)}. 
+			To define semi-HA we need the notion of a \vocab{(meet) semi-lattice}.
 			  
 			
 			\begin{mdframed}
@@ -592,8 +593,9 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			In addition, we define \emph{meet semi-lattice} as follows: 
 			\begin{mdframed}
 			\textbf{Definition:}
-			A \textit{bounded (meet) semi-lattice} $(L,\le)$ is a (meet) semi-lattice that additionally has 
-			a greatest element $1$, which satisfies
+			A \textit{bounded (meet) semi-lattice} $(L,\le)$ is a (meet) 
+			semi-lattice that additionally has 
+			a \emph{greatest element} (we name it $1$), which satisfies
 			
 			$x \le 1$ for every $x$ in $L$
 			\end{mdframed}
@@ -603,57 +605,27 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\textbf{Definition:}
 			A \textit{semi-HA} is a bounded (meet) semi-lattice $(L,\le, 1)$ 
 			s.t. for every $a,b\in L$ there exists an \textit{exponential} 
-			(we name it $b^{a}$) 
+			(we name it $a\rightarrow b$) 
 			with the properties: 
 			\begin{enumerate}
-			\item $b^{a}\times a\le b $
-			\item $b^{a}$ is the greatest such element
+			\item $a\rightarrow b\times a\le b $
+			\item $a\rightarrow b$ is the greatest such element
 			\end{enumerate}
 			\end{mdframed}
-			\subsubsection{Axiomatization of semi-HAs}
-			We can axiomatize the meet (i.e. greatest lower bound)($\times$) of $\phi,\psi$ for any  lower bound $\chi$.
-			\begin{mdframed}
-			\begin{mathpar}
-			  \infer{\phi \conj \psi \leq \phi}{
-				}
-			  \and
-			  \infer{\phi \conj \psi \leq \psi}{
-				} 
-			\end{mathpar}
-			\begin{equation*}
-			  \infer{\chi \leq \phi \conj \psi}{
-				\chi \leq \phi & \chi \leq \psi} 
-			\end{equation*}
-			\end{mdframed}
 			
-			We can axiomatize the existence of a greatest element as follows:
-			\begin{mdframed}
-			\begin{equation*}
-			  \infer{\chi \leq 1}{
-				} 
-			\end{equation*}
-			which says that $1$ is the greatest element.
-			\end{mdframed}
-			Finally, to axiomatize \emph{semi-HAs} we require the existence of exponentials for every $\phi$, $\psi$ as follows:
 			
-			\begin{mdframed}
-			\begin{mathpar}
-			  \infer{\phi \times  (\psi^{\phi})\leq\psi}{
-				} 
-				\and
-				\infer{\chi\leq\psi^{\phi}}{\phi\times\chi\leq\psi}
-			\end{mathpar}
-			\end{mdframed}
-			
-			In addition, given two \emph{semi-HAs}, we are interested in order preserving 
+			In addition, given two \emph{semi-HAs}, we are 
+			interested in order preserving 
 			functions (functors) $F$ that also preserve products and exponentials: 
 			\begin{mdframed}
 				\textbf{Definition}
 			A function $F$ between two (semi)-HAs ($HA_1$, $HA_2$) is order preserving
-			and commutes with products and exponentials \emph{iff}
+			and commutes with products and exponentials \emph{iff} for every 
+			$\phi,\psi \in HA_1$
 				\begin{enumerate}
+				\item $\phi\le_{HA_1}\psi\Rightarrow F\phi\le_{HA_2}F\psi$
 				\item{$F(\phi \times\psi) = F(\phi)\times(F(\psi))$} 
-				\item{$F(\psi^{\phi}}) = F(\psi)^{F(\phi)}$}
+				\item $F(\phi\rightarrow \psi) = F(\psi)\rightarrow F(\phi)$
 				\end{enumerate}
 			\end{mdframed}
 			
@@ -661,7 +633,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			are of interest. We define a $Jcalc$-triplet as follows:
 			\begin{mdframed}
 				\textbf{Definition}
-			A \emph{$J$-triplet} is 
+			A \emph{$Jcalc$-triplet} is 
 				
 			\begin{enumerate}
 			\item A semi-Hayting algebra $HA$
@@ -681,61 +653,37 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				where:
 				\begin{enumerate}
 					\item Elements of $F:K\rightarrow L$ are  pairs of the form $\langle k,Fk \rangle$
-					\item $\langle k_1,Fk_1 \rangle \le \langle k_2, Fk_2\rangle$ \textit{iff}  $k_1\le_{K}k_2$ and $Fk_1\le_{L}Fk_2$ 
+					\item $\langle k_1,Fk_1 \rangle \le_F \langle k_2, Fk_2\rangle$ \textit{iff}  $k_1\le_{K}k_2$ and $Fk_1\le_{L}Fk_2$ 
 				\end{enumerate}
 			\end{mdframed}
 
-<<<<<<< HEAD
-			Given a $J$-triplet we define the induced pair algebra
-			$\langle HA, F(HA)\rangle$
-			and name it $\Box^{F}HA$ as follows:
-			\begin{mdframed}
-				\textbf{Definition} Given a $J$-triplet we define the induced 
-				$\Box^{F}HA$ as follows:
-				
-			\begin{enumerate}
-				\item Elements are pairs $\langle A, FA\rangle$ (name them $\Box^{F}A$) where $A\in HA$ and $FA$ its image
-				\item For every two elements  $\Box^{F}A$, $\Box^{F}B$:
-				$$\Box^{F}A \le_{\Box^{F}}B \Box^{F}B \text{iff} A\le{HA}B \text{and} FA\le_J FB $$^{\footnote
-				Actually in a $J$-triplet case (
-					actuallly in a $ A\le{HA}B$ implies $FA\le_J FB$ but the definition of pair algebras
-					of proof systems can be generalized to weaker scenarios as we will sketch in the next section
-				)}
-			\end{enumerate}
-		\end{mdframed}
-		\begin{mdframed}
-			\begin{theorem}\label{thm:PairAlgebra}
-			$\Gamma\vdash_{IPL} \phi \true$ iff for any \vocab{Heyting Algebra} $H$ we have $\Gamma^+\leq\phi^{*}$ where $*$ is  defined as the lifting of any map of $\prop$s to elements of $H$ and $(+)$ is defined inductively on the length of $\Gamma$ as follows
-			\begin{alignat*}{2}
-			  nil^+  &&\quad = & \quad\top\\
-			  (\Gamma,\phi)^+&&\quad = &\quad
-			  \Gamma^+\wedge\phi* \
-			\end{alignat*}
-			\end{theorem}
-			\end{mdframed}
-=======
 			\begin{theorem}
-				For any triplet $(K,L,F)$ the algebra of $F$-points is a partial order.
+				For any triplet $(K,L,F)$ of $HA$s with an order preserving function $F:K\Rightarrow$
+				the algebra of $F$-points is a partial order.
 			\end{theorem}
+			\begin{proof}
+				It is trivial to show that the algebra of $F$-points ``inherits'' reflexivity, 
+				transitivity and antisymmetry from the underlying algebras.
+			\end{proof}
 
 			Given a $Jcalc$-triplet there is an induced $F$-point algebra:
 			\begin{mdframed}
 				\textbf{Definition}
-				Given a $J$-triplet we define the algebra  $\Box^{F}HA$ as the induced $F$-point algebra.
+				Given a $Jcalc$-triplet we define the algebra  $\Box^{F}HA$ as the induced $F$-point algebra.
 			\end{mdframed}
 			By the definitions, the $\Box^{F}HA$ point algebra has the following properties:
 			\begin{enumerate}
 				\item Elements are pairs $\langle A, FA\rangle$ (name them $\Box^{F}A$) where $A\in HA$ and $FA$ its image
 				\item For every two elements $\Box^{F}A$, $\Box^{F}B$:
 
-				$\Box^{F}A \le_\Box^{F}B \Box^{F}B \text{iff} A\le{HA}B \text{and} FA\le_J FB $ 
+				$\Box^{F}A \le\Box^{F}B \text{ iff } A\le_{HA}B \text{and} FA\le_J FB $ 
 				
 				\item It is a Heyting algebra with:
 				\begin{itemize}
-					\item Elements of the form $\Box^F (A \times B)$ forming products 
-					(name them $\Box^F A\times \Box^F B$)
+					\item Elements of the form $\Box^F (A \times B)$ 
+					forming products (we name them $\Box^F A\times \Box^F B$)
 					\item Elements of the form $\Box^F ( B^{A})$ 
-					forming exponentials (name them $\Box^FB^{\Box^F{A}}$)
+					forming exponentials (name them $\Box^F{A}\rightarrow \Box^F B$)
 				\end{itemize}
 			\end{enumerate}
 			The last property is not obvious so we will sketch the proof:
@@ -745,19 +693,19 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				For any two elements $\Box^F A$, $\Box^F B$, the element $\Box^F (A \times B)$ forms their product since,
 				$A \times B\le A$ in $HA$ and $F(A\times B)=FA\times FB \le FA$ and thusly, 
 				$\Box^F (A \times B)\le \Box^FA$.
-				Analogously, $\Box^F (A \times B)\le Box^FA$. 
+				Analogously, $\Box^F (A \times B)\le \Box^FA$. 
 				In addition we need to show that, for any $\Box^F C$ s.t. $\Box^F C\le \Box^F A $ and 
 				$\Box^F C\le \Box^F B $ we get $\Box^F C\le\Box^F(A\times B)$. 
 				By the definition for any such  $\Box^F C$ we have $C\le A\times B$
 				and $FC\le F(A\times B)$ which imply that $\Box^F C\le\Box^F(A\times B)$
 
-				To show that  $\Box^F ( B^{A})$ is the  exponential of $\Box^FA$, $\Box^FB$, 
+				To show that  $\Box^F A \rightarrow \Box^F B:= $ is the  
+				exponential of $\Box^FA$, $\Box^FB$, 
 				we have to show, first that $\Box^F ( B^{A})\times\Box^F A\le \Box^F B$.
 				By definition $\Box^F ( B^{A})\times\Box^F A :=\Box^F( B^{A}\times A)$. Also
 				for the underlying exponentials we have $ B^{A}\times A\le B$ and 
 				$F(B^{A}\times A)= FB^{FA}\times FA \le FB$ which by definition of $\Box^F HA$
 				gives   $\Box^F(B^{A}\times A)\le \Box^F(B)$ and hence, by definition, $\Box^F ( B^{A})\times \Box^F A\le \Box^F B$.
->>>>>>> 534ceafa4bbeace854320873babf03e08393a7b8
 
 				In addition we have to show that $\Box^F ( B^{A})$ is the greatest element with the previous property.
 				Consider any other $\Box^F C$ s.t. $\Box^F C\times\Box^F A\le \Box^F B$, by definitions, then, $C\times A\le B$
