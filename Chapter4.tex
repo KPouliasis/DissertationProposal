@@ -1,12 +1,22 @@
 \chapter{Curry -- Howard view of justification logic}
 \label{proposal}
-In this paper we suggest reading a constructive necessity  of a formula ($\Box A$) as  internalizing a notion of constructive truth of $A$ 
-(a proof within a deductive system $I$) and validity of $A$
+In this and the following chapter
+we suggest reading a constructive necessity  
+of a formula ($\Box A$) as  internalizing a notion 
+of constructive truth of $A$ 
+(a proof within a deductive system $I$) 
+and validity of $A$
 (a proof under an interpretation  $\llbracket A \rrbracket_J$ within some system $J$).  An example of such a relation is provided by the simply typed lambda calculus
-(as $I$) and its implementation in $SK$ combinators (as $J$). We utilize justification logic to axiomatize the notion of 
-validity-under-interpretation and, hence, treat  a  ``semantical'' notion in a purely proof-theoretic manner. We present the system  in 
+(as $I$) 
+and its implementation in $SK$ combinators (as $J$). 
+We utilize justification logic to axiomatize the notion of 
+validity-under-interpretation and, hence, 
+treat  a  ``semantical'' notion in a purely
+ proof-theoretic manner. We present the system  in 
 Gentzen-style  natural deduction formulation  and provide reduction and expansion rules for the $\Box$ connective. Finally, we add proof-terms and proof-term equalities
-to obtain a corresponding calculus ({\sf{Jcalc$^{-}$}}) that can be viewed as an extension of the Curry--Howard isomorphism with justifications.
+to obtain a corresponding calculus ({\sf{Jcalc$^{-}$}}) in the next chapter.
+The obtained system can be viewed as an extension of the Curry--Howard 
+isomorphism with justifications.
 We provide standard metatheoretic results  and suggest a 
 programming language  interpretation in  languages with foreign function interfaces (\textit{FFI}s).
 
@@ -20,11 +30,15 @@ As an example one could think  $I$  being  Heyting arithmetic and $J$ some  ``st
 (e.g. a classical axiomatization of Peano arithmetic, a classical or intuitionistic set theory etc). 
  In Artemov's work $I$ is assumed to be
 based on intuitionistic logic and $J$  on classical logic. 
-We, initially,  mute such assumptions to focus exclusively on the mechanics of necessity in this framework.
-We recover them later and study  their relation  to  the Rule of Necessitation for our system.
-What's more,  such a semantic relation can be treated logically giving  rise to a modality of explicit necessity. Different sorts of necessity
+We, initially,  mute such assumptions to focus exclusively 
+on the mechanics of necessity in this framework.
+We recover them later and study  their relation  to  
+the Rule of Necessitation for our system.
+What's more,  such a semantic relation can be treated 
+logically giving  rise to a modality of explicit necessity. 
+Different sorts of necessity
 ($K$, $D$, $S4$, $S5$) have been offered  an explicit counterpart under the umbrella of justification logic. Some of them have been studied within a
-Curry--Howard setting ~\cite{ArtBon07LFCS}. Our paper
+Curry--Howard setting ~\cite{ArtBon07LFCS}. Our work
 focuses on  $K$ modality and  should be viewed as the  counterpart of ~\cite{Bellin2001} with justifications as we explain in \ref{relat}.
 \subsection{Deductive Systems, Validity and Necessity}
 Following a framework championed by Lambek \cite{Lambek1968,Lambek1969}, let us  assume two deductive systems $I$ 
@@ -230,20 +244,20 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	(with appropriate renaming of variables -- e.g. $x_i\rightsquigarrow s_i$). For the vacuous case  when $\Gamma$  is  empty 
 	we require $\llbracket\circ \rrbracket = \dagger$ to be well formed.
 	
-	% \begin{mdframed}[nobreak=true,frametitle={\footnotesize Judgments on Context Wellformedness}]
-	% \mbox{\footnotesize
-	% \begin{mathpar}
-	% \inferrule*[right=\small{Nil}] { }{\Turn {\circ} {\sf wf}}
-	% \and
-	% \inferrule*[right=$\Gamma$-Ext] { {\Gamma\in {\sf Prop_0}}\\ { A \in {\sf Prop_0}} \\{x\not\in \Gamma}}{{\Gamma, x: A}\in {\sf Prop_0}}
-	% \and
-	% %\and
-	% %\inferrule*[right=\small{Nil}] { } {\Turn {\circ} {\sf\llbracket wf\rrbracket}}
-	% \inferrule*[right=$\llbracket$\small{ Nil} $\rrbracket$]{ }{\Turn {\dagger= \llbracket \circ \rrbracket} {\sf\llbracket wf\rrbracket}}
-	% \and
-	% \inferrule*[right=$\llbracket\Gamma\rrbracket$] { {  \Gamma  \in {\sf  Prop_0}}} {\llbracket \Gamma \rrbracket \in { \llbracket \sf Prop_0 \rrbracket}}
-	% \end{mathpar}}
-	%\end{mdframed}
+	\begin{mdframed}[nobreak=true,frametitle={\footnotesize Judgments on Context Wellformedness}]
+	\mbox{\footnotesize
+	\begin{mathpar}
+	\inferrule*[right=\small{Nil}] { }{\Turn {\circ} {\sf wf}}
+	\and
+	\inferrule*[right=$\Gamma$-Ext] { {\Gamma\in {\sf Prop_0}}\\ { A \in {\sf Prop_0}} \\{x\not\in \Gamma}}{{\Gamma, x: A}\in {\sf Prop_0}}
+	\and
+	%\and
+	%\inferrule*[right=\small{Nil}] { } {\Turn {\circ} {\sf\llbracket wf\rrbracket}}
+	\inferrule*[right=$\llbracket$\small{ Nil} $\rrbracket$]{ }{\Turn {\dagger= \llbracket \circ \rrbracket} {\sf\llbracket wf\rrbracket}}
+	\and
+	\inferrule*[right=$\llbracket\Gamma\rrbracket$] { {  \Gamma  \in {\sf  Prop_0}}} {\llbracket \Gamma \rrbracket \in { \llbracket \sf Prop_0 \rrbracket}}
+	\end{mathpar}}
+	\end{mdframed}
 	%Certain basic facts about well formed contexts are shown in the appendix \ref{bfcw}. 
 	In the following entry we define proof trees (in turnstile representation) of the intuitionistic source theory $I$.  For all following rules we assume $\Gamma, A,B \in {\sf Prop_0}$:
 	\begin{mdframed}[nobreak=true,frametitle={\footnotesize Judgments on Truth  $\Gamma, A,B \in {\sf Prop_0}$ }]
@@ -600,9 +614,13 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			In addition, given two \emph{semi-HAs}, we are interested in order preserving 
 			functions (functors) $F$ that also preserve products and exponentials: 
 			\begin{mdframed}
+				\textbf{Definition}
+			A function $F$ between two (semi)-HAs ($HA_1$, $HA_2$) is order preserving
+			and commutes with products and exponentials \emph{iff}
 				\begin{enumerate}
-				\item{$F(\phi \wedge\psi) = F(\phi)\wedge(F(\psi))$} 
-				\item{$F(\phi\supset\psi}) = F(\phi) \supset F(\psi)$}
+				\item $\phi\le_{1}\psi\Rightarrow F\phi \le_{2} F\psi$
+				\item{$F(\phi \wedge_{1}\psi) = F(\phi)\wedge_{2}(F(\psi))$} 
+				\item{$F(\phi\supset_{1}\psi}) = F(\phi) \supset_{2} F(\psi)$}
 				\end{enumerate}
 			\end{mdframed}
 			
@@ -610,11 +628,12 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			are of interest. We define a $J$-triplet as follows:
 			\begin{mdframed}
 				\textbf{Definition}
+			A \emph{$J$-triplet} is 
 				
 			\begin{enumerate}
 			\item A semi-Hayting algebra $HA$
 			\item A partial order $J$
-			\item A function order preserving function $F$ from $HA$ to $J$ s.t.
+			\item An order preserving function $F$ from $HA$ to $J$ s.t.
 			\begin{enumerate}
 				\item The image $F(HA)$ forms a semi-Heyting Algebra
 				\item $F$ preserves products and exponentials
@@ -622,16 +641,33 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\end{enumerate}
 		\end{mdframed}
 
-			Given a $J$-triplet we define the pair algebra of $\Box^{F}HA$ as follows:
+			Given a $J$-triplet we define the induced pair algebra
+			$\langle HA, F(HA)\rangle$
+			and name it $\Box^{F}HA$ as follows:
 			\begin{mdframed}
-				\textbf{Definition}
+				\textbf{Definition} Given a $J$-triplet we define the induced 
+				$\Box^{F}HA$ as follows:
 				
 			\begin{enumerate}
 				\item Elements are pairs $\langle A, FA\rangle$ (name them $\Box^{F}A$) where $A\in HA$ and $FA$ its image
 				\item For every two elements  $\Box^{F}A$, $\Box^{F}B$:
-				$$\Box^{F}A \le_\Box^{F}B \Box^{F}B \text{iff} A\le{HA}B \text{and} FA\le_J FB $$ 
+				$$\Box^{F}A \le_{\Box^{F}}B \Box^{F}B \text{iff} A\le{HA}B \text{and} FA\le_J FB $$^{\footnote
+				Actually in a $J$-triplet case (
+					actuallly in a $ A\le{HA}B$ implies $FA\le_J FB$ but the definition of pair algebras
+					of proof systems can be generalized to weaker scenarios as we will sketch in the next section
+				)}
 			\end{enumerate}
 		\end{mdframed}
+		\begin{mdframed}
+			\begin{theorem}\label{thm:PairAlgebra}
+			$\Gamma\vdash_{IPL} \phi \true$ iff for any \vocab{Heyting Algebra} $H$ we have $\Gamma^+\leq\phi^{*}$ where $*$ is  defined as the lifting of any map of $\prop$s to elements of $H$ and $(+)$ is defined inductively on the length of $\Gamma$ as follows
+			\begin{alignat*}{2}
+			  nil^+  &&\quad = & \quad\top\\
+			  (\Gamma,\phi)^+&&\quad = &\quad
+			  \Gamma^+\wedge\phi* \
+			\end{alignat*}
+			\end{theorem}
+			\end{mdframed}
 
 
 
