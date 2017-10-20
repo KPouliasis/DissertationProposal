@@ -1,6 +1,5 @@
 \chapter{Curry -- Howard view of justification logic}
 \label{proposal}
-<<<<<<< HEAD
 In this and the following chapter
 we suggest reading a constructive necessity  
 of a formula ($\Box A$) as  internalizing a notion 
@@ -18,20 +17,6 @@ Gentzen-style  natural deduction formulation  and provide reduction and expansio
 to obtain a corresponding calculus ({\sf{Jcalc$^{-}$}}) in the next chapter.
 The obtained system can be viewed as an extension of the Curry--Howard 
 isomorphism with justifications.
-=======
-In this chapter we suggest reading a constructive necessity  of a formula ($\Box A$) as  internalizing a notion of 
-constructive truth of $A$ 
-(a proof within a deductive system $I$) and validity of $A$
-(a proof under an interpretation  $\llbracket A \rrbracket_J$ within some system $J$).  
-An example of such a relation is provided by the simply typed lambda calculus
-(as $I$) and its implementation in $SK$ combinators (as $J$). 
-We utilize justification logic to axiomatize the notion of 
-validity-under-interpretation and, hence, treat  a  ``semantical'' notion in a purely proof-theoretic manner. 
-We present the system  in 
-Gentzen-style  natural deduction formulation  and provide reduction and expansion rules for the $\Box$ connective. 
-In the subsequent chapter, we add proof-terms and proof-term equalities
-to obtain a corresponding calculus ({\sf{Jcalc$^{-}$}}) that can be viewed as an extension of the Curry--Howard isomorphism with justifications.
->>>>>>> 534ceafa4bbeace854320873babf03e08393a7b8
 We provide standard metatheoretic results  and suggest a 
 programming language  interpretation in  languages with foreign function interfaces (\textit{FFI}s).
 
@@ -47,17 +32,6 @@ As an example one could think  $I$  being  Heyting arithmetic and $J$ some  ``st
 (e.g. a classical axiomatization of Peano arithmetic, a classical or intuitionistic set theory etc). 
  In Artemov's work $I$ is assumed to be
 based on intuitionistic logic and $J$  on classical logic. 
-<<<<<<< HEAD
-We, initially,  mute such assumptions to focus exclusively 
-on the mechanics of necessity in this framework.
-We recover them later and study  their relation  to  
-the Rule of Necessitation for our system.
-What's more,  such a semantic relation can be treated 
-logically giving  rise to a modality of explicit necessity. 
-Different sorts of necessity
-($K$, $D$, $S4$, $S5$) have been offered  an explicit counterpart under the umbrella of justification logic. Some of them have been studied within a
-Curry--Howard setting ~\cite{ArtBon07LFCS}. Our work
-=======
 We, initially,  mute such assumptions to focus exclusively on the mechanics of necessity in this framework.
 We recover them later and study  their relation  to  the Rule of Necessitation for our system.
 What's more,  such a semantic relation can be treated logically giving  rise to a modality of explicit necessity. 
@@ -65,7 +39,6 @@ Different sorts of necessity
 ($K$, $D$, $S4$, $S5$) have been offered  an explicit counterpart under the umbrella of justification logic. 
 Some of them have been studied within a
 Curry--Howard setting ~\cite{ArtBon07LFCS}. Our paper
->>>>>>> 534ceafa4bbeace854320873babf03e08393a7b8
 focuses on  $K$ modality and  should be viewed as the  counterpart of ~\cite{Bellin2001} with justifications as we explain in \ref{relat}.
 \subsection{Deductive Systems, Validity and Necessity}
 Following a framework championed by Lambek \cite{Lambek1968,Lambek1969}, let us  assume two deductive systems $I$ 
@@ -262,27 +235,44 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	For labeled contexts of assumptions we require standard wellformedness conditions (i.e. uniqueness of labels).
 	We use letters $x_i$, or simply $x$, for labels of  contexts with assumptions in $\sf Prop_0$, $x_i'$ or simply $x'$ for contexts with assumptions in   $\sf Prop_1$ and $s_i$, or simply $s$,  
 	for $\sf \llbracket Prop_0 \rrbracket$ contexts. 
-	We use $\circ$ for the empty context of ${\sf Prop_0}$ and ${\sf Prop_1}$ and  $\dagger$ for the empty context of ${ \llbracket {\sf Prop_0}\rrbracket}$.
+	We use $\circ$ and $\Box\circ$ for the empty context of ${\sf Prop_0}$ and ${\sf Prop_1}$ respectively
+	and  $\dagger$ for the empty context of ${ \llbracket {\sf Prop_0}\rrbracket}$.
 	%We ``overload" the use of $\in$ symbol and write $x\not\in\Gamma$ to denote that ``the label $x$ is not present in the domain of $\Gamma$".
-	We abuse notation and write $x:A\in\Gamma$ (or, similarly, $s:\llbracket A\rrbracket\in\Delta$) to denote that the label $x$ is assigned type $A$ in $\Gamma$; or $\Gamma\in {\sf Prop_0}$ 
+	We abuse notation and write $x:A\in\Gamma$ 
+	(or, similarly, $s:\llbracket A\rrbracket\in\Delta$) 
+	to denote that the label $x$ is assigned type $A$ in $\Gamma$; 
+	or $\Gamma\in {\sf Prop_0}$ instead of $\Turn {\Gamma}{\sf wf_0}$
 	(resp. $\Gamma \in {\sf Prop_1}$, $\Delta\in {\sf \llbracket Prop_0\rrbracket}$)  
 	to denote that  $\Gamma$ is a wellformed context  with  co--domain of elements in ${\sf Prop_0}$ (resp. in ${\sf Prop_1}$, $\llbracket {\sf Prop_0}\rrbracket$).
-	For $\Gamma \in {\sf Prop_0}$ we define  $\llbracket \Gamma\rrbracket$ as  the lifting of the context $\Gamma$ through the $\llbracket \bullet \rrbracket$  symbol 
-	(with appropriate renaming of variables -- e.g. $x_i\rightsquigarrow s_i$). For the vacuous case  when $\Gamma$  is  empty 
-	we require $\llbracket\circ \rrbracket = \dagger$ to be well formed.
+	For $\Gamma \in {\sf Prop_0}$ we define  $\llbracket \Gamma\rrbracket$ as 
+	 the lifting of the context $\Gamma$ through the $\llbracket \bullet \rrbracket$  symbol 
+	(with appropriate renaming of variables -- e.g. $x_i\rightsquigarrow s_i$), similarily
+	we define the $\Box \Gamma$ operation . 
+	For the vacuous cases  when $\Gamma$  is  the empty context
+	we require $\llbracket\circ \rrbracket = \dagger$  
+	and $\Box \Gamma=\Box\circ$to be well formed.
 	
 	\begin{mdframed}[nobreak=true,frametitle={\footnotesize Judgments on Context Wellformedness}]
 	\mbox{\footnotesize
 	\begin{mathpar}
-	\inferrule*[right=\small{Nil}] { }{\Turn {\circ} {\sf wf}}
+	\inferrule*[right=\small{Nil}] { }{\Turn {\circ} {\sf wf_0}}
 	\and
-	\inferrule*[right=$\Gamma$-Ext] { {\Gamma\in {\sf Prop_0}}\\ { A \in {\sf Prop_0}} \\{x\not\in \Gamma}}{{\Gamma, x: A}\in {\sf Prop_0}}
+	\inferrule*[right=$\Gamma$-Ext] { 
+		{\Turn{\Gamma} {\sf wf_0}}\\ 
+	{ A \in {\sf Prop_0}} \\{x\not\in \Gamma}}{\Turn{\Gamma, x: A}{\sf wf_0} }
 	\and
 	%\and
 	%\inferrule*[right=\small{Nil}] { } {\Turn {\circ} {\sf\llbracket wf\rrbracket}}
-	\inferrule*[right=$\llbracket$\small{ Nil} $\rrbracket$]{ }{\Turn {\dagger= \llbracket \circ \rrbracket} {\sf\llbracket wf\rrbracket}}
+	\inferrule*[right=$\llbracket$\small{ Nil} $\rrbracket$]{ }
+	{\Turn {\dagger= \llbracket \circ \rrbracket} {\sf  \llbracket wf_0\rrbracket}}
 	\and
-	\inferrule*[right=$\llbracket\Gamma\rrbracket$] { {  \Gamma  \in {\sf  Prop_0}}} {\llbracket \Gamma \rrbracket \in { \llbracket \sf Prop_0 \rrbracket}}
+	\inferrule*[right=$\llbracket\Gamma\rrbracket$] { {\Turn \Gamma  {\sf  wf_0}}} {\Turn {\llbracket \Gamma \rrbracket}  { \llbracket {\sf wf_0} \rrbracket}}
+	\and
+	\inferrule*[right=$\Box$\small{ Nil}]{ }
+	{\Turn {\Box \circ} {\sf   wf_1}}
+	\and
+	\inferrule*[right=$\Box\Gamma$] { {\Turn \Gamma  {\sf  wf_0}}} {
+		\Turn {\Box\Gamma}  {  {\sf wf_1}}}
 	\end{mathpar}}
 	\end{mdframed}
 	%Certain basic facts about well formed contexts are shown in the appendix \ref{bfcw}. 
@@ -620,11 +610,12 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\begin{mdframed}
 				\textbf{Definition}
 			A function $F$ between two (semi)-HAs ($HA_1$, $HA_2$) is order preserving
-			and commutes with products and exponentials \emph{iff} for every 
+			and commutes with top, products and exponentials \emph{iff} for every 
 			$\phi,\psi \in HA_1$
 				\begin{enumerate}
 				\item $\phi\le_{HA_1}\psi\Rightarrow F\phi\le_{HA_2}F\psi$
-				\item{$F(\phi \times\psi) = F(\phi)\times(F(\psi))$} 
+				\item $F\top_{HA_1} = \top_{HA_2}$ 
+				\item{$F(\phi \times\psi) = F(\phi)\times(F(\psi)$} 
 				\item $F(\phi\rightarrow \psi) = F(\psi)\rightarrow F(\phi)$
 				\end{enumerate}
 			\end{mdframed}
@@ -641,7 +632,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\item An order preserving function $F$ from $HA$ to $J$ s.t.
 			\begin{enumerate}
 				\item The image $F(HA)$ forms a semi-Heyting Algebra
-				\item $F$ preserves products and exponentials
+				\item $F$ preserves top, products and exponentials
 			\end{enumerate}
 			\end{enumerate}
 			\end{mdframed}
@@ -658,7 +649,8 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\end{mdframed}
 
 			\begin{theorem}
-				For any triplet $(K,L,F)$ of $HA$s with an order preserving function $F:K\Rightarrow$
+				For any triplet $(K,L,F)$ of $HA$s with an order 
+				preserving function $F:K\rightarrow L$
 				the algebra of $F$-points is a partial order.
 			\end{theorem}
 			\begin{proof}
@@ -676,13 +668,15 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				\item Elements are pairs $\langle A, FA\rangle$ (name them $\Box^{F}A$) where $A\in HA$ and $FA$ its image
 				\item For every two elements $\Box^{F}A$, $\Box^{F}B$:
 
-				$\Box^{F}A \le\Box^{F}B \text{ iff } A\le_{HA}B \text{and} FA\le_J FB $ 
+				$\Box^{F}A \le\Box^{F}B \text{ \textit{iff} } A\le_{HA}B 
+				\text{ \textit{and} } FA\le_J FB $ 
 				
 				\item It is a Heyting algebra with:
 				\begin{itemize}
+					\item $\Box^F\top := \langle \top_{HA}, F\top_{HA}=\top_J \rangle$ 
 					\item Elements of the form $\Box^F (A \times B)$ 
 					forming products (we name them $\Box^F A\times \Box^F B$)
-					\item Elements of the form $\Box^F ( B^{A})$ 
+					\item Elements of the form $\Box^F ( A\rightarrow B)$ 
 					forming exponentials (name them $\Box^F{A}\rightarrow \Box^F B$)
 				\end{itemize}
 			\end{enumerate}
@@ -690,27 +684,46 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\begin{theorem}[$\Box^{F}HA$ is Heyting]
 			\end{theorem}
 			\begin{proof}
-				For any two elements $\Box^F A$, $\Box^F B$, the element $\Box^F (A \times B)$ forms their product since,
-				$A \times B\le A$ in $HA$ and $F(A\times B)=FA\times FB \le FA$ and thusly, 
-				$\Box^F (A \times B)\le \Box^FA$.
-				Analogously, $\Box^F (A \times B)\le \Box^FA$. 
-				In addition we need to show that, for any $\Box^F C$ s.t. $\Box^F C\le \Box^F A $ and 
+				$Box \top$ is a top element since for any $A\in HA, 
+				$A\le \top$ a
+				For any two elements $\Box^F A$, $\Box^F B$, 
+				the element $\Box^F (A \times B)$ forms their product since,
+				$A \times B\le A$ in $HA$ and $F(A\times B)=FA\times FB \le FA$
+				in $J$, and thusly, 
+				$\Box^F (A \times B)\le \Box^FA$ (in $\Box^F HA$).
+				Analogously, $\Box^F (A \times B)\le \Box^FA$.
+
+				In addition, $\Box^F (A \times B)$ is the product we need to show 
+				that is the greatest element with the previous property.
+				I.e. for any $\Box^F C$ s.t. $\Box^F C\le \Box^F A $ and 
 				$\Box^F C\le \Box^F B $ we get $\Box^F C\le\Box^F(A\times B)$. 
 				By the definition for any such  $\Box^F C$ we have $C\le A\times B$
 				and $FC\le F(A\times B)$ which imply that $\Box^F C\le\Box^F(A\times B)$
 
-				To show that  $\Box^F A \rightarrow \Box^F B:= $ is the  
+				To show that  $\Box^F(A\rightarrow B)$ is the  
 				exponential of $\Box^FA$, $\Box^FB$, 
-				we have to show, first that $\Box^F ( B^{A})\times\Box^F A\le \Box^F B$.
-				By definition $\Box^F ( B^{A})\times\Box^F A :=\Box^F( B^{A}\times A)$. Also
-				for the underlying exponentials we have $ B^{A}\times A\le B$ and 
-				$F(B^{A}\times A)= FB^{FA}\times FA \le FB$ which by definition of $\Box^F HA$
-				gives   $\Box^F(B^{A}\times A)\le \Box^F(B)$ and hence, by definition, $\Box^F ( B^{A})\times \Box^F A\le \Box^F B$.
+				we have to show, first that 
+				$\Box^F ( A\rightarrow B)\times\Box^F A\le \Box^F B$.
+				By the $\Box^F HA$ product definition 
+				$\Box^F ( A\rightarrow B)\times\Box^F A :=\Box^F( (A\rightarrow B)\times A)$. 
+				Also
+				by the underlying exponentials we have $ (A\rightarrow B)\times A\le B$ 
+				and  $F((A\rightarrow B)\times A)= (FA\rightarrow FB)\times FA \le FB$
+				which by definition of $\Box^F HA$ gives   
+				$\Box^F((A\rightarrow B)\times A)\le \Box^F B$ 
+				and hence, by definition, 
+				$\Box^F ( A\rightarrow B)\times \Box^F A\le \Box^F B$.
 
-				In addition we have to show that $\Box^F ( B^{A})$ is the greatest element with the previous property.
-				Consider any other $\Box^F C$ s.t. $\Box^F C\times\Box^F A\le \Box^F B$, by definitions, then, $C\times A\le B$
-				 and $FC\times FA\le FB$. By the definitions of the underlying exponentials we get $C\le B^A$ and 
-				 $FC \le FA^FB =F(B^A)$. Thusly, $\Box^F C\le \Box^F(B^A)$  
+				In addition we have to show that 
+				$\Box^F ( A\rightarrow B)$ is the 
+				greatest element with the previous property.
+				Consider any other $\Box^F C$ s.t. $\Box^F C\times\Box^F A\le \Box^F B$, 
+				by definitions of $\Box^F$ and its products then, $C\times A\le B$
+				 and $FC\times FA\le FB$.
+				  By the definitions of the underlying exponentials 
+				 we get $C\le A\rightarrow B$ and 
+				 $FC \le FA\rightarrow FB =F(A\rightarrow B)$. 
+				 And again by definition of $\Box^F HA$, $\Box^F C\le \Box^F(A\rightarrow B)$.  
 			\end{proof}
 
 
@@ -721,13 +734,14 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				of   $HA$, $F(HA)$, $\Box^{F}HA$
 			\end{mdframed}
 			
-				\begin{theorem}\label{thm:cmpha}[Soundness and completness]
-				$\Gamma\vdash_{Jcal}\phi \true$ iff for any \vocab{Jcalc Algebra} $JC$ ($HA,F,J$)we have 
+				\begin{theorem}\label{thm:cmpjtriplet}
+					\textbf{Soundness and completness}\\
+				$\Gamma\vdash_{Jcal}\phi$ iff for any \vocab{Jcalc Algebra} $JC$ ($HA,F,J$)we have 
 				$\Gamma^+\leq\phi^{*}$ where $*$ is  defined as 
-				the extension of any map of atomic $\prop$s to elements of $HA$ and $(+)$ 
-				is defined inductively on the length of $\Gamma$ as follows
+				the extension of any map of atomic $\prop$s ($p_i$) to elements of $HA$ and $(+)$ 
+				is defined inductively on the length of $\Gamma$.
 				\begin{alignat*}{2}
-					(\top)* &&\quad= & \quad\top_J\\
+					(\top)* &&\quad= & \quad\top\\
 					(A\wedge B \in Prop_0)*  &&\quad = & \quad  A*\times_{HA}B*\\
 					(A\supset B \in Prop_0)*  &&\quad = & B*^{A*}\\
 					(\llbracket A\rrbracket)* && \quad = & FA*\\
