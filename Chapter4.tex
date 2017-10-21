@@ -139,12 +139,13 @@ Using standard, proof tree notation with labeled assumptions we formulate our ru
 	\end{mathpar}
 }
 We can, easily, generalize to $\Box$ed contexts (of the form $\Box A_1, \ldots,  \Box A_i$) of arbitrary length:
-\\
+
 \mbox{\small
 	\begin{mathpar}
-		\inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i} $] {{\infer*{\Box  A_1}{}}\\{\ldots}\\
-			{\infer*{\Box  A_i}{}}\\	{\inferrule*{}
-				{\inferrule*[vdots=1.5em, right=$\vec{x}$]{ }{\Gamma': A_1,\ldots  A_i}\\\\
+		\inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i} $] {
+			{\infer*{\Box A_1\ldots\Box  A_i}{}}\\	{\inferrule*{}
+				{\inferrule*[vdots=1.5em, right=$\vec{x}$]{ }
+				{\Gamma': A_1,\ldots  A_i}\\\\
 					\inferrule*[]{}{ B}}}\\
 			{\inferrule*{}
 				{\inferrule*[vdots=1.5em, right=$\vec{s}$]{ }{\llbracket \Gamma'\rrbracket:\llbracket  A_1\rrbracket,\ldots \llbracket  A_i\rrbracket}\\\\
@@ -153,7 +154,7 @@ We can, easily, generalize to $\Box$ed contexts (of the form $\Box A_1, \ldots, 
 		
 	\end{mathpar}
 }
-\\
+
 We read as ``Introducing $\Box B$ after eliminating $\Box A_1 \ldots \Box A_i $ crossing out (vectors of) labels $\vec{x}, \vec{s}$ ". 
 Interestingly, the same rule eliminates boxes  and introduces new ones. 
 This  is not surprising for $K$ modality (it is a left-right rule as we will see (\ref{seqcalc}).
@@ -739,10 +740,11 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			
 				\begin{theorem}\label{thm:cmpjtriplet}
 					\textbf{Soundness and completness}\\
-				$\Gamma\vdash_{Jcal}\phi$ iff for any \vocab{Jcalc Algebra} $JC$ ($HA,F,J$)we have 
-				$\Gamma^+\leq\phi^{*}$ where $*$ is  defined as 
-				the extension of any map of atomic $\prop$s ($p_i$) to elements of $HA$ and $(+)$ 
-				is defined inductively on the length of $\Gamma$.
+				$\Gamma\vdash_{Jcal}\phi$ iff for any \vocab{Jcalc Algebra}  $JC$ ($HA,F,J$)
+				and any $*$ map that extends  a maps of atomic $\prop$s ($p_i$) to elements of $HA$ 
+				with properties shown below and $(+)$ 
+				is defined inductively on the length of $\Gamma$ as shown below
+				then $\Gamma^+\leq\phi^{*}$.
 				\begin{alignat*}{2}
 					(\top)* &&\quad= & \quad\top\\
 					(A\wedge B \in Prop_0)*  &&\quad = & \quad  A*\times_{HA}B*\\
@@ -826,15 +828,14 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 					\end{itemize}
 				\end{itemize}
 				Now assume that $\Gamma^{+}\le\phi*$ for any Jcalc algebra and 
-				mapping $*$ as described below then by case analysis: 
-				\begin{enumerate}
-					\item $\Gamma,\phi\in {\sf Prop_0}, \llbracket{\sf Prop_0}\rrbracket $ 
-
+				mapping $*$ and consider  $*$ to extend  the identity mapping  
+				into the (free) J-calc algebra defined above. It is easy to see that in JCalc
+				$\Gamma\vdash\phi$. E.g. assume, without loss of generality,
+				that $\Gamma$ is of the form $\Box\phi_1,\ldots\Box\phi_n$ then
+				$\Box\phi_1\wedge\ldots\Box\phi_n\le\phi$ in the free JCalc algebra
+				under identity and
+				thus $\Box\phi_1\wedge\ldots\Box\phi_n\le\vdash\phi$ by the construction above which
+				gives trivially $\Gamma\vdash\phi$ (since $\Gamma\vdash\Box\phi_1\wedge\ldots\Box\phi_n$)
 
 			\end{proof}
-			To prove soundness and compl
-			\begin{theorem}[Soundness and Completeness]
-				Define a syntatic
-			\end{theorem}
-		\begin{theorem}
-		\end{theorem}
+
