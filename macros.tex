@@ -12,6 +12,8 @@
 \usepackage{tikz-cd}
 \usepackage{centernot}
 \usepackage{listings}
+\usepackage[usestackEOL]{stackengine}
+
 \usetikzlibrary{shapes.geometric}
 \usepackage[framemethod=TikZ]{mdframed}
 \mdfdefinestyle{MyFrame}{%
@@ -224,3 +226,18 @@
 \newcommand*{\PrTriSm}[1]{\begin{tikzpicture}
 	\node[buffer2]{#1};
 	\end{tikzpicture}}
+
+\newcommand\functor[1][l]{\csname#1functor\endcsname}
+\newcommand\lfunctor[3]{%
+	\setbox0=\hbox{$#2$}%
+	\kern\wd0%
+	\ensurestackMath{\Centerstack[c]{#1\\ \mathllap{#2\;\,}\mathclap{\DownArrow}\\#3}}%
+}
+\newcommand\rfunctor[3]{%
+	\setbox0=\hbox{$#2$}%
+	\ensurestackMath{\Centerstack[c]{#1\\\mathclap{\DownArrow}\mathrlap{\,\;#2}\\#3}}%
+	\kern\wd0%
+}
+\newcommand\functormapsto{\mathrel{\ensurestackMath{\Centerstack[c]{\longmapsto\\ \\\longmapsto}}}}
+\setstackgap{L}{1.3\normalbaselineskip}
+\newcommand\DownArrow{\rotatebox[origin=c]{-90}{$\longrightarrow$\,}}
