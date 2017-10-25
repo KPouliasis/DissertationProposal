@@ -1,0 +1,151 @@
+\chapter{Notes on extending the calculus}
+In this chapter we will make an informal case about the scalability
+of the presented system. We will sketch how the calculus can
+quite easily be extended in different ways 
+and make a case that such extensions are of interest from the trinitarian (logic/ type theory/ category theory)
+point of view.
+
+\section{Extending on higher order modal types}
+We saw in Chapter $6$ how the calculus corresponds to Jcalc algebras
+which are essentially pairs of Heyting algebras under an order preserving function.
+The points of such functions correspond to $\Box$ed types.
+
+\begin{tikzpicture}[description/.style={fill=white,inner sep=2pt}]
+    \matrix (m) [matrix of math nodes, row sep=3em,
+    column sep=2.5em, text height=1.5ex, text depth=0.25ex]
+    { A & & FA  \\
+    B & & FB \\ };
+    %\draw[double,double distance=5pt] (m-1-1) – (m-1-3);
+    \path[-,font=\scriptsize]
+    (m-1-1) edge[double,thick,double distance=5pt] node[auto] {$ \Box A $} (m-1-3)
+    (m-2-1) edge[double,thick,double distance=5pt] node[auto] {$ \Box B $} (m-2-3)
+    (m-1-1) edge node[auto] {$ \vdash $} (m-2-1)
+    (m-1-3) edge node[auto] {$ \vdash $} (m-2-3);
+    \end{tikzpicture}
+
+This structure is easily
+extensible to account for $\Box$ed types of higher degree. Instead of a pair of 
+Heyting algebras we could have a stack of Heyting algebras related with order preserving
+functions as shown in the schema.
+
+\begin{tikzpicture}[description/.style={fill=white,inner sep=2pt}]
+    \matrix (m) [matrix of math nodes, row sep=3em,
+    column sep=2.5em, text height=1.5ex, text depth=0.25ex]
+    { A & & F_0A & & F_1F_0A \\
+      B & & F_0B & & F_1F_0B\\ };
+    %\draw[double,double distance=5pt] (m-1-1) – (m-1-3);
+    \path[-,font=\scriptsize]
+    (m-1-1) edge[double,thick,double distance=5pt] node[auto] {$ \Box A $} (m-1-3)
+    (m-2-1) edge[double,thick,double distance=5pt] node[auto] {$ \Box B $} (m-2-3)
+    (m-1-3) edge[double,thick,double distance=5pt] node[auto] {$ \Box FA $} (m-1-5)
+    (m-2-3) edge[double,thick,double distance=5pt] node[auto] {$ \Box FB $} (m-2-5)
+    (m-1-1) edge[bend left = 30] node[auto] {$ \Box\Box A $} (m-1-5)
+    (m-2-1) edge[bend right = 30] node[auto] {$ \Box\Box B $} (m-2-5)
+    (m-1-1) edge node[auto] {$ \vdash $} (m-2-1)
+    (m-1-3) edge node[auto] {$ \vdash $} (m-2-3)
+    (m-1-5) edge node[auto] {$ \vdash $} (m-2-5);
+    \end{tikzpicture}
+
+
+In a nutshell, instead 
+of one function symbol $\llbracket \rrbracket$ 
+the system can 
+be axiomatized to reason about chains of 
+composable (provability) preserving functions. 
+The modifications required are minor to obtain such a system.
+Instead of a function symbol $\llbracket \rrbracket$ we have $F_0, F_1\ldots F_j$ and we 
+define for any formula $\Box A\in {\sf Prop_i}$, 
+$F_i\Box A:= \Box F_i A$ (
+    and similarly, lifting over the connectives: 
+$F_i(\Box A\supset \Box B):= \Box F_i A\supset\Box F_i B$)
+the rule can then be written:
+
+\begin{mdframed}[nobreak=true, frametitle={\footnotesize 
+    Judgments on Necessity with $\Gamma\in {\sf Prop_i} \text{,{\ \sf length}}(\Gamma)=i\text{,\ }
+    \ 1\le k\le j  \text{\ and, }\Gamma^{\prime},A, A_k,  B\in {\sf Prop_{i-1}}$ }]
+\mbox{\footnotesize
+    \begin{mathpar}
+        \inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i}$]
+        {{(\forall  A_i \in \Gamma'. \ \Turn {\Gamma}{\Box  A_i})}\\{\Turn {\Gamma'} { B}}\\{\Turn {F_i\Gamma'} {F_i  B} }} {\Turn {\Gamma}\Box  B}
+        
+    \end{mathpar}}
+\end{mdframed}
+
+
+
+
+\section{From order theory to category theory}
+There is a classic passage from orders to categories, 
+which corresponds to the passage of provability to 
+proof relevance. In addition, order preserving functions become 
+functors in the categorical scenario. But functors behave functionally
+on terms (i.e. preserve proof equalities, or essentially, normalization principles of the cut elimination process).
+To account, hence, for 
+a categorical semantics of the system one has to account for equality
+in the higher level of the system (i.e. on justifications).
+
+This idea is actually not foreign in the litarature that explores the relation
+between lambda calculus and (typed) combinatory logic and, in addition,
+it is tempting to introduce equality between justifications so that one
+could more accurately describe computational phenomena arising when 
+a language interacts with another language (or, its own modules).
+
+Generalizing, from the order theoretic semantics, we would expect a system
+in which $\llbracket\rrbracket$ would correspond to functors 
+(preserving the connectives and hence, $\beta\eta$ equalities). 
+We are expecting the extension of Jcalc with rules for $\beta\eta$ equalities 
+on the level of justifications to fit exactly the bill. The required 
+equalities that correspond to $\beta$ reduction are standard in presentations of 
+the $SK$ calculus. 
+\begin{mdframed}
+    \begin{mathpar}
+        \inferrule*[right=$K_\beta$]{}{\Delta\vdash K*J_1*J_2 = J_1}
+        \inferrule*[right=$S_\beta$]{} {\Delta\vdash S*J_1*J_2*J_3 = J_1*J_3(J_2*J_3)}
+\end{mdframed}
+Rules corresponding to $\eta$ equality are less obvious 
+but can be found in the excellent \cite{}. We also require a that tells now 
+that $\llbracket\rrbracket$ (or, $F_0$ in an extended system) is functorial (functional)
+on terms
+\begin{mdframed}
+    \begin{mathpar}
+        \inferrule*[right=$K_\beta$]{\Gamma\vdash M =_{\beta\eta} N :A}{\Delta\vdash \llbracket M\rrbracket=\rrbracket N\rrbracket :
+        \llbracket A \rrbracket}
+        \inferrule*[right=$S_\beta$]{} {\Delta\vdash S*J_1*J_2*J_3 = J_1*J_3(J_2*J_3)}
+    \end{mathpar}
+\end{mdframed}
+Following the know results one can show that $\llbracket \rrbracket$  corresponds to functors
+that preserve products and exponentials (of cartesian closed categories)
+and have the following properties:
+
+
+
+
+\begin{mdframed}[nobreak=true, frametitle={Reduction rules on justifications }]
+\mbox{\footnotesize
+    \begin{mathpar}
+        \inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i}$]
+        {{(\forall  A_i \in \Gamma'. \ \Turn {\Gamma}{\Box  A_i})}\\{\Turn {\Gamma'} { B}}\\{\Turn {F_i\Gamma'} {F_i  B} }} {\Turn {\Gamma}\Box  B}
+        
+    \end{mathpar}}
+\end{mdframed}
+
+
+
+
+\section {Adding equalities to the justification logic system}
+
+\subsection {Factivity and adjunctions}
+Having an understanding of the system in categorical terms helps 
+thinking about extensions in such terms too. In any category theoretic
+textbook, the next ``tighter" relation between categories is that of an adjunction.
+Interestingly, the notion of adjunction, is also central in the relation
+between classical and intuitionistic proofs (the two parts of the adjunction
+are inclusion, and double negation translation).  The notion of adjunction, plays
+an important role in functional programming theory as the backbone 
+of monadic computation. 
+We would expect that the view of necessity as 
+relating two proofs systems could extend to cover the notion of adjunction.
+We would expect a rule of the form:
+
+
+
