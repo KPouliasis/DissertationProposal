@@ -1,8 +1,10 @@
 \chapter{Notes on extending the calculus}
+
 In this chapter we will make an informal case about the scalability
 of the presented system. We will sketch how the calculus can
 quite easily be extended in different ways 
-and make a case that such extensions are of interest from the trinitarian (logic/ type theory/ category theory)
+and make a case that such extensions are of interest from 
+the trinitarian (logic/ type theory/ category theory)
 point of view.
 
 \section{Extending on higher order modal types}
@@ -25,7 +27,8 @@ The points of such functions correspond to $\Box$ed types.
 
 This structure is easily
 extensible to account for $\Box$ed types of higher degree. Instead of a pair of 
-Heyting algebras we could have a stack of Heyting algebras related with order preserving
+Heyting algebras we could have a stack of Heyting algebras 
+related with order preserving
 functions as shown in the schema.
 
 \begin{tikzpicture}[description/.style={fill=white,inner sep=2pt}]
@@ -75,6 +78,7 @@ the rule can then be written:
 
 
 \section{From order theory to category theory}
+
 There is a classic passage from orders to categories, 
 which corresponds to the passage of provability to 
 proof relevance. In addition, order preserving functions become 
@@ -100,52 +104,68 @@ the $SK$ calculus.
 \begin{mdframed}
     \begin{mathpar}
         \inferrule*[right=$K_\beta$]{}{\Delta\vdash K*J_1*J_2 = J_1}
+        \and
         \inferrule*[right=$S_\beta$]{} {\Delta\vdash S*J_1*J_2*J_3 = J_1*J_3(J_2*J_3)}
-\end{mdframed}
+    \end{mathpar}
+    \end{mdframed}
 Rules corresponding to $\eta$ equality are less obvious 
-but can be found in the excellent \cite{}. We also require a that tells now 
+but can be found in the excellent \cite{}. Similarly, equalities regarding (\wedge)
+combinators can be introduced. 
+We also need an axiom  that expressed 
 that $\llbracket\rrbracket$ (or, $F_0$ in an extended system) is functorial (functional)
 on terms
 \begin{mdframed}
     \begin{mathpar}
         \inferrule*[right=$K_\beta$]{\Gamma\vdash M =_{\beta\eta} N :A}{\Delta\vdash \llbracket M\rrbracket=\rrbracket N\rrbracket :
-        \llbracket A \rrbracket}
-        \inferrule*[right=$S_\beta$]{} {\Delta\vdash S*J_1*J_2*J_3 = J_1*J_3(J_2*J_3)}
+        \llbracket A \rrbracket}    
     \end{mathpar}
 \end{mdframed}
-Following the know results one can show that $\llbracket \rrbracket$  corresponds to functors
-that preserve products and exponentials (of cartesian closed categories)
-and have the following properties:
+We expect that such a system is a full axiomatization  of functors
+that preserve products and exponentials (of cartesian closed categories) 
+Which are common in the litarature in proofs of the (syntactical) 
+embedding of the lambda calculus into combinatory logic.
 
 
 
-
-\begin{mdframed}[nobreak=true, frametitle={Reduction rules on justifications }]
-\mbox{\footnotesize
-    \begin{mathpar}
-        \inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i}$]
-        {{(\forall  A_i \in \Gamma'. \ \Turn {\Gamma}{\Box  A_i})}\\{\Turn {\Gamma'} { B}}\\{\Turn {F_i\Gamma'} {F_i  B} }} {\Turn {\Gamma}\Box  B}
-        
-    \end{mathpar}}
-\end{mdframed}
-
-
-
-
-\section {Adding equalities to the justification logic system}
-
-\subsection {Factivity and adjunctions}
-Having an understanding of the system in categorical terms helps 
-thinking about extensions in such terms too. In any category theoretic
+\section {Factivity and adjunctions}
+Having an understanding of the system in order theoretic/ categorical terms 
+helps thinking about extensions. In any category theoretic
 textbook, the next ``tighter" relation between categories is that of an adjunction.
 Interestingly, the notion of adjunction, is also central in the relation
 between classical and intuitionistic proofs (the two parts of the adjunction
 are inclusion, and double negation translation).  The notion of adjunction, plays
 an important role in functional programming theory as the backbone 
 of monadic computation. 
+
 We would expect that the view of necessity as 
-relating two proofs systems could extend to cover the notion of adjunction.
-We would expect a rule of the form:
+relating two proof systems could be extended to cover the notion of an adjunction.
+In order theoretic terms an adjunction between two preorders $\mathcal{C},\mathcal{D}$
+is a pair of orderd preserving functions $L:\mathcal{D}\rightarrow C$, $R:\mathcal{C}\rightarrow{D}$
+such that there is an isomorphism:
+$\forall d\in  D, c\in C Ld\ le c \longleftrightarrow d\le R c$. A logically interesting example of 
+an adjunction is that between intuitionistic proofs and classical proofs where the $L$ adjunct is inclusion
+and the right adjunct is double negation translation and we have:
+\begin{mathpar}
+    \inferrule*[right=$\downarrow\uparrow$]{I(\Gamma)\vdash\phi}{\Gamma\vdash\neg\neg \phi} 
+\end{mathpar}
+To axiomatize such notions in $Jcalc$ one should add another function symbol to 
+correspond to $R$ and add the rule:  
+\begin{mathpar}
+    \inferrule*[right=$R$]{\llbracket\Gamma\rrbracket\vdash_J j:\phi}
+    {\Gamma\vdash return{j}:R\phi} 
+\end{mathpar}
+
+This is enough to obtain a generalized notion of Factivity that is:
+\begin{mathpar}
+    \inferrule*[right=$R$]{\llbracket\Gamma\rrbracket\vdash M:\Box\phi}
+    {\Gamma\vdash let \_&s=M in return (s):R\llbracket\phi\rrbracket} 
+\end{mathpar}
+Such an extension gives the standard factivity rule if $R\llbracket\rrbracket=id$.
+Such extensions can capture phenomena in which a language is giving control to another language
+to perform a computation externally but then it retains to control to calculate the continuation
+of the client program. Refine example above.
+
+
 
 
 
