@@ -1,7 +1,7 @@
 \chapter{Intuitionistic Logic}\label{intui}
 \section{Intuitionism}\label{sec:intrui}
-In this Chapter, I will be presenting foundational work in the intersection of \emph{Intuitionistic Logic} and \emph{Type Theory}. 
-The presentation is scaffolding following Prof. Robert Harper's lecture videos in \emph{Homotopy Type Theory}~\cite{HarperHOTT} and the accompanying notes by students of the class~\cite{HOTTNotes1}. I will often deviate to standard textbooks in the field ~\cite{Barendregt1984-BARTLC},~\cite{citeulike:993095},~\cite{Pierce:2002:TPL:509043} to present further important results. 
+In this and the subsequent chapter, I will be presenting foundational work in the intersection of \emph{Intuitionistic Logic} and \emph{Type Theory}. 
+The presentation is scaffolding following Robert Harper's lecture videos in \emph{Homotopy Type Theory}~\cite{HarperHOTT} and the accompanying notes by students of the class~\cite{HOTTNotes1}. I will often deviate to standard textbooks in the field ~\cite{Barendregt1984-BARTLC},~\cite{citeulike:993095},~\cite{Pierce:2002:TPL:509043} to present further important results. 
 \subsection{A bird's eye view}  
 In a nutshell, \emph{Intuitionistic mathematics}  is a program in foundations 
 of mathematics  that extends \emph{Brouwer's program}~\cite{brouwer1975collected}.
@@ -14,7 +14,7 @@ computational interpretations. In the following I will be using the terms intuti
 and \emph{constructive} interchangeably.  
 
 For the purposes of this paper, the main diverging point of Brouwer's program, 
-later explicated by Heyting ~\cite{heyting1966intuitionism} and Kolmogorov~\cite{kolmogorov1925principe}~\cite{artemov2004kolmogorov}, lies in the treatment of proofs. In contrast to classical approaches to foundations 
+later explicated by Heyting~\cite{heyting1966intuitionism} and Kolmogorov~\cite{kolmogorov1925principe}~\cite{artemov2004kolmogorov}, lies in the treatment of proofs. In contrast to classical approaches to foundations 
 that treat proof objects as external to theories, the constructive approach treats proofs 
 as the fundamental forms of construction and hence, as first class citizens. 
 As a result, the constructive view of logic draws heavily from proof theory
@@ -54,7 +54,10 @@ approach and the classical one i.e the (default) absence of the
 
 \section{IPL}
 \ac{IPL} can be viewed as ``the logic of \emph{proof relevance}" conforming with the intuitionistic view described in \ref{sec:intrui}. To judge a fact as \emph{true} one may provide a \emph{proof}
-appropriate of the fact. \emph{Proofs} can be synthesized to obtain proofs for more complex facts (\emph{introduction rules}) and consumed to provide proofs relevant for other  facts (\emph{elimination rules}). The importance of the interplay between introduction and elimination rules was developed by Gentzen. A discussion on the meaning of the logical connectives that is prevalent in \emph{MLTT} can be found in \cite{martin1996meanings} 
+appropriate of the fact. \emph{Proofs} can be synthesized to obtain 
+proofs for more complex facts (\emph{introduction rules}) and consumed
+ to provide proofs relevant for other  facts (\emph{elimination rules}). The importance of the interplay between introduction and elimination rules was developed by Gentzen. 
+ A discussion on the meaning of the logical connectives that is prevalent in \emph{MLTT} can be found in \cite{martin1996meanings} 
 Following the presentation style  by   Martin-L\"{o}f we split the notions of \emph{judgment} and \emph{proposition}. We have two main kinds of judgments:
 \begin{itemize}
 \item  \emph{Judgments} that are logical arguments about the truth(or, equivalently, proof) of a \emph{proposition}. They might, optionally, involve assumptions on the truth (or, equivalently, proof) of other propositions. We might call these \emph{logical judgments}. 
@@ -99,7 +102,7 @@ The natural deduction system of \ac{IPL} is given below:
 \begin{mathpar}
 \inferrule*[right=Nil] { } {{\sf nil}\  \context}
 \and
-\inferrule*[right=$\Gamma$-Add] {{\Gamma\ } {\sf \context}  \\ {\phi \in {\sf Prop}}} {{\Gamma, \phi \true} \ \context}
+\inferrule*[right=$\Gamma$-Ext] {{\Gamma\ } {\sf \context}  \\ {\phi \in {\sf Prop}}} {{\Gamma, \phi \true} \ \context}
 \end{mathpar}
 \end{mdframed}
 
@@ -194,9 +197,9 @@ The natural deduction system of \ac{IPL} is given below:
 							   \inferrule*[] 
 							    {\Turnsi {\Gamma
 							   } {\phi \true}} {\Turnsi {\operatorname{\pi}(\Gamma)}{\phi\true}}
-							    
-								\end{mathpar}
-						\end{mdframed}
+							    \end{mathpar}
+                  Where $\pi(\Gamma)$ is a meta-symbol standing for any permutation of $\Gamma$.
+                \end{mdframed}
 
 \section{Order Theoretic Semantics: \vocab{Heyting Algebras}}\label{ha:ax}
 \vocab{IPL} viewed order theoretically gives rise to a \vocab{Heyting  Algebra(HA)}. 
@@ -291,7 +294,7 @@ Finally, to axiomatize \emph{HAs} we require the existence of exponentials for e
 \begin{theorem}\label{thm:cmpha}
 $\Gamma\vdash_{IPL} \phi \true$ iff for any \vocab{Heyting Algebra} $H$ we have $\Gamma^+\leq\phi^{*}$ where $*$ is  defined as the lifting of any map of $\prop$s to elements of $H$ and $(+)$ is defined inductively on the length of $\Gamma$ as follows
 \begin{alignat*}{2}
-  nil^+  &&\quad = & \quad\top\\
+  {\sf nil}^+  &&\quad = & \quad\top\\
   (\Gamma,\phi)^+&&\quad = &\quad
   \Gamma^+\wedge\phi* \
 \end{alignat*}
