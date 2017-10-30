@@ -1,5 +1,5 @@
-\chapter{Lambda Calculus With Types}\label{lambda}
-
+\chapter{Lambda Calculus With Types}
+\label{lambda}
 \section{From intuitionistic provability to proof trees}
 \vocab{IPL} can be viewed as a declarative axiomatization of proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
@@ -83,7 +83,17 @@ Proof trees by their nature satisfy the properties of entailment in \ref{ssec:en
 	\end{theorem}
 \end{mdframed}
 \subsection{Equating Proof Trees}
-Having proof objects as first class citizens, permits for developing logics, essentially, as theories of (typed) equality among such objects. This idea stemmed from Gentzen's work on natural deduction and cut elimination and it is what gives to proofs  computational content. Here are the proposed  equalities for the proof relevant \vocab{IPL} introduced initially by Gentzen as the driver of the proof  cut elimination. We will be revisiting these very same equalities and reframe them as equalities among proof terms in the next section. Nevertheless, they can be expressed in proof tree form.  We show indicatively the equalities regarding the $\supset$ connective proofs reserving the rest for the more concise notation.
+Having proof objects as first class citizens, permits for developing logics, essentially, 
+as theories of (typed) equality among such objects. 
+This idea stemmed from Gentzen's work on natural deduction and 
+cut elimination and it is what gives to proofs  computational content. 
+Here are the proposed  equalities for the proof relevant \vocab{IPL} introduced initially 
+by Gentzen as the driver of the proof  cut elimination. 
+We will be revisiting these very same equalities and reframe them as equalities among
+ proof terms in the next section. Nevertheless, they can be expressed in proof tree form.  
+ We show indicatively the equalities regarding the $\supset,\wedge$ connectives reserving the
+  rest for the more concise notation.
+
 
 \begin{mathpar}
 	\begin{array}{c c c}
@@ -92,36 +102,67 @@ Having proof objects as first class citizens, permits for developing logics, ess
 		{\begin{array}[b]{c} x:A\\ {\mathcal{D}} \\ B \true \end{array}}}{A \supset B \true}}\\
 {\begin{array}{c}\mathcal{E}\\{A \true}\end{array}}
 }
-{ B \true}} & = &
+{ B \true}} & =_{\beta} &
 	
 			{\begin{array}[b]{c} \mathcal{E} \\ A \true \\ {\mathcal{D}} \\ B \true \end{array}} 
 
-
 \end{array}
+\end{mathpar}
+%{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B \true \end{array}}
+%
+%
+\begin{mathpar}
+	\begin{array}{c c c}
+	{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B \true \end{array}}
+			& =_{\eta} &
+		
+			{\inferrule{
+				{\inferrule[]{
+						{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B \true \end{array}}
+							\\{\overline{x:A}}} 
+							{ B \true}}}
+				{A \supset B}
+		}
+		
+	\end{array}
+\end{mathpar}
+
+
+\begin{mathpar}
+	\begin{array}{c c c}
+		{\inferrule{
+				{\inferrule[]{
+						{\begin{array}[b]{c}  {\mathcal{D}} \\ A \true \end{array}}
+							\\{\begin{array}[b]{c}  {\mathcal{E}} \\  B \true \end{array} }
+						} 
+						{ A\wedge B \true}}}
+				{A \true}
+		}
+			& =_{\beta} &
+		
+		{\begin{array}[b]{c}  {\mathcal{D}} \\ A\true \end{array}}
+		
+		
+	\end{array}
 \end{mathpar}
 
 \begin{mathpar}
 	\begin{array}{c c c}
 		{\inferrule{
 				{\inferrule[]{
-						{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B \true \end{array}}\\{\overline{x:A}}} { B \true}}}{A \supset B}
-			}
-			& = &
+						{\begin{array}[b]{c}  {\mathcal{D}} \\ A \true \end{array}}
+							\\{\begin{array}[b]{c}  {\mathcal{E}} \\  B \true \end{array} }
+						} 
+						{ A\wedge B \true}}}
+				{B \true}
+		}
+			& =_{\beta} &
 		
-		{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B \true \end{array}}
+		{\begin{array}[b]{c}  {\mathcal{E}} \\ A\true \end{array}}
 		
 		
 	\end{array}
 \end{mathpar}
-
-
-
-
-
-
-
-
-
 
 \section{Linear representation of trees  with proof terms: $\lambda$ calculus}
 Proof terms provide an alternative linear representation for proof trees. The simply typed lambda calculus and its equational system can, thus, be viewed as a calculus for proof trees and proof reductions for  intuitionistic logic. What's more, following the doctrine of proof relevance and of characterizing connectives by their proof reductions, i.e. working in the realm of Curry -- Howard Isomorphism, we hit two birds with one stone: we both develop proof relevant logics and we get typed programming languages that reflect their computational content. The ``simplest" language obtained within this program is the simply typed lambda calculus, but we will see that the same doctrine  extends to different logics with different judgmental constructs.
