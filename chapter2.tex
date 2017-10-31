@@ -1,6 +1,5 @@
-\chapter{Lambda Calculus With Types}
-\label{lambda}
-\section{From intuitionistic provability to proof trees}
+\chapter{Typed lambda calculus}\label{lambda}
+\section{From intuitionistic provability to  proof trees}
 \vocab{IPL} can be viewed as a declarative axiomatization of proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
 	\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\
@@ -24,7 +23,6 @@ Here we provide such a  formulation in proof trees of judgments together with th
 \end{mathpar}
 We focus one judgments $J$ of the form ${A \true}$.
 Here are the the rules for constructing proof trees with labeled assumptions\footnote{Essentially the constructs are directed acyclic graphs since assumptions with the same label are ``bind" and substitutable together but we will be cavalier with such a details}.
-First, the deductions using reflection on hypothesis are valid:
 \begin{mathpar}
 \begin{array}[b]{c}{ x_1:A_1 \true,\ldots,  x_i:A_i\true}\\{\vdots}\\{A_{j\in 1\dots i} \true}
 \end{array}
@@ -163,6 +161,18 @@ We will be revisiting these very same equalities and reframe them as equalities 
 		
 	\end{array}
 \end{mathpar}
+
+\begin{mathpar}
+	\begin{array}{c c c}
+		{\begin{array}[b]{c}  {\mathcal{D}} \\ A\wedge B \true \end{array}}
+		& =_{\eta} &
+		\inferrule{
+		\inferrule[]{\inferrule {\mathcal{D}}{ A\wedge B \true}}
+		{A \true}\\\inferrule[]{\inferrule {\mathcal{D}}{ A\wedge B \true}}
+		{A \true}}{A\wedge B}
+	\end{array}
+\end{mathpar}
+
 
 \section{Linear representation of trees  with proof terms: $\lambda$ calculus}
 Proof terms provide an alternative linear representation for proof trees. The simply typed lambda calculus and its equational system can, thus, be viewed as a calculus for proof trees and proof reductions for  intuitionistic logic. What's more, following the doctrine of proof relevance and of characterizing connectives by their proof reductions, i.e. working in the realm of Curry -- Howard Isomorphism, we hit two birds with one stone: we both develop proof relevant logics and we get typed programming languages that reflect their computational content. The ``simplest" language obtained within this program is the simply typed lambda calculus, but we will see that the same doctrine  extends to different logics with different judgmental constructs.

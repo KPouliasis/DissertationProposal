@@ -211,7 +211,7 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 				\and
 				\inferrule*[right=Top] { } {\top \in {\sf Prop_0}}
 				\and
-				\inferrule*[right=Conj] {{ A \in {\sf Prop_i }}\\ { B \in {\sf Prop_j}}} {  A \wedge B \in {\sf Prop_{max(i,j)}} } 
+				\inferrule*[right=Conj] {{ A \in {\sf Prop_i }}\\ { B \in {\sf Prop_i}}} {  A \wedge B \in {\sf Prop_i} } 
 				%\inferrule*[right=Bot] { } {\bot \in {\sf Prop_0}} 
 				%\and
 				\and
@@ -738,7 +738,6 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				Given a $J$-triplet we define the corresponding $Jcalc$ algebra as the union of the underlying relations
 				of   $HA$, $F(HA)$, $\Box^{F}HA$
 			\end{mdframed}
-			
 				\begin{theorem}\label{thm:cmpjtriplet}
 					\textbf{Soundness and completness}\\
 				$\Gamma\vdash_{Jcal}\phi$ iff for any \vocab{Jcalc Algebra}  $JC$ ($HA,F,J$)
