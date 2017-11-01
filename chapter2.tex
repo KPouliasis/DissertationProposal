@@ -472,63 +472,24 @@ There is no (closed) term $M$ for which $\vdash M:\bot$
 \end{theorem}
  Suppose the opposite and obtain a contradiction using the previous theorem: there is no way to obtain a normal form of a bottom type from the rules.  
  
- A stronger result is the strong normalization theorem that says that \textit{every} strategy in normalizing. This result is important in concurrent implementations of reduction since it implies that the order in which redexes are consumed does not matter during the evaluation of  expression. 
- %The strong normalization, as we will see, is effectively isomorphic (in  the usage of induction principles) with the proof of admissibility of cut for the sequent calculus formulation of the system. Again we sketch the basic steps toward the proof which is one intricate application of the mathematics of induction.
+ A stronger result is the strong normalization theorem that says that \textit{every} strategy 
+ in normalizing. This result is important in concurrent implementations of reduction since 
+ it implies that the order in which redexes are consumed does 
+ not matter during the evaluation of  expression. 
  
- The important idea behind the technique -- that generalizes to proof of strong normalization for more complex calculi-- is the concept of  reducibility predicates. Reducibility predicates give a stronger induction principle that delivers the desired result as a lemma.  Reducibility predicates are sets of terms classified by their type.
- and are defined by induction on the structure of their type. We show strong normalization only for the $\rightarrow, \times$ fragment of the calculus but the technique generalizes (see, e.g. ~\cite{prawitz1971ideas}). 
+ The important idea behind the technique -- that generalizes to proof of 
+ strong normalization for more complex calculi-- is the concept of  reducibility predicates. 
+ Reducibility predicates give a stronger induction principle that delivers the desired 
+ result as a lemma.  Reducibility predicates are sets of terms classified by their type.
+ and are defined by induction on the structure of their type. 
+ We show strong normalization only for the $\rightarrow, \times$ fragment 
+ of the calculus but the technique generalizes (see, e.g. ~\cite{prawitz1971ideas}). 
  
-\begin{mdframed}
-	\textbf{Definition}
-	We define the predicate $Red_A$ for a type $A$ as follows and for closed terms $M$ as follows:
-	\begin{itemize}
-		\item $M\in Red_{P_i}$ iff $M$ is of atomic type $P_i$  and $M$ is normalizable. 
-		\item $M \in Red_{A\rightarrow B}$ iff $M$ is of type $A\rightarrow B$ and $\forall N. N \in Red_{A}\Longrightarrow (MN) \in Red_B$
-		
-		\item $M \in Red_{A\wedge B}$ iff $M$ is of type $A\wedge B$,  $\operatorname{fst}(M)\in Red_A$ and $\operatorname{snd}(M) \in Red_B$
-	%	\item $M in Red_{A\vee B}$ iff $\forall N_3, N_4 s.t.  N_1 \in Red_{A} implies N_3[N_1\x]\in Red_C and N_2 \in Red_{B} implies  N_4[N_2\y]\in Red_{C} the term $case M of inl(x) M[x]| inr(y)N[y] \in Red_{C}$		\
-		
-	\end{itemize}
-\end{mdframed}
-Reducibility has the important following properties below where  by \textit{neutral} we mean terms of the form $\langle M, N \rangle$, $\lambda x. M$ 
-\begin{theorem}
-	\begin{enumerate}
-		\item $M\in Red_A$ implies that $M$ is normalizable. 
-		\item $M \in Red_A$ and $M\mapsto_\beta^{*} N$ then $N\in Red_A$
-		\item If $M$ is neutral then,  $\forall N {\text s.t} M\mapsto^{\beta} N. N\in Red_A\Longrightarrow M \in Red_A $ 
-		\item  If $M$ is neutral and normal, then $M \in Red_A$
-	\end{enumerate}
-\end{theorem}
-The proof goes  by induction on the structure of type $A$.
-Now we are able to prove the following theorems:
 
-\begin{mdframed}
-	\begin{theorem}
-	\begin{itemize}
-		\item If $M,N$ are reducible then so is $\langle M, N \rangle$
-		\item For all reducible $M$ of type $A$ if $N[M/x]$ is reducible then so is $\lambda x. N$
-	\end{itemize}
-
-	\end{theorem}
-	\end{mdframed}
-
-These results suffice to show the following theorem:
-Given $x_1:A_1, \ldots, x_i: A_i\vdash M: A$ then and reducible terms $v_1\in Red_{A_1},\ldots v_i\in Red_{A_i}$ then  $M[v_1/x_1\ldots v_i/x_i]\in Red_A$ 
-Out of which we get:
-\begin{mdframed}
- 	\begin{theorem}
- 		\textbf{Strong Normalization Theorem}
-
- 			Every term $\vdash M:A$ is strongly normalizing
-
- 		
- 	\end{theorem}
- \end{mdframed}
- 
 \subsection{The essence of proofs--as--programs }
 The proofs of normalization above are essentially of the same "proof strength" (induction principles) as the logical proof of cut elimination. In a nutshell, eliminating cuts is the same as normalizing proof terms (and the corresponding proof trees).
 
-In reality, the slogan of the Curry-Howard isomorphism and, in general, of a type theoretic treatment to logic should be "Normalization as Cut Elimination". This aspect of the isomorphism can be shown explicitly follow Sieg's extraction method ~\cite{Sieg1998}, that  showcases how a construction of the Cut-free sequent calculus comes naturally from an analysis of normal proofs in the natural deduction. This result has been extremely useful through my research and I am expecting to revisit it in more detail at my thesis work.
+In reality, the slogan of the Curry-Howard isomorphism and, in general, of a type theoretic treatment to logic should be "Normalization as Cut Elimination". This aspect of the isomorphism can be shown explicitly follow Sieg's extraction method ~\cite{Sieg1998}, that  showcases how a construction of the Cut-free sequent calculus comes naturally from an analysis of normal proofs in the natural deduction. 
 
  
 \subsection{Propositions as Types}
