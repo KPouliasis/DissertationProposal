@@ -11,7 +11,8 @@ The rule says, ``given the existence a proof of $\phi$ and a proof of $\psi$ fro
 
 We used the description ``declarative" because in this format \vocab{IPL} sequents $\Gamma\vdash \true $ do not describe how such existentials are realized. It is in essence a logic of ``proof relevant truth" but it does not involve the proofs themselves as first class objects. 
 
-An alternative presentation is to explicate proof constructs by directly providing a system of ``proof trees". Such, an approach was actually championed in Gentzen's natural deduction systems and is the necessary move to obtain proof calculi. Once we have proof explicit  proof objects (either as trees, or as we will, see as terms) the system is enriched with equality principles involving such objects. Such rules give computational value (``proof dynamics") to the constructs  and are the driver idea in the  ``Curry--Howard Isomorphism" and its extensions.
+An alternative presentation is to explicate proof constructs by directly providing a system of ``proof trees". Such an approach was actually championed in Gentzen's natural deduction systems and is the necessary move to obtain proof calculi. 
+Once we have  explicit  proof objects (either as trees, or as we will see, as terms) the system is enriched with equality principles involving such objects. Such rules give computational value (``proof dynamics") to the constructs  and are the driver idea in the  ``Curry--Howard Isomorphism" and its extensions.
 
 Here we provide such a  formulation in proof trees of judgments together with the equality rules on trees, essentially following Gentzen. Proof trees of judgments have the following shape:
 
@@ -156,7 +157,7 @@ We will be revisiting these very same equalities and reframe them as equalities 
 		}
 			& =_{\beta} &
 		
-		{\begin{array}[b]{c}  {\mathcal{E}} \\ A\true \end{array}}
+		{\begin{array}[b]{c}  {\mathcal{E}} \\ B\true \end{array}}
 		
 		
 	\end{array}
@@ -274,7 +275,7 @@ Gentzen's principles transliterate to an equational system for terms. In the fol
      \item	that commutes with  operators  E.g. 
      \begin{mathpar}
      	\inferrule*[]
-     	{\Gamma \entails M\equiv M':A\wedge B}
+     	{\Gamma \entails M\equiv M':A\times B}
      	{\Gamma\entails \operatorname{fst}(M)\equiv\operatorname{fst}(M'):A}
      	\end{mathpar} 
      \end{itemize}
@@ -318,7 +319,7 @@ Gentzen's Inversion Principle captures the idea that ``elim is post-inverse to i
 
 \subsubsection{Uniqueness of Forms}
 
-Gentzen's Uniqueness Principles on the other hand capture the idea that ``intro is post-inverse to elim" (a.k.a ``local completeness"). There should be only one way -- modulo definitional equivalence -- to prove something. The ``$\beta$" rules give rise to computational dynamics via reduction. The so called ``$\eta$" equality rules impose properties that the computational model should satisfy.
+Gentzen's Uniqueness Principles on the other hand capture the idea that ``elim is inverse to intro" (a.k.a ``local completeness"). There should be only one way -- modulo definitional equivalence -- to prove something. The ``$\beta$" rules give rise to computational dynamics via reduction. The so called ``$\eta$" equality rules impose properties that the computational model should satisfy.
 
 The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 
@@ -327,9 +328,9 @@ The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 		\inferrule*[right=$\eta\top$]{\Gamma\vdash M:\top}{\Gamma\vdash M\equiv \langle \ \rangle: \top} 
 		\and
 		
-		\inferrule*[right=$\eta\wedge$]{\Gamma\vdash M:A\wedge B}{\Gamma\vdash M\equiv \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\wedge B }
+		\inferrule*[right=$\eta\times$]{\Gamma\vdash M:A\times B}{\Gamma\vdash M\equiv \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\times B }
 		\and
-		\inferrule*[right=$\eta\supset$]{\Gamma\vdash M:\phi\supset \psi}{\Gamma\vdash M\equiv \lambda x. M x: \phi\supset\psi} 
+		\inferrule*[right=$\eta\rightarrow$]{\Gamma\vdash M:\phi\rightarrow \psi}{\Gamma\vdash M\equiv \lambda x. M x: \phi\rightarrow\psi} 
 		\and
 		\inferrule*[right=$\eta\vee$]
 		{\Gamma\vdash M:\phi_1+\phi_2}
@@ -349,7 +350,9 @@ The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 \section{Operational (a.k.a ``term") Semantics} 
 It is obvious that the system is consistent in terms of provability. It's forgetful projection is exactly \ac{IPL} for which we have provided order-theoretic models. We would like to show consistency for the proof relevant model. One way is operational semantic.
 
-The first step toward operational semantics is to break the symmetry of the definitional equivalence and construct a one-way reduction relation  on lambda terms. Towards this definition we first define the notion of a  \textit{redex}: 
+The first step toward operational semantics is to break the symmetry of the definitional equivalence and construct a one-way reduction 
+relation  on lambda terms. 
+Towards this definition we first define the notion of a  \textit{redex}\footnote{we only present it for the $\times\rightarrow$ part of the calculus}: 
 \begin{mdframed}
 \begin{definition}	
 \begin{itemize}
@@ -480,10 +483,7 @@ There is no (closed) term $M$ for which $\vdash M:\bot$
  The important idea behind the technique -- that generalizes to proof of 
  strong normalization for more complex calculi-- is the concept of  reducibility predicates. 
  Reducibility predicates give a stronger induction principle that delivers the desired 
- result as a lemma.  Reducibility predicates are sets of terms classified by their type.
- and are defined by induction on the structure of their type. 
- We show strong normalization only for the $\rightarrow, \times$ fragment 
- of the calculus but the technique generalizes (see, e.g. ~\cite{prawitz1971ideas}). 
+ result as a lemma(see, e.g. ~\cite{prawitz1971ideas}). 
  
 
 \subsection{The essence of proofs--as--programs }
