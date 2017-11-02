@@ -28,7 +28,7 @@ Here are the the rules for constructing proof trees with labeled assumptions\foo
 \begin{array}[b]{c}{ x_1:A_1 \true,\ldots,  x_i:A_i\true}\\{\vdots}\\{A_{j\in 1\dots i} \true}
 \end{array}
 \and
-\begin{array}[b]{c}{ x_1:A_1 \true, \ldots,   x_i:A_i\true}\\{\vdots}\\{\top\true}
+\begin{array}[b]{c}{ x_1:A_1 \true, \ldots,   x_i:A_i\true}\\{\vdots}\\{\Longrightarrowp\true}
 \end{array}
 \end{mathpar}
 
@@ -184,7 +184,7 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mathpar}
 \inferrule*[right=Atom] { } {P_i \in {\sf Type}}
 \and
-\inferrule*[right=Top] { } {\top \in {\sf Type}}
+\inferrule*[right=Top] { } {\Longrightarrowp \in {\sf Type}}
 \and
 \inferrule*[right=Bottom] { } {\bot \in {\sf Type}}
 \and
@@ -216,7 +216,7 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mdframed}
 \textbf{Top Introduction -- Bottom Elimination}
 \begin{mathpar}
-\inferrule*[right=$\top$I] { } {\Turnsi {\Gamma} { \langle \rangle:\top }}
+\inferrule*[right=$\Longrightarrowp$I] { } {\Turnsi {\Gamma} { \langle \rangle:\Longrightarrowp }}
 \and
 \inferrule*[right=$\bot$E] {\Turnsi {\Gamma} {M:\bot } } {\Turnsi {\Gamma} { abort[\phi](M) :\phi}}
 \end{mathpar}
@@ -325,7 +325,7 @@ The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 
 \begin{mdframed}
 	\begin{mathpar}
-		\inferrule*[right=$\eta\top$]{\Gamma\vdash M:\top}{\Gamma\vdash M\equiv \langle \ \rangle: \top} 
+		\inferrule*[right=$\eta\Longrightarrowp$]{\Gamma\vdash M:\Longrightarrowp}{\Gamma\vdash M\equiv \langle \ \rangle: \Longrightarrowp} 
 		\and
 		
 		\inferrule*[right=$\eta\times$]{\Gamma\vdash M:A\times B}{\Gamma\vdash M\equiv \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\times B }
@@ -502,9 +502,9 @@ There is a correspondence between propositions and types:
 
     Propositions & Types \\
 
-    $\top$ & $1$ \\
+    $\Longrightarrowp$ & $1$ \\
     $A\wedge B$ & $A\times B$ \\
-    $A\supset B$ & function $A\to B$ or $B^A$ \\
+    $A\supset B$ & function $A\Longrightarrow B$ or $B^A$ \\
     $\bot$ & $0$ \\
     $A\vee B$ & $A+B$\\
 
@@ -515,27 +515,27 @@ There is a correspondence between propositions and types:
 
 \section{Categories for proof relevant \vocab{IPL}}
 
-In a Heyting Algebra, we have a preorder (or, partial order in the ``textbook" definition) $\phi\leq \psi$ when $\phi$ implies $\psi$. \emph{HAs} are insufficient, however, for the treatment of proof objects (there can be at most one instance of $\phi\leq\psi$ for specific $\phi$,$\psi$). We can  keep track of proofs, so if $M$ is a proof from  $\Gamma$ to $\psi$, we want to think of it as a map $M:\Gamma+\to \psi+$. In category theory ~\cite{awodey2010category}, the analog of a Heyting Algebra is that of a Bi--Cartesian Closed Category (\emph{BiCCC}). That is a category with all finite products, co--products and exponentials. For an exposition of BiCCCs and their relation with intuitionistic logic ~\cite{Lambek1985}. The axiomatization of a category (in general), finite (and nullary) products and co-products and exponentials is given in this section. 
+In a Heyting Algebra, we have a preorder (or, partial order in the ``textbook" definition) $\phi\leq \psi$ when $\phi$ implies $\psi$. \emph{HAs} are insufficient, however, for the treatment of proof objects (there can be at most one instance of $\phi\leq\psi$ for specific $\phi$,$\psi$). We can  keep track of proofs, so if $M$ is a proof from  $\Gamma$ to $\psi$, we want to think of it as a map $M:\Gamma+\Longrightarrow \psi+$. In category theory ~\cite{awodey2010category}, the analog of a Heyting Algebra is that of a Bi--Cartesian Closed Category (\emph{BiCCC}). That is a category with all finite products, co--products and exponentials. For an exposition of BiCCCs and their relation with intuitionistic logic ~\cite{Lambek1985}. The axiomatization of a category (in general), finite (and nullary) products and co-products and exponentials is given in this section. 
 
 \subsection{Definitions and Axioms of a Category}
-A category has \emph{objects} $\phi,\psi, \ldots$ and \emph{arrows} $f,g,h\ldots$ Each arrow goes from an object to an object. To say that $g$ goes from $\phi$ to $\psi$ we write $g:\phi\rightarrow\psi$, or say that $\phi$ is the domain of $g$, and $\psi$ the \emph{co--domain}. We write $Dom(g)=\phi$ and $Cod(g)=\psi$.
+A category has \emph{objects} $\phi,\psi, \ldots$ and \emph{arrows} $f,g,h\ldots$ Each arrow goes from an object to an object. To say that $g$ goes from $\phi$ to $\psi$ we write $g:\phi\Rightarrow\psi$, or say that $\phi$ is the domain of $g$, and $\psi$ the \emph{co--domain}. We write $Dom(g)=\phi$ and $Cod(g)=\psi$.
 We say that two arrows $f$ and $g$ are \emph{composable} with $Dom(f)=Cod(g)$. If $f$ and $g$ are composable, they have a \emph{composite}, an arrow called $f\circ g$. There is an \emph{identity} for every object $\phi$.
 \begin{mdframed}
 \begin{mathpar}
 \inferrule*[right=$\text{ID}_{ex}$]{ }
-{\operatorname{id}:\phi\to \phi}
+{\operatorname{id}:\phi\Longrightarrow \phi}
 \and
-\inferrule*[right=Comp]{{f:\phi\to\psi } \\{g:\psi\to\chi}}
-{g\circ f:\phi\to \chi}
+\inferrule*[right=Comp]{{f:\phi\Longrightarrow\psi } \\{g:\psi\Longrightarrow\chi}}
+{g\circ f:\phi\Longrightarrow \chi}
 \and
-\inferrule*[right=$\text{ID}_l$]{f:\phi\to\psi }
-{id_{\psi}\circ f=f:\phi\to \psi}
+\inferrule*[right=$\text{ID}_l$]{f:\phi\Longrightarrow\psi }
+{id_{\psi}\circ f=f:\phi\Longrightarrow \psi}
 \and
-\inferrule*[right=idr]{f:\phi\to\psi }
-{f\circ id_{\phi} =f:\phi\to \psi}
+\inferrule*[right=idr]{f:\phi\Longrightarrow\psi }
+{f\circ id_{\phi} =f:\phi\Longrightarrow \psi}
 \and
-\inferrule*[right=idr]{{f:\phi\to\psi }\\{g:\psi\to\chi}\\{h:\chi\to\omega}}
-{h\circ (g\circ f) =(h\circ g)\circ f:\phi\to \omega}
+\inferrule*[right=idr]{{f:\phi\Longrightarrow\psi }\\{g:\psi\Longrightarrow\chi}\\{h:\chi\Longrightarrow\omega}}
+{h\circ (g\circ f) =(h\circ g)\circ f:\phi\Longrightarrow \omega}
 \end{mathpar}
 \end{mdframed}
 
@@ -545,33 +545,33 @@ We say that two arrows $f$ and $g$ are \emph{composable} with $Dom(f)=Cod(g)$. I
 Now we can think about objects in the category that correspond to propositions given in the correspondence.
 
 \paragraph{Terminal Object}
-$1$ is the terminal object, also called the final object, which corresponds to $\top$. For any object $\Gamma$ there is a unique map $\Gamma\to 1$. 
+$1$ is the terminal object, also called the final object, which corresponds to $\Longrightarrowp$. For any object $\Gamma$ there is a unique map $\Gamma\Longrightarrow 1$. 
 \begin{mdframed}
 \begin{mathpar}
 
 \inferrule*[right=Existence]
-{ } {\langle \ \rangle:\phi\to 1}
+{ } {\langle \ \rangle:\phi\Longrightarrow 1}
 \and
 \inferrule*[right=Unicity($\eta$)]
-{M:\Gamma\to 1}{M=\langle \ \rangle:\Gamma\to 1}
+{M:\Gamma\Longrightarrow 1}{M=\langle \ \rangle:\Gamma\Longrightarrow 1}
 \end{mathpar}
 \end{mdframed}
 
 
 
 \paragraph{Product} 
-For any objects $\phi$ and $\psi$ there is an object $\chi=\phi\times \psi$ equipped with arrows $\operatorname{fst}:\phi\times\psi\to\phi$ and $\operatorname{snd}:\phi\times\psi\to\psi$ that is the \emph{product} of $\phi$ and $\psi$, which corresponds to the join $\phi\wedge \psi$. For any other object $\Gamma$ with arrows $M:\Gamma\to\phi$ and $\Gamma\to\psi$ there  exists \emph{unique} arrow, $\langle M,N \rangle$ s.t. $\operatorname{fst}\circ\langle M, N\rangle=M(\beta\times_1)$ and
+For any objects $\phi$ and $\psi$ there is an object $\chi=\phi\times \psi$ equipped with arrows $\operatorname{fst}:\phi\times\psi\Longrightarrow\phi$ and $\operatorname{snd}:\phi\times\psi\Longrightarrow\psi$ that is the \emph{product} of $\phi$ and $\psi$, which corresponds to the join $\phi\wedge \psi$. For any other object $\Gamma$ with arrows $M:\Gamma\Longrightarrow\phi$ and $\Gamma\Longrightarrow\psi$ there  exists \emph{unique} arrow, $\langle M,N \rangle$ s.t. $\operatorname{fst}\circ\langle M, N\rangle=M(\beta\times_1)$ and
 $\operatorname{snd}\circ\langle M, N\rangle=N(\beta\times_2)$.
 \begin{mdframed}
 \begin{mathpar}
 
-\inferrule*[right=Exist$_1$]{{M:\Gamma\to \phi} \\{ N:\Gamma\to \psi}} {\langle M,N\rangle : \Gamma\to \phi\times \psi} 
+\inferrule*[right=Exist$_1$]{{M:\Gamma\Longrightarrow \phi} \\{ N:\Gamma\Longrightarrow \psi}} {\langle M,N\rangle : \Gamma\Longrightarrow \phi\times \psi} 
 \and
-\inferrule*[right=Exist$_2$($\beta_1$)]{{M:\Gamma\to \phi} \\{ N:\Gamma\to \psi}} {\operatorname{fst}\circ\langle M,N\rangle : \Gamma\to \phi}
+\inferrule*[right=Exist$_2$($\beta_1$)]{{M:\Gamma\Longrightarrow \phi} \\{ N:\Gamma\Longrightarrow \psi}} {\operatorname{fst}\circ\langle M,N\rangle : \Gamma\Longrightarrow \phi}
 \and 
-\inferrule*[right=Exist$_3$($\beta_2$)]{{M:\Gamma\to \phi} \\{ N:\Gamma\to \psi}} {\operatorname{snd}\circ\langle M,N\rangle : \Gamma\to \phi} 
+\inferrule*[right=Exist$_3$($\beta_2$)]{{M:\Gamma\Longrightarrow \phi} \\{ N:\Gamma\Longrightarrow \psi}} {\operatorname{snd}\circ\langle M,N\rangle : \Gamma\Longrightarrow \phi} 
 \and
-\inferrule*[right=Un($\eta$)]{{P:\Gamma\to \phi\times \psi} \\{ \operatorname{fst}\circ P=M:\Gamma\to \phi}\\ {\operatorname{snd}\circ P=N:\Gamma\to \psi}} {P=\langle M,N\rangle : \Gamma\to \phi\times \psi}
+\inferrule*[right=Un($\eta$)]{{P:\Gamma\Longrightarrow \phi\times \psi} \\{ \operatorname{fst}\circ P=M:\Gamma\Longrightarrow \phi}\\ {\operatorname{snd}\circ P=N:\Gamma\Longrightarrow \psi}} {P=\langle M,N\rangle : \Gamma\Longrightarrow \phi\times \psi}
 \end{mathpar}
 Diagrammatically:
 \begin{equation*}
@@ -597,38 +597,38 @@ B^A&{B^A\times A}\arrow{rr}[swap]{\operatorname{ap}} &{}&{B}
 \]
 such that the diagram commutes.
 
-This means that there exists a map $\operatorname{ap}:B^A\times A\to B$ (application map) that corresponds to implication elimination.
+This means that there exists a map $\operatorname{ap}:B^A\times A\Longrightarrow B$ (application map) that corresponds to implication elimination.
 
-The universal property is that for all objects $C$ that have a map $h:C\times A\to B$, there exists a unique map $\lambda(h):C\to B^A$ such that
+The universal property is that for all objects $C$ that have a map $h:C\times A\Longrightarrow B$, there exists a unique map $\lambda(h):C\Longrightarrow B^A$ such that
 \[
-\operatorname{ap}\circ (\lambda(h)\times \operatorname{id}_A )=h:C\times A\to B
+\operatorname{ap}\circ (\lambda(h)\times \operatorname{id}_A )=h:C\times A\Longrightarrow B
 \]
 This means that the diagram commutes. Another way to express the induced map is $\lambda(h)\times \operatorname{id}_A = \langle \lambda(h)\circ\operatorname{fst},\operatorname{snd}\rangle$.
 
-The map $\lambda(h):C\to B^A$ is unique, meaning that
+The map $\lambda(h):C\Longrightarrow B^A$ is unique, meaning that
 \begin{mathpar}
-\inferrule*{\operatorname{ap}\circ(g\times \operatorname{id_A})=h:C\times A\to B}{g=\lambda(h):C\to B^A}
+\inferrule*{\operatorname{ap}\circ(g\times \operatorname{id_A})=h:C\times A\Longrightarrow B}{g=\lambda(h):C\Longrightarrow B^A}
 \end{mathpar}
 
 \paragraph{Co--Products}
-For any objects $\phi$ and $\psi$ there is an object $\chi=\phi + \psi$ equipped with arrows $\operatorname{inl}:\phi\to\phi+\psi$ and $\operatorname{inr}:\psi\to\phi+\psi$ that is the \emph{co-product} of $\phi$ and $\psi$, which corresponds to the meet $\phi\wedge \psi$. For any other object $\omega$ with arrows $M:\omega\to\phi\vee\psi$ and $N:\omega\to\phi\vee\psi$ there  exists \emph{unique} arrow, ${ M,N }$ s.t. $\{M,N\}\circ\operatorname{inl}=M$ and
+For any objects $\phi$ and $\psi$ there is an object $\chi=\phi + \psi$ equipped with arrows $\operatorname{inl}:\phi\Longrightarrow\phi+\psi$ and $\operatorname{inr}:\psi\Longrightarrow\phi+\psi$ that is the \emph{co-product} of $\phi$ and $\psi$, which corresponds to the meet $\phi\wedge \psi$. For any other object $\omega$ with arrows $M:\omega\Longrightarrow\phi\vee\psi$ and $N:\omega\Longrightarrow\phi\vee\psi$ there  exists \emph{unique} arrow, ${ M,N }$ s.t. $\{M,N\}\circ\operatorname{inl}=M$ and
 $\{M,N\}\circ\operatorname{inr}=N$.
 
 \begin{mdframed}
 \begin{mathpar}
 
-\inferrule*[right=Exist$_1$]{O:\Gamma\to \phi}{ \operatorname{inl}\circ O:\Gamma\to\phi + \psi}  
+\inferrule*[right=Exist$_1$]{O:\Gamma\Longrightarrow \phi}{ \operatorname{inl}\circ O:\Gamma\Longrightarrow\phi + \psi}  
 \and
 
-\inferrule*[right=Exist$_2$]{P:\Gamma\to \psi}{ \operatorname{inr}\circ P:\Gamma\to\phi + \psi}
+\inferrule*[right=Exist$_2$]{P:\Gamma\Longrightarrow \psi}{ \operatorname{inr}\circ P:\Gamma\Longrightarrow\phi + \psi}
 \and
-\inferrule*[right=Exist$_3$($\beta_1$)]{{O:\Gamma\to \phi} \\{M:\phi\to\omega}\\{N:\psi\to\omega}} {\{M,N\}\circ\operatorname{inl}\circ O=M\circ O : \Gamma\to \omega}
+\inferrule*[right=Exist$_3$($\beta_1$)]{{O:\Gamma\Longrightarrow \phi} \\{M:\phi\Longrightarrow\omega}\\{N:\psi\Longrightarrow\omega}} {\{M,N\}\circ\operatorname{inl}\circ O=M\circ O : \Gamma\Longrightarrow \omega}
 \and 
-\inferrule*[right=Exist$_3$($\beta_2$)]{{P:\Gamma\to \psi} \\{M:\phi\to\omega}\\{N:\psi\to\omega}} {\{M,N\}\circ\operatorname{inr}\circ P=N\circ P : \Gamma\to \omega}
+\inferrule*[right=Exist$_3$($\beta_2$)]{{P:\Gamma\Longrightarrow \psi} \\{M:\phi\Longrightarrow\omega}\\{N:\psi\Longrightarrow\omega}} {\{M,N\}\circ\operatorname{inr}\circ P=N\circ P : \Gamma\Longrightarrow \omega}
 \and
-\inferrule*[right=Exist$_3$($\beta_2$)]{{M:\Gamma\to \phi} \\{ N:\Gamma\to \psi}} {\operatorname{snd}\circ\langle M,N\rangle : \Gamma\to \phi} 
+\inferrule*[right=Exist$_3$($\beta_2$)]{{M:\Gamma\Longrightarrow \phi} \\{ N:\Gamma\Longrightarrow \psi}} {\operatorname{snd}\circ\langle M,N\rangle : \Gamma\Longrightarrow \phi} 
 \and
-\inferrule*[right=Un($\eta$)]{ { O :\Gamma\to \phi} \\ {P:\Gamma\to \psi}\\{U:\phi + \psi\to\omega}\\{M:\phi\to\omega}\\{N:\psi\to\omega} \\{U\circ \operatorname{inl}\circ O=M} \\
+\inferrule*[right=Un($\eta$)]{ { O :\Gamma\Longrightarrow \phi} \\ {P:\Gamma\Longrightarrow \psi}\\{U:\phi + \psi\Longrightarrow\omega}\\{M:\phi\Longrightarrow\omega}\\{N:\psi\Longrightarrow\omega} \\{U\circ \operatorname{inl}\circ O=M} \\
  \\{U\circ \operatorname{inr}\circ N =M}} {U=\{M,N\} }  
 \end{mathpar}
 Diagrammatically:
