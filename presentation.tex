@@ -189,16 +189,19 @@ e.g. \[\inferrule*[right=$\beta\supset$]
   \[\inferrule*[right=\sout{Nec}] 
   {\vdash A} {\vdash \Box A}\]
   \[\inferrule*[right=$\Box_I$] 
-  {{\vdash A}\\ {\vdash  {\sf Just\quad A}}} {\vdash \Box A}\]
+  {{\vdash A}\\ {\vdash  {\sf J A}}} {\vdash \Box A}\]
 In JL the motivation is that ${\vdash A}$ is ${\sf int}$ and
-${\sf J A}$ is in ${\sf cl}$  so $Just$ can be seen as an embedding.
+${\sf J A}$ is in ${\sf cl}$  so $J$ can be seen as an embedding.
+In general though the connective can be treated indepenedently of the details
+of the two systems
 \end{frame}
-\begin{frame}{Motivation}
-  \[\inferrule*[right=\sout{Nec}] 
-  {\vdash A} {\vdash \Box A}\]
-  \[\inferrule*[right=$\Box_I$] 
-  {{\vdash A}\\ {\vdash  {\sf Just\quad A}}} {\vdash \Box A}\]
-In JL the motivation is that ${\vdash A}$ is ${\sf int}$ and
-${\sf J A}$ is in ${\sf cl}$  so $Just$ can be seen as an embedding.
+\begin{frame}{Roadmad}
+  \begin{itemize}
+ \item Create a system with two kinds of judgments 
+ $A \ {\sf true}$ and $A {\sf valid}:=\  
+ {\sf true}$ and treat necessity as “double theoremhood”
+%   obtain a system of basic constructive modality investigating the minimal relation between these two systems
+%   Use justification logic to axiomatize validity $\llbracket \sf {judgments}\rrbracket$.
+\end{itemize}
 \end{frame}
 \end{document}
