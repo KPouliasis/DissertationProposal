@@ -1,0 +1,204 @@
+\documentclass{beamer}
+  \usetheme{metropolis}
+  \usepackage[normalem]{ulem}
+  
+  \newcommand{\Turnsi}[2]
+	{ {#1}\vdash  {#2}}
+
+  \usepackage{outlines}
+  
+         % Use metropolis theme
+         \usepackage{mathpartir}
+         \usepackage{mathtools}
+         \usepackage{appendixnumberbeamer}
+         
+         \usepackage{booktabs}
+         \usepackage[scale=2]{ccicons}
+         
+         \usepackage{pgfplots}
+         \usepgfplotslibrary{dateplot}
+         
+         \usepackage{xspace}
+         \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+  \title{A reading of justification logic modality in Curry-Howard fashion}
+  \date{\today}
+  \author{Konstantinos Pouliasis}
+  \institute{CUNY, Graduate Center}
+  \begin{document}
+    \maketitle
+    \section{Introduction}
+    \begin{frame}{Curry--Howard Isomorphism}
+      \begin{itemize}
+\item sparked from the investigation of the connection of 
+explicit proofs in intuitionistic logic and 
+programs of a simple programming language (\emph{STLC})
+
+\item central topic of study in the field of type theory
+
+\item standard theoretical tool for studying and designing programming languages
+      \end{itemize}
+\end{frame}
+\begin{frame}{\emph{CHI} in logic}
+  \begin{itemize}
+
+  \item a  paradigm in logic studies that emphasizes proof relevance
+
+  \item scales : the isomorphism holds for more complex logics and correspondingly captures complex programming language constructs.
+
+  \item We use proofs-as-programs(-as-morphisms) and CHI interchangeably.
+  \end{itemize}
+\end{frame}
+\section{Intuitionistic Logic and STLC}
+\begin{frame}{Intuitionism and constructive mathematics}
+  \begin{outline}
+    \1 {Continuation of Brouwer's program}
+    
+    \2{Notion of truth collides with the notion of proof}
+    
+  
+  \1 Mathematical reasoning and logic is a human faculty
+  
+  \2 The creative subjects use mathematical language 
+  as a means to express their reasoning (proof) constructs
+  \2 
+  There are open problems
+  \2 
+  Propositions do not come with a pre-existing truth value
+\end{outline}
+\end{frame}
+
+\begin{frame}{Logic within constructive mathematics}
+\begin{outline} 
+
+\1[] The object of logic is the study of ``sane'' proof constructs independently of formal systems
+
+\1[] The traditional chasm between ``syntax'' and ``semantics'' is no longer that very fruitful at least when “engineering” new logics.
+\end{outline}
+\begin{columns}[T,onlytextwidth]
+  \column{0.5\textwidth}
+
+    \begin{alertblock}{Verificationist}
+    \begin{quote}The meaning of a connective is the ways that one can prove it\end{quote} (Martin Lof - Verificationist approach)
+    \end{alertblock}
+
+
+  \column{0.5\textwidth}
+
+  \begin{exampleblock}{Pragmatist}
+  \begin{quote} The meaning of a connective is the way one can use its proofs\end{quote}
+  \end{exampleblock}
+\end{columns}
+\end{frame}
+\begin{frame}{Example: rules $\wedge$}
+  \begin{mathpar}
+ \inferrule*[right=Intro] { {\begin{array}{c} \mathcal{D} \\ {A} \end{array} } \\{\begin{array}{c} \mathcal{E} \\ {B} \end{array} }} {A\wedge B} 
+  \end{mathpar}
+\[ \begin{array}{c c} \inferrule*[right=Elim1] { {\begin{array}{c} \\ \mathcal{D} \\ {A\wedge B} \end{array} }} {A} & \inferrule*[right=Elim2] { {\begin{array}{c} \\ \mathcal{D} \\ {A\wedge B} \end{array} }} {B} \end{array} \]
+\end{frame}
+
+\begin{frame}{Proof equality and harmony}
+  \begin{itemize}
+  \item[] Proof trees are objects of logic and - as mathematical objects - are equipped with equality
+
+  \item[]\alert{Logic is “algebrized”}
+  
+  \item[]Equalities should provide for the “harmony” of the Introduction – Elimination (constructors– distructors)
+  
+ \end{itemize}
+\end{frame}
+\begin{frame}{Harmony}
+      \[ \begin{array}{l c r} {\inferrule*[right=Elim1]{\inferrule*[right=Intro] { {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \\{\begin{array}{c} \mathcal{E} \\ {B} \end{array} }} {A\wedge B}}{A}} & = & {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \end{array} \]
+      \[ \begin{array}{l c r} {\inferrule*[right=Elim2]{\inferrule*[right=Intro] { {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \\{\begin{array}{c} \mathcal{E} \\ {B} \end{array} }} {A\wedge B}}{B}} & = & {\begin{array}{c} \mathcal{E}\\ {B} \end{array} } \end{array} \]
+\end{frame}
+\begin{frame}{Harmony}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.7\textwidth}
+        \begin{exampleblock}{Elim rules are not too weak}
+        \[\begin{array}{l c r} {\begin{array}{c} \mathcal{D}\\ {A\wedge B} \end{array} } 
+        & = & {\inferrule*[right=Intro]{
+          {\inferrule*[right=Elim1] { {
+          \begin{array}{c} \mathcal{D}\\ {A\wedge B} \end{array} 
+        } } {A}}\\ {\inferrule*[right=Elim2] { {\begin{array}{c} \mathcal{D}\\ {A\wedge B} \end{array} } } {B}}}
+        {A\wedge B}
+      } \end{array} \]
+        \end{exampleblock}
+  \end{columns}
+\end{frame}
+\begin{frame}{Harmony}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    
+   \[\begin{array}{c c c}
+    {\inferrule{
+    {\inferrule[]{
+      {\begin{array}[b]{c} \overline{x:A}\\ {\mathcal{D}} \\ B  \end{array}}}{A \supset B }}\\
+  {\begin{array}{c}\mathcal{E}\\{A }\end{array}}
+  }
+  { B }} & = &
+    
+        {\begin{array}[b]{c} \mathcal{E} \\ A  \\ {\mathcal{D}} \\ B  \end{array}} 
+  
+  \end{array}\]
+  \column{0.5\textwidth}
+  \[\begin{array}{c c c}
+	{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B  \end{array}}
+			& = &
+		
+			{\inferrule{
+				{\inferrule[]{
+						{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B  \end{array}}
+							\\{\overline{x:A}}} 
+							{ B }}}
+				{A \supset B}
+		}
+	\end{array}\]
+\end{columns}
+\end{frame}
+\begin{frame}{Calculi for free}
+  \begin{itemize} 
+  \item[] trees $\mapsto$ \emph{terms} (inhabitation judgments)
+  \item[] local soundness $\mapsto$ $\beta$ reduction (equality judgments), 
+  \item [] local completeness $\mapsto$ $\eta$ expansion (equality judgments)
+  \end{itemize}
+\end{frame}
+\begin{frame}
+\begin{mathpar}
+    \inferrule*[right=$\top$I] { } {\Turnsi {\Gamma} { \langle \rangle:\top }}
+    \and
+    \inferrule*[right=Tup] {\Turnsi {\Gamma} {M:\phi_1}\\{\Turnsi {\Gamma} { M^{'}:\phi_2}}} {\Turnsi {\Gamma} {  
+      \langle M,M^{'}\rangle:\phi_1\times \phi_2 }}
+      \and
+      \inferrule*[right=LPrj] {\Turnsi {\Gamma} {M:\phi_1\times\phi_2 }} {\Turnsi {\Gamma} {\operatorname{fst}(M):  \phi_1}}
+      \and
+      \inferrule*[right=RPrj] {\Turnsi {\Gamma} {M:\phi_1\times\phi_2}} {\Turnsi {\Gamma} {\operatorname{snd}(M):  \phi_2}}
+      \and
+  \inferrule*[right=$\lambda-$Abs] {\Turnsi {\Gamma, x:\phi_1 } 
+  {M:\phi_2 }} {\Turnsi {\Gamma} { \lambda x. M:\phi_1\rightarrow \phi_2 }}
+  \inferrule*[right=App] {\Turnsi {\Gamma} {M:\phi_1\rightarrow\phi_2 }\\{\Turnsi {\Gamma} {M^{'}:\phi_1}}} {\Turnsi {\Gamma} {  (M M^{'}):\phi_2 }}
+\end{mathpar}
+\alert{Plus equality judgments}
+e.g. \[\inferrule*[right=$\beta\supset$] 
+{{\Gamma,x:A\vdash M:B}\\ {\Gamma\vdash N:A}}
+{\Gamma\vdash(\lambda x.M)(N)\equiv [N/x]M:B}\]
+\alert{plus congruence axiomatization}
+\alert{plus context judgments}
+\end{frame}
+\section{JCalc: Natural deduction}
+
+\begin{frame}{Motivation}
+  \[\inferrule*[right=\sout{Nec}] 
+  {\vdash A} {\vdash \Box A}\]
+  \[\inferrule*[right=$\Box_I$] 
+  {{\vdash A}\\ {\vdash  {\sf Just\quad A}}} {\vdash \Box A}\]
+In JL the motivation is that ${\vdash A}$ is ${\sf int}$ and
+${\sf J A}$ is in ${\sf cl}$  so $Just$ can be seen as an embedding.
+\end{frame}
+\begin{frame}{Motivation}
+  \[\inferrule*[right=\sout{Nec}] 
+  {\vdash A} {\vdash \Box A}\]
+  \[\inferrule*[right=$\Box_I$] 
+  {{\vdash A}\\ {\vdash  {\sf Just\quad A}}} {\vdash \Box A}\]
+In JL the motivation is that ${\vdash A}$ is ${\sf int}$ and
+${\sf J A}$ is in ${\sf cl}$  so $Just$ can be seen as an embedding.
+\end{frame}
+\end{document}
