@@ -28,7 +28,7 @@ Here are the the rules for constructing proof trees with labeled assumptions\foo
 \begin{array}[b]{c}{ x_1:A_1 \true,\ldots,  x_i:A_i\true}\\{\vdots}\\{A_{j\in 1\dots i} \true}
 \end{array}
 \and
-\begin{array}[b]{c}{ x_1:A_1 \true, \ldots,   x_i:A_i\true}\\{\vdots}\\{\Longrightarrowp\true}
+\begin{array}[b]{c}{ x_1:A_1 \true, \ldots,   x_i:A_i\true}\\{\vdots}\\{\top\true}
 \end{array}
 \end{mathpar}
 
@@ -98,7 +98,7 @@ We will be revisiting these very same equalities and reframe them as equalities 
 	\begin{array}{c c c}
 	{\inferrule{
 	{\inferrule[]{
-		{\begin{array}[b]{c} x:A\\ {\mathcal{D}} \\ B \true \end{array}}}{A \supset B \true}}\\
+		{\begin{array}[b]{c} \overline{x:A}\\ {\mathcal{D}} \\ B \true \end{array}}}{A \supset B \true}}\\
 {\begin{array}{c}\mathcal{E}\\{A \true}\end{array}}
 }
 { B \true}} & =_{\beta} &
@@ -184,7 +184,7 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mathpar}
 \inferrule*[right=Atom] { } {P_i \in {\sf Type}}
 \and
-\inferrule*[right=Top] { } {\Longrightarrowp \in {\sf Type}}
+\inferrule*[right=Top] { } {\top \in {\sf Type}}
 \and
 \inferrule*[right=Bottom] { } {\bot \in {\sf Type}}
 \and
@@ -216,7 +216,7 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mdframed}
 \textbf{Top Introduction -- Bottom Elimination}
 \begin{mathpar}
-\inferrule*[right=$\Longrightarrowp$I] { } {\Turnsi {\Gamma} { \langle \rangle:\Longrightarrowp }}
+\inferrule*[right=$\top$I] { } {\Turnsi {\Gamma} { \langle \rangle:\top }}
 \and
 \inferrule*[right=$\bot$E] {\Turnsi {\Gamma} {M:\bot } } {\Turnsi {\Gamma} { abort[\phi](M) :\phi}}
 \end{mathpar}
@@ -325,7 +325,7 @@ The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 
 \begin{mdframed}
 	\begin{mathpar}
-		\inferrule*[right=$\eta\Longrightarrowp$]{\Gamma\vdash M:\Longrightarrowp}{\Gamma\vdash M\equiv \langle \ \rangle: \Longrightarrowp} 
+		\inferrule*[right=$\eta\top$]{\Gamma\vdash M:\top}{\Gamma\vdash M\equiv \langle \ \rangle: \top} 
 		\and
 		
 		\inferrule*[right=$\eta\times$]{\Gamma\vdash M:A\times B}{\Gamma\vdash M\equiv \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\times B }
@@ -502,7 +502,7 @@ There is a correspondence between propositions and types:
 
     Propositions & Types \\
 
-    $\Longrightarrowp$ & $1$ \\
+    $\top$ & $1$ \\
     $A\wedge B$ & $A\times B$ \\
     $A\supset B$ & function $A\Longrightarrow B$ or $B^A$ \\
     $\bot$ & $0$ \\
@@ -545,7 +545,7 @@ We say that two arrows $f$ and $g$ are \emph{composable} with $Dom(f)=Cod(g)$. I
 Now we can think about objects in the category that correspond to propositions given in the correspondence.
 
 \paragraph{Terminal Object}
-$1$ is the terminal object, also called the final object, which corresponds to $\Longrightarrowp$. For any object $\Gamma$ there is a unique map $\Gamma\Longrightarrow 1$. 
+$1$ is the terminal object, also called the final object, which corresponds to $\top$. For any object $\Gamma$ there is a unique map $\Gamma\Longrightarrow 1$. 
 \begin{mdframed}
 \begin{mathpar}
 
