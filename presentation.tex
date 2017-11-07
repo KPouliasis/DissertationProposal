@@ -1,6 +1,8 @@
 \documentclass{beamer}
   \usetheme{metropolis}
   \usepackage[normalem]{ulem}
+  \usepackage{stmaryrd}
+  
   
   \newcommand{\Turnsi}[2]
 	{ {#1}\vdash  {#2}}
@@ -183,7 +185,7 @@ e.g. \[\inferrule*[right=$\beta\supset$]
 \alert{plus congruence axiomatization}
 \alert{plus context judgments}
 \end{frame}
-\section{JCalc: Natural deduction}
+\section{JCalc: Motivation}
 
 \begin{frame}{Motivation}
   \[\inferrule*[right=\sout{Nec}] 
@@ -195,13 +197,181 @@ ${\sf J A}$ is in ${\sf cl}$  so $J$ can be seen as an embedding.
 In general though the connective can be treated indepenedently of the details
 of the two systems
 \end{frame}
+\begin{frame}{Relating Deductive systems}  
+  \begin{outline}
+  \1 Assume deductive systems 
+  \2 $I$:with propositions in $U_I$
+  a possibly non-empty signature of axioms $\Sigma_I$
+  an entailment relation $\Sigma_I;\Gamma\vdash_{I}A$
+  \2 $J$ with: $U_J$, $\Sigma_J$, and $\Sigma_J;\Delta\vdash_J \phi$ respectively.
+  
+  \1 Deductive System Requirements
+  
+  \2 Reflexivity :
+  
+  $A \in \Gamma \Longrightarrow \Gamma\vdash_{I}A$\\
+  $\phi \in \Delta \Longrightarrow \Delta\vdash_{J}\phi$
+  \2 Compositionality:
+  
+  $\Gamma\vdash_I A$ and $\Gamma^{\prime},A\vdash_{I} B \Longrightarrow \Gamma,\Gamma^{'}\vdash_I B $\\
+  $\Delta\vdash_J\phi$ and $\Delta^{\prime},\phi\vdash_{J} \psi \Longrightarrow \Delta,\Delta^{'}\vdash_J \psi$
+  \1 Top elements :
+  
+  $\Gamma\vdash_{I}\top_I $ and $\Delta\vdash_{J}\top_J $
+  \end{outline}
+\end{frame}
+
+\begin{frame}{Interpetations and Validations}
+  
+  \begin{outline}
+  \1An interpretation for $I$, ($\llbracket\bullet \rrbracket_J$) is a pair $(J,\llbracket\bullet\rrbracket)$ of a deductive system $J$ together with a (functional) mapping $\llbracket \bullet \rrbracket: U_I\rightarrow U_J$ on propositions of $I$ into propositions of $J$ extended to multisets of formulae of $U_I$ s.t.
+  \2 $\llbracket\top_I \rrbracket = \top_J$
+  
+  \2 For $\Gamma$ of the form $A_1,\ldots, A_n$: $\llbracket\Gamma \rrbracket=\llbracket A_1 \rrbracket,\ldots, \llbracket A_n\rrbracket$
+  
+  \1 Given a deductive system $I$ and an interpretation function $\llbracket\bullet\rrbracket_J:U_I\rightarrow U_J$ of $I$ into $J$ we define:
+  
+  \2 A validation of a deduction $\Sigma_I;\Gamma\vdash_I A$ to be a deduction $\Sigma_J;\Delta\vdash_{J} \phi$ in $J$ such that $\llbracket A \rrbracket=\phi$ and $\Delta=\llbracket \Gamma \rrbracket $ . We will be writing $ \llbracket \Sigma_I;\Gamma\vdash_I A\rrbracket_J$
+  \end{outline}
+\end{frame}
+\begin{frame}{Interpetations and Validations}
+  
+  \begin{outline}
+  \1An interpretation for $I$, ($\llbracket\bullet \rrbracket_J$) is a pair $(J,\llbracket\bullet\rrbracket)$ of a deductive system $J$ together with a (functional) mapping $\llbracket \bullet \rrbracket: U_I\rightarrow U_J$ on propositions of $I$ into propositions of $J$ extended to multisets of formulae of $U_I$ s.t.
+  \2 $\llbracket\top_I \rrbracket = \top_J$
+  
+  \2 For $\Gamma$ of the form $A_1,\ldots, A_n$: $\llbracket\Gamma \rrbracket=\llbracket A_1 \rrbracket,\ldots, \llbracket A_n\rrbracket$
+  
+  \1 Given a deductive system $I$ and an interpretation function $\llbracket\bullet\rrbracket_J:U_I\rightarrow U_J$ of $I$ into $J$ we define:
+  
+  \2 A validation of a deduction $\Sigma_I;\Gamma\vdash_I A$ to be a deduction $\Sigma_J;\Delta\vdash_{J} \phi$ in $J$ such that $\llbracket A \rrbracket=\phi$ and $\Delta=\llbracket \Gamma \rrbracket $ . We will be writing $ \llbracket \Sigma_I;\Gamma\vdash_I A\rrbracket_J$
+  \end{outline}
+\end{frame}
+\begin{frame}{Logical Completeness}
+  \begin{outline}
+  
+  \1 Given a deductive system $I$, we say that $J$ is logically complete under $\llbracket\bullet \rrbracket_J$ when for all purely logical deductions $\mathcal{D}$ in $I$ there exists a (purely logical) validation $\mathcal{E}$ in $J$. i.e: 
+  $\forall \mathcal{D}. \ \mathcal{D}:\Gamma\vdash_I A \Longrightarrow \exists\mathcal{E}: \llbracket \Gamma\vdash A\rrbracket_J$
+ \1 Spoiler: our system axiomatizes (extensions) of logical validations and treats 
+ boxes as points of such validations  
+ \1 Without loss of generality we focus on the case where $I$ is
+ based on minimal intuitinistic logic
+\end{outline}
+\end{frame}
 \begin{frame}{Roadmad}
   \begin{itemize}
  \item Create a system with two kinds of judgments 
- $A \ {\sf true}$ and $A {\sf valid}:=\  
- {\sf true}$ and treat necessity as “double theoremhood”
-%   obtain a system of basic constructive modality investigating the minimal relation between these two systems
-%   Use justification logic to axiomatize validity $\llbracket \sf {judgments}\rrbracket$.
+ $A \ {\sf true}$ (as in $\Gamma\sf{true}\vdash_I \sf {true}$) and 
+ $A\ {\sf valid}:=\llbracket A \rrbracket  
+ {\sf true}$ as in $\Delta {\sf true}\vdash_J\llbracket A \rrbracket$ 
+ and treat necessity as “double theoremhood”
+\item obtain a system of basic constructive modality investigating the minimal relation between these two systems
+\item Use justification logic to axiomatize validity $\llbracket \sf {judgments}\rrbracket$.
 \end{itemize}
 \end{frame}
+\begin{frame}{Roadmad}
+  \begin{itemize}
+ \item Create a system with two kinds of judgments 
+ $A \ {\sf true}$ (as in $\Gamma\sf{true}\vdash_I \sf {true}$) and 
+ $A\ {\sf valid}:=\llbracket A \rrbracket  
+ {\sf true}$ as in $\Delta {\sf true}\vdash_J\llbracket A \rrbracket$ 
+ and treat necessity as “double theoremhood”
+\item obtain a system of basic constructive modality investigating the minimal relation between these two systems
+\item Use justification logic to axiomatize validity $\llbracket \sf {judgments}\rrbracket$.
+\item focus on a minimal system based on $K$ modal logic and intuitionistic implication
+\item \item add proof terms and show that such type systems are useful p
+
+\item show that this approach scales with stronger modality
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{$K$-$\Box$ rule}
+  One modal rule for elimination and introduction to relate judgments $A\ {\sf valid}$, $ A\ {\sf true}$, $ \Box A {\sf true}$:
+  
+  \[ \inferrule* {{\begin{array}{c}\mathcal{D}\\ \Box A\end{array}} \\ {\inferrule* {}{{\begin{array}{c} \overline{x:A} \\ \mathcal{E} \\ {B} \end{array} } \\ {\begin{array}{c} \overline{s:\llbracket A \rrbracket} \\ \mathcal{F} \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
+  
+\end{frame}
+
+\begin{frame}  {Modal Rule (Generically)}
+  
+  Or, generalizing for assumptions
+  
+  $\Gamma:=x_1:A_1, \ldots, x_i: A_i\ \text{and } \Delta:= s_1:\llbracket A_i \rrbracket, \ldots s_i:\llbracket A_i\rrbracket$:
+
+  \[ \inferrule* {{\Box A_1, \ldots, \Box A_i} \\ {\inferrule* {}{{\begin{array}{c} \overline{\Gamma} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \overline{\Delta} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
+  \end{frame}
+\begin{frame} {Modal Rule ($\Box$ Introduction)}
+  
+  We defined the connective negatively but we obtain $\Box$ constuctors by the very same rule for $\Gamma,\Delta$ empty and derivations $\mathcal{\overline{D},\overline{E}}$ closed for substitutions.
+  
+  \[ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}} \\ {B} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}} \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
+  
+\end{frame}
+
+
+
+\section{Jcalc: provability}
+\begin{frame}{Type Universe}
+
+\[\begin{array}{c c} \\ \inferrule* { } {P_k \in {\sf Prop_0}} & \inferrule* { } {\top \in {\sf Prop_0}} \\ \\ \inferrule* {{ A \in {\sf Prop_0 }}\\ { B \in {\sf Prop_0}}} { A\supset B\in {\sf Prop_{0}}} & \inferrule* { A \in {\sf Prop_0 }} {\llbracket A\rrbracket \in {\sf \llbracket Prop_{0}\rrbracket}} \\ \\ \inferrule* { A \in{\sf Prop_{0} }} {\Box A\in{\sf Prop_{1}} } & \inferrule* {{ A \in {\sf Prop_1 }}\\ { B \in {\sf Prop_1}}} { A\supset B\in {\sf Prop_{1}}} \end{array} \]
+\end{frame}
+\begin{frame} {Natural deduction for ${\sf Prop_0}$}
+\[\begin{array}{l r} \inferrule* {x: A \in \Gamma}{ {\Gamma}\vdash { A}} & \inferrule* { }{{\Gamma}\vdash { \top}} \\ \\ \inferrule* {{{\Gamma, x: A} \vdash { B}}} {{\Gamma}\vdash { A\supset B}} & \inferrule* {{ {\Gamma}\vdash{ A\supset B}}\\{{\Gamma}\vdash { A}}} { {\Gamma} \vdash { B}} \end{array} \]
+\end{frame}
+\begin{frame}{Natural Deduction ( $\llbracket{\sf Prop_0}\rrbracket$ )}
+
+With $ A, B, C \in {\sf Prop_0} $
+
+\[\begin{array}{l c} \inferrule* {s:\llbracket A\rrbracket \in \Delta}{{\Delta}\vdash {\llbracket A\rrbracket}} & \inferrule* { } { {\Delta} \vdash{\llbracket \top \rrbracket}} \end{array} \]
+\[\begin{array}{l l} \inferrule*{ } {\Delta\vdash \llbracket A \supset (B \supset A)\rrbracket } \\ \\ \inferrule* { }{\Delta\vdash\llbracket A\supset (B \supset C) \supset (( A\supset B) \supset ( A \supset C))\rrbracket} \\ \\ {\inferrule* {{ {\Delta}\vdash { \llbracket A \supset B \rrbracket}}\\ {{\Delta}\vdash {\llbracket A \rrbracket}}} { {\Delta}\vdash {\llbracket B\rrbracket}}} \\ \\ {\inferrule* {{ {\Delta}\vdash { \llbracket A \rrbracket}}\\ {{\Delta},{\llbracket A \rrbracket}\vdash {\llbracket B \rrbracket}}} { {\Delta}\vdash {\llbracket B\rrbracket}}} \end{array} \]
+\end{frame}
+\begin{frame}{Natural Deduction ( ${\sf Prop_1}$ )}
+
+\[\begin{array}{c} \inferrule*{x^{\prime}: \Box A \in \Gamma}{ {\Gamma}\vdash {\Box A}} \\ \\ \inferrule*{{(\forall A_i \in \Gamma^{\prime}. \ {\Gamma}\vdash{\Box A_i})}\\{{\Gamma^{\prime}}\vdash { B}}\\ { {\llbracket \Gamma^{\prime} \rrbracket}\vdash {\llbracket B\rrbracket} }} { {\Gamma}\vdash\Box B} \\ \\ \inferrule* {{ {\Gamma, x^{\prime}: \Box A} \vdash { \Box B}}} { {\Gamma}\vdash { \Box A\supset \Box B}} \\ \\ \inferrule* {{ {\Gamma} \vdash { \Box A\supset \Box B}}\\{ {\Gamma} \vdash { \Box A}}} { {\Gamma}\vdash { \Box B}} \end{array} \]
+\end{frame}
+
+\begin{frame}{Basic facts}
+  \begin{itemize}
+\item Logical completeness of $\llbracket\bullet \rrbracket$:\\
+ $\forall \Gamma, A \in {\sf Prop_0}$ \ $\Gamma\vdash A \Longrightarrow \llbracket \Gamma\rrbracket\vdash\llbracket A\rrbracket $,
+ \item Admissibility of (standard) $K$ rule:
+ $\forall \Gamma, A \in {\sf Prop_0}$ $\Gamma\vdash A \Longrightarrow \Box\Gamma\vdash\Box A$,
+ \item Admissibility of Nec: 
+ $\vdash A  \Longrightarrow \vdash \Box A$
+  \end{itemize}
+\end{frame}
+\section{Jcalc: Order Theory}
+\begin{frame}{Semi HAs}
+  \begin{outline}
+  \1 A \textit{(meet) semi-lattice} is a non-empty \emph{partial order} 
+  (i.e. reflexive, antisymmetric and transitive) 
+  with finite meets.
+  
+ \1
+  A \textit{bounded (meet) semi-lattice} $(L,\le)$ is a (meet) 
+  semi-lattice that additionally has 
+  \2 \emph a {greatest element} (we name it $1$), which satisfies\\
+  $x \le 1$ for every $x$ in $L$  
+ \1 A \textit{semi-HA} is a bounded (meet) semi-lattice $(L,\le, 1)$ 
+ s.t. for every $a,b\in L$ there exists an \textit{exponential} 
+ (we name it $a\rightarrow b$) 
+ with the properties: 
+ \begin{enumerate}
+ \item $a\rightarrow b\times a\le b $
+ \item $a\rightarrow b$ is the greatest such element : \\ $c\times a\le b \Longrightarrow c\le a\rightarrow b $
+ \end{enumerate}
+  \end{outline}
+\end{frame}
+\begin{frame}{Local Soundness}
+  For $\mathcal{\overline{D},\overline{E}}$ closed for substitutions, the first proof tree is reducible to the second:
+  
+  \[\begin{array}{l r} \inferrule*{ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}} \\ {A} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}} \\ \llbracket A \rrbracket \end{array}} }}} {\Box A}\\{{\inferrule* {}{{\begin{array}{c} \overline{x:A} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \overline{s:\llbracket A \rrbracket} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}}}{\Box B} & \Longrightarrow \end{array} \]
+  \[ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}}\\ \overline{A} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}}\\ \overline{\llbracket A \rrbracket} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}}{\Box B} \]
+  \end{frame}
+  \begin{frame}{Local Completeness}
+   Any deduction $\mathcal{D}: \Box A$ can be expanded as follows:
+  
+  \[\begin{array} {c r} \begin{array}{c} \mathcal{D}\\ \Box A \end{array} & \Longrightarrow \\ \\ \inferrule* {{\begin{array}{c} \mathcal{D}\\ \Box A \end{array} } \\ {\begin{array}{c} \\ \overline{x:A} \end{array}} \\ {{\begin{array}{c} \\ \overline{s:\llbracket A\rrbracket} \end{array}}} }{\Box A} \end{array} \]
+    \end{frame}
 \end{document}
