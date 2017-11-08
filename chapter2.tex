@@ -462,7 +462,8 @@ As a result we get a weak  normalization theorem by induction on pairs $(d(M),k)
 \begin{mdframed}
 \begin{theorem}
 	\textbf{Weak Normalization Theorem}
-For every term $\Gamma\vdash M:A$ there exists a normalization strategy such that $M\mapsto_{\beta}^{*}N$ and $N$ is a normal form.
+For every term $\Gamma\vdash M:A$ there exists a normalization strategy 
+such that $M\mapsto_{\beta}^{*}N$ and $N$ is a normal form.
 \end{theorem}
 \end{mdframed} 
 
@@ -504,7 +505,7 @@ There is a correspondence between propositions and types:
 
     $\top$ & $1$ \\
     $A\wedge B$ & $A\times B$ \\
-    $A\supset B$ & function $A\Longrightarrow B$ or $B^A$ \\
+    $A\supset B$ & function $A\rightarrow B$ or $B^A$ \\
     $\bot$ & $0$ \\
     $A\vee B$ & $A+B$\\
 
@@ -515,7 +516,8 @@ There is a correspondence between propositions and types:
 
 \section{Categories for proof relevant \vocab{IPL}}
 
-In a Heyting Algebra, we have a preorder (or, partial order in the ``textbook" definition) $\phi\leq \psi$ when $\phi$ implies $\psi$. \emph{HAs} are insufficient, however, for the treatment of proof objects (there can be at most one instance of $\phi\leq\psi$ for specific $\phi$,$\psi$). We can  keep track of proofs, so if $M$ is a proof from  $\Gamma$ to $\psi$, we want to think of it as a map $M:\Gamma+\Longrightarrow \psi+$. In category theory ~\cite{awodey2010category}, the analog of a Heyting Algebra is that of a Bi--Cartesian Closed Category (\emph{BiCCC}). That is a category with all finite products, co--products and exponentials. For an exposition of BiCCCs and their relation with intuitionistic logic ~\cite{Lambek1985}. The axiomatization of a category (in general), finite (and nullary) products and co-products and exponentials is given in this section. 
+In a Heyting Algebra, we have a preorder (or, partial order in the 
+``textbook" definition) $\phi\leq \psi$ when $\phi$ implies $\psi$. \emph{HAs} are insufficient, however, for the treatment of proof objects (there can be at most one instance of $\phi\leq\psi$ for specific $\phi$,$\psi$). We can  keep track of proofs, so if $M$ is a proof from  $\Gamma$ to $\psi$, we want to think of it as a map $M:\Gamma+\Longrightarrow \psi+$. In category theory ~\cite{awodey2010category}, the analog of a Heyting Algebra is that of a Bi--Cartesian Closed Category (\emph{BiCCC}). That is a category with all finite products, co--products and exponentials. For an exposition of BiCCCs and their relation with intuitionistic logic ~\cite{Lambek1985}. The axiomatization of a category (in general), finite (and nullary) products and co-products and exponentials is given in this section. 
 
 \subsection{Definitions and Axioms of a Category}
 A category has \emph{objects} $\phi,\psi, \ldots$ and \emph{arrows} $f,g,h\ldots$ Each arrow goes from an object to an object. To say that $g$ goes from $\phi$ to $\psi$ we write $g:\phi\Rightarrow\psi$, or say that $\phi$ is the domain of $g$, and $\psi$ the \emph{co--domain}. We write $Dom(g)=\phi$ and $Cod(g)=\psi$.
