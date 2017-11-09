@@ -343,9 +343,9 @@ of the two systems
   \begin{mathpar}
     \inferrule*[right=$\wedge_0$I] {{\Turnsi {\Gamma} { A}}\\{\Turnsi {\Gamma} { B}}} {\Turnsi {\Gamma} {   A\wedge B}}
     \and 
-    \inferrule*[right=$\wedge_0$E] {{\Turnsi {\Gamma} {A\wedge B}}} {\Turnsi {\Gamma} {   A}}
+    \inferrule*[right=$\wedge_0$E1] {{\Turnsi {\Gamma} {A\wedge B}}} {\Turnsi {\Gamma} {   A}}
     \and 
-    \inferrule*[right=$\wedge_0$E] {\Turnsi {\Gamma} {A\wedge B}} {\Turnsi {\Gamma} {   B}}
+    \inferrule*[right=$\wedge_0$E2] {\Turnsi {\Gamma} {A\wedge B}} {\Turnsi {\Gamma} {   B}}
   \end{mathpar}
   \begin{mathpar}
     \inferrule*[right=$\supset_0$I] {{\Turnsi {\Gamma, x: A} { B}}} {\Turnsi {\Gamma} {   A\supset  B}}
@@ -391,6 +391,30 @@ of the two systems
  \item $a\rightarrow b$ is the greatest such element : \\ $c\times a\le b \Longrightarrow c\le a\rightarrow b $
  \end{enumerate}
   \end{outline}
+\end{frame}
+\begin{frame}{"Good" order preserving functions}
+  \textbf{Definition}
+  A function $F$ between two (semi)-HAs ($HA_1$, $HA_2$)
+   is order preserving
+  and commutes with top, products and exponentials \emph{iff} for every 
+  $\phi,\psi \in HA_1$
+    \begin{enumerate}
+    \item $\phi\le_{HA_1}\psi\Rightarrow F\phi\le_{HA_2}F\psi$
+    \item $F\top_{HA_1} = \top_{HA_2}$ 
+    \item{$F(\phi \times\psi) = F(\phi)\times(F(\psi)$} 
+    \item $F(\phi\rightarrow \psi) = F(\psi)\rightarrow F(\phi)$
+    \end{enumerate}
+    A \emph{$Jcalc$-triplet} is 
+    
+  \begin{enumerate}
+  \item A semi-Hayting algebra $HA$
+  \item A partial order $J$
+  \item An order preserving function $F$ from $HA$ to $J$ s.t.
+  \begin{enumerate}
+    \item The image $F(HA)$ forms a semi-Heyting Algebra
+    \item $F$ preserves top, products and exponentials
+  \end{enumerate}
+  \end{enumerate}
 \end{frame}
 \begin{frame}{Local Soundness}
   For $\mathcal{\overline{D},\overline{E}}$ closed for substitutions, the first proof tree is reducible to the second:

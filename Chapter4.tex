@@ -281,17 +281,23 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	\begin{mdframed}[nobreak=true,frametitle={\footnotesize Judgments on Truth  $\Gamma, A,B \in {\sf Prop_0}$ }]
 		\label{jots}
 		\mbox{\small
-			\begin{mathpar}
-				\inferrule*[right=$\Gamma_0$-Refl] {x: A \in \Gamma}{\Turn {\Gamma} { A}}
-				\and
-				\inferrule*[right=$\top_0$I] { }{\Turn {\Gamma} { \top}}
-				\and
-				\inferrule*[right=$\supset_0$I] {{\Turn {\Gamma, x: A} { B}}} {\Turn {\Gamma} {   A\supset  B}}
-				\and
-				\inferrule*[right=$\supset_0$E] {{\Turn {\Gamma} { A\supset  B}}\\{\Turn {\Gamma} { A}}} {\Turn {\Gamma} {   B}}
-				
-				%\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
-			\end{mathpar}}
+		\begin{mathpar}
+			\inferrule*[right=$\Gamma_0$-Refl] {x: A \in \Gamma}{\Turnsi {\Gamma} { A}}
+			\and
+			\inferrule*[right=$\top_0$I] { }{\Turnsi {\Gamma} { \top}}
+			\and
+			\inferrule*[right=$\wedge_0$I] {{\Turnsi {\Gamma} { A}}\\{\Turnsi {\Gamma} { B}}} {\Turnsi {\Gamma} {   A\wedge B}}
+			\and
+			\inferrule*[right=$\wedge_0$E1] {{\Turnsi {\Gamma} {A\wedge B}}} {\Turnsi {\Gamma} {   A}}
+			\and
+			\inferrule*[right=$\wedge_0$E2] {\Turnsi {\Gamma} {A\wedge B}} {\Turnsi {\Gamma} {   B}}
+			\and
+			\inferrule*[right=$\supset_0$I] {{\Turnsi {\Gamma, x: A} { B}}} {\Turnsi {\Gamma} {   A\supset  B}}
+			\and
+			\inferrule*[right=$\supset_0$E] {{\Turnsi {\Gamma} { A\supset  B}}\\{\Turnsi {\Gamma} { A}}} {\Turnsi {\Gamma} {   B}}
+			
+			%\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
+		  \end{mathpar}}
 		\end{mdframed}
 		
 		For the calculus of interpretation (validity) we demand context reflexivity, compositionality and logical completeness with respect to  intuitionistic implication.
@@ -372,6 +378,13 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 			\inferrule*[left=ax1.]{}{ A\supset (B \supset  A)}
 			\and
 			\inferrule*[left=ax2.]{}{ (A\supset (B \supset C) )\supset (( A\supset B) \supset ( A \supset C))}
+			\and 			
+			\inferrule*[left=ax3.]{}{ (A\supset (B \supset A\wedge B) )}
+			\and
+			\inferrule*[left=ax4.]{}{ (A\wedge B) \supset A )}
+			\and
+			\inferrule*[left=ax4.]{}{ (A\wedge B) \supset B )}
+			
 			\and
 			\inferrule*[left=K.]{}{\Box ( A\supset B)\supset\Box  A \supset \Box B}
 			\and
@@ -741,7 +754,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				\begin{theorem}\label{thm:cmpjtriplet}
 					\textbf{Soundness and completness}\\
 				$\Gamma\vdash_{Jcal}\phi$ iff for any \vocab{Jcalc Algebra}  $JC$ ($HA,F,J$)
-				and any $*$ map that extends  a maps of atomic $\prop$s ($p_i$) to elements of $HA$ 
+				and any $*$ map that extends  a map of atomic $\prop$s ($p_i$) to elements of $HA$ 
 				with properties shown below and $(+)$ 
 				is defined inductively on the length of $\Gamma$ as shown below
 				then $\Gamma^+\leq\phi^{*}$.
@@ -773,7 +786,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				the proof is well-known from intutionistic logic semantics ($\Gamma\in{\sf Prop_0}\vdash \phi\in {\sf Prop_0}
 				\Rightarrow \Gamma^+\le_{HA}\phi *$)
 				. 
-				For the ${\sf Prop_1}$ part of the calculus again by induction.
+				For the ${\sf \llbracket Prop_0\rrbracket}$ part of the calculus again by induction.
 				Reflexion, of contexts is trivial. For the axiomatic cases, it is a well known result
 				that in any Heyting algebra (and thus in $F(HA)$ of any Jcalc algebra) 
 				elements of the shape of the axiomatic combinators are equivalent (equiprovable) to $\top$.
