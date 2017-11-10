@@ -2,6 +2,7 @@
   \usetheme{metropolis}
   \usepackage[normalem]{ulem}
   \usepackage{stmaryrd}
+  % \usepackage{minted}
   
   
   \newcommand{\Turnsi}[2]
@@ -326,7 +327,7 @@ of the two systems
     %\and
     %\inferrule*[right= Arr] {{ A \in {\sf Prop_{i} }}\\ { B \in {\sf Prop_{j}}}} { A\supset  B\in {\sf Prop_{max(i,j)}}}
     \and
-    \inferrule*[right= Arr] {{ A \in {\sf Prop_i }}\\ { B \in {\sf Prop_j}}} { A\supset  B\in {\sf Prop_{max(i,j)}}}
+    \inferrule*[right= Arr] {{ A \in {\sf Prop_i }}\\ { B \in {\sf Prop_i}}} { A\supset  B\in {\sf Prop_{i}}}
     \and
     \inferrule*[right=Brc] { A \in {\sf Prop_0 }} {\llbracket  A\rrbracket \in {\sf \llbracket Prop_{0}\rrbracket}}
     %\and
@@ -349,15 +350,38 @@ of the two systems
   \end{mathpar}
   \begin{mathpar}
     \inferrule*[right=$\supset_0$I] {{\Turnsi {\Gamma, x: A} { B}}} {\Turnsi {\Gamma} {   A\supset  B}}
-    \and
     \inferrule*[right=$\supset_0$E] {{\Turnsi {\Gamma} { A\supset  B}}\\{\Turnsi {\Gamma} { A}}} {\Turnsi {\Gamma} {   B}}
     
     %\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
+    
   \end{mathpar}
 \end{frame}
-\begin{frame}{Natural Deduction ( ${\sf Prop_1}$ )}
+\begin{frame} {Natural deduction for ${\sf \llbracket Prop_0\rrbracket}$}
+    \begin{mathpar}
+      \inferrule*[right=$\Delta$-Refl] {s:\llbracket  A\rrbracket \in \Delta}{\Turnsi {\Delta} {\llbracket  A\rrbracket}}
+      \inferrule*[right=Ax$_1$] { } {\Turnsi {\Delta} {\llbracket  \top\rrbracket}}
+      \and
+      \inferrule*[right=  Ax$_2$]{  A, B \in {\sf Prop_0} }   {\Delta\vdash \llbracket   A \supset (B \supset   A)\rrbracket }
+      \and
+      \inferrule*[right=  Ax$_3$]{ {  A,B, C \in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\supset (B \supset C) \supset ((  A\supset B) \supset (  A \supset C))\rrbracket}
+      \and
+      \inferrule*[right = Ax$_4$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\supset (B \supset A\wedge B) \rrbracket}
+      \and
+      \inferrule*[right = Ax$_5$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\wedge B \supset A  \rrbracket}
+      \and
+      \inferrule*[right = Ax$_6$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\wedge B \supset B  \rrbracket}
+      \and					
+      \inferrule*[right=MP] {{\Turnsi {\Delta} { \llbracket  A \supset  B \rrbracket}}\\ {\Turnsi{\Delta} {\llbracket  A \rrbracket}}}{\Turnsi {\Delta} {\llbracket  B\rrbracket}}
+    \end{mathpar}
+\end{frame}
+\begin{frame}{Natural Deduction ( ${\sf Prop_1}$ ) with $\Gamma\in {\sf Prop_1}$}
 
 \[\begin{array}{c} \inferrule*{x^{\prime}: \Box A \in \Gamma}{ {\Gamma}\vdash {\Box A}} \\ \\ \inferrule*{{(\forall A_i \in \Gamma^{\prime}. \ {\Gamma}\vdash{\Box A_i})}\\{{\Gamma^{\prime}}\vdash { B}}\\ { {\llbracket \Gamma^{\prime} \rrbracket}\vdash {\llbracket B\rrbracket} }} { {\Gamma}\vdash\Box B} \\ \\ \inferrule* {{ {\Gamma, x^{\prime}: \Box A} \vdash { \Box B}}} { {\Gamma}\vdash { \Box A\supset \Box B}} \\ \\ \inferrule* {{ {\Gamma} \vdash { \Box A\supset \Box B}}\\{ {\Gamma} \vdash { \Box A}}} { {\Gamma}\vdash { \Box B}} \end{array} \]
+  \begin{mathpar}
+    \inferrule*[right=$\wedge_0$I] {{\Turnsi {\Gamma} { \Box A}}\\{\Turnsi {\Gamma} { \Box B}}} {\Turnsi {\Gamma} {   \Box A\wedge \Box B}}
+    \inferrule*[right=$\wedge_0$E1] {{\Turnsi {\Gamma} {\Box A\wedge \Box B}}} {\Turnsi {\Gamma} {  \Box A}}
+    \inferrule*[right=$\wedge_0$E2] {\Turnsi {\Gamma} {\Box A\wedge \Box B}} {\Turnsi {\Gamma} {   \Box B}}
+  \end{mathpar}
 \end{frame}
 
 \begin{frame}{Basic facts}
@@ -394,37 +418,279 @@ of the two systems
 \end{frame}
 \begin{frame}{"Good" order preserving functions}
   \textbf{Definition}
-  A function $F$ between two (semi)-HAs ($HA_1$, $HA_2$)
+  A function $F$ between two (semi)-HAs ($H_1$, $H_2$)
    is order preserving
   and commutes with top, products and exponentials \emph{iff} for every 
-  $\phi,\psi \in HA_1$
+  $\phi,\psi \in H_1$
     \begin{enumerate}
-    \item $\phi\le_{HA_1}\psi\Rightarrow F\phi\le_{HA_2}F\psi$
-    \item $F\top_{HA_1} = \top_{HA_2}$ 
-    \item{$F(\phi \times\psi) = F(\phi)\times(F(\psi)$} 
-    \item $F(\phi\rightarrow \psi) = F(\psi)\rightarrow F(\phi)$
-    \end{enumerate}
+    \item $\phi\le_{H_1}\psi\Rightarrow F\phi\le_{H_2}F\psi$
+    \item $F\top_{H_1} = \top_{H_2}$ 
+    \item{$F(\phi \times_{H_1}\psi) = F(\phi)\times_{H_2}(F(\psi)$} 
+    \item $F(\phi\rightarrow_{H_1} \psi) = F(\psi)\rightarrow_{H_2} F(\phi)$
+    \end{enumerate}    
+  \end{frame}
+ \begin{frame}{$Jcalc$-triplet}
     A \emph{$Jcalc$-triplet} is 
     
   \begin{enumerate}
-  \item A semi-Hayting algebra $HA$
+  \item A semi-Hayting algebra $H$
   \item A partial order $J$
-  \item An order preserving function $F$ from $HA$ to $J$ s.t.
+  \item An order preserving function $F$ from $H$ to $J$ s.t.
   \begin{enumerate}
-    \item The image $F(HA)$ forms a semi-Heyting Algebra
+    \item The image $F(H)$ forms a semi-Heyting Algebra
     \item $F$ preserves top, products and exponentials
   \end{enumerate}
   \end{enumerate}
 \end{frame}
-\begin{frame}{Local Soundness}
-  For $\mathcal{\overline{D},\overline{E}}$ closed for substitutions, the first proof tree is reducible to the second:
+\begin{frame}{$\Box^F HA$ pair algebra}
+Given a $Jcalc-$triplet ($HA$,$F$,$J$)  define the induced algebra of $F$-points:
+$\Box^F HA$:
+\begin{enumerate}
+\item elements are pairs  $\langle A,FA\rangle$ (name them, $\Box A$)
+\item $\Box A\le \Box B$ iff $\A\le B$ and $FA\le FB$ 
+\end{enumerate}
+We can show:
+\begin{itemize}
+  \item It is reflexive, transitive and antisymmetric (a \textit{partial} order)
+  \item It is a (semi) Heyting algebra with:
+  \begin{itemize}
+    \item $\Box^F \top$ being the top element (name it $\top_{\Box^F}$)
+    \item For any two elements $\Box^F A$, $\Box^F B$: 
+    $\Box^F (A\times B)$ is their product (name it, $\Box^{F} A\wedge\Box^{F} B$)
+    \item For any two elements $\Box^F A$, $\Box^F B$:
+    $\Box^F (A\rightarrow B)$ is their exponential 
+    (name it, $\Box^F A\rightarrow\Box^B A$)
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$Jcalc$ Algebra}
+  \begin{itemize}
+  \item Given a $Jcalc$ triplet unionize the $\le$s ($HA$, $F(HA)$, $\Box^{F}HA$)
+  \item We call the result  \textit{jcalc} -algebra
+  \item Jcalc is sound and complete w.r.t jcalc algebras :
   
-  \[\begin{array}{l r} \inferrule*{ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}} \\ {A} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}} \\ \llbracket A \rrbracket \end{array}} }}} {\Box A}\\{{\inferrule* {}{{\begin{array}{c} \overline{x:A} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \overline{s:\llbracket A \rrbracket} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}}}{\Box B} & \Longrightarrow \end{array} \]
-  \[ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}}\\ \overline{A} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}}\\ \overline{\llbracket A \rrbracket} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}}{\Box B} \]
+    $\Gamma\vdash_{Jcal}\phi$ iff for any \textit{Jcalc Algebra}  $JC$ ($HA,F,J$)
+    $\Gamma^+\leq\phi^{*}$ 
+  \item $*$ is any extension of a mapping from atomic propositions of ${\sf Prop_0}$
+  to elements of $HA$ with the following properties:
+  \begin{alignat*}{2}
+    (\top)* &&\quad= & \quad\top\\
+    (A\wedge B \in Prop_0)*  &&\quad = & \quad  A*\times_{HA}B*\\
+    (A\supset B \in Prop_0)*  &&\quad = & \quad A*\rightarrow_{HA} B*\\
+    (\llbracket A\rrbracket)* && \quad = & \quad F(A*)\\					
+    (\Box A)* &&\quad = & \quad\Box^F A* \\
+    (\Box A\supset \Box B)*  &&\quad = & \quad\Box^F A* \rightarrow{\Box^F B*}\\
+    (\Box A\wedge\Box B)*  &&\quad = & \quad\Box^F A*\times{\Box^F B*}\\
+  \end{alignat*}
+
+  \end{itemize}
+
+\end{frame}
+
+\section{Terms calculus for Jcalc}
+
+\begin{frame}{{\sf let} bindings}
+  \begin{itemize}
+\item Standard construct in modern programming languages
+\item e.g.
+  \texttt{let (x,y) = (2,4) in (x+1,y+1)}
+\item The expression above has a $\beta$-redex and it reduces:\\
+\texttt{let (x,y) = (2,4) in (x+1,y+1)} $\rightarrow_{\beta}$ \texttt{(x+1,y+1)[2/x][3/y]}
+$\rightarrow_\beta$\\
+\item We obtain similar semantics from the $\Box$ rules applying the slogans
+\texttt{(3,4)}
+  \end{itemize}
+\end{frame}
+\begin{frame}{Proof term assignment: subcases of the rule }
+  $\Gamma \in {\sf Prop_1}$
+  \begin{itemize}
+  \item[]
+  \[\inferrule*{{(\forall A_i \in \Gamma^{\prime}. \ {\Gamma}\vdash{\Box A_i})}\\{{\Gamma^{\prime}}\vdash { B}}\\ { {\llbracket \Gamma^{\prime} \rrbracket}\vdash {\llbracket B\rrbracket} }} { {\Gamma}\vdash\Box B}\]
+  \item[]
+  \[\inferrule*[Right=$\Gamma'$ empty]{{\vdash { B}\\ { \vdash {\llbracket B\rrbracket} }}} 
+   { {\Gamma}\vdash\Box B}\]
+   \item[]
+   \[\inferrule*[Right=$\Gamma'$ empty]{{\vdash { M: B}\\ { \vdash J:{\llbracket B\rrbracket} }}} 
+   { {\Gamma}\vdash M\&J:\Box B}\]
+ \end{itemize}
+\end{frame}
+\begin{frame}{Proof term assignment: subcases of the rule }
+  $\Gamma \in {\sf Prop_1}$
+  \begin{itemize}
+  \item[]
+  \[\inferrule*{{(\forall A_i \in \Gamma^{\prime}. \ {\Gamma}\vdash{\Box A_i})}\\{{\Gamma^{\prime}}\vdash { B}}\\ { {\llbracket \Gamma^{\prime} \rrbracket}\vdash {\llbracket B\rrbracket} }} { {\Gamma}\vdash\Box B}\]
+  \item[]
+  \[\inferrule*[Right=$\Gamma'$ unary]{{x:A\vdash { B}\\ {s:\llbracket A\rrbracket\vdash {\llbracket B\rrbracket} }}} 
+   { {\Gamma}\vdash\Box B}\]
+   \item[]
+   \[\inferrule*[Right=$\Gamma'$ unary]{{ \Turnsi {\Gamma}{N:\Box  A}}\\{\Turnsi {x:A} { M:B}}\\{\Turnsi {s:\llbracket A \rrbracket} {{\sf J}:\llbracket  B\rrbracket} }} {\Turnsi {\Gamma} {{\sf let} \ (x\& s \ \ {\sf be\ } N) \ {\sf in}\  (M\& {\sf J}):\Box  B}} \]
+   \item[]
+  \end{itemize}
+\end{frame}
+\begin{frame}{Local Soundness}
+ For $\mathcal{\overline{D},\overline{E}}$ closed for substitutions, the first proof tree is reducible to the second:
+  
+ \[\begin{array}{l r} \inferrule*{ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}} \\ {A} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}} \\ \llbracket A \rrbracket \end{array}} }}} {\Box A}\\{{\inferrule* {}{{\begin{array}{c} \overline{x:A} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \overline{s:\llbracket A \rrbracket} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}}}{\Box B} & \Longrightarrow \end{array} \]
+ \[ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}}\\ \overline{A} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}}\\ \overline{\llbracket A \rrbracket} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}}{\Box B} \]
+  \end{frame}
+  \begin{frame}{$\beta$ reduction}
+    \begin{mathpar}
+        \inferrule*[]{
+            {\inferrule*[Left=$\Box_I$]{ \vdash M:A\\ \vdash {\sf j}:\llbracket A \rrbracket}{\Gamma\vdash M \& {\sf j}:\Box A}}\\{x:A\vdash M':B }\\ {s:\llbracket A\rrbracket \vdash {\sf j'}:\llbracket B \rrbracket}}
+        {\Gamma\vdash {\sf let} \ \ (x\& s)\ \ {\sf be}\ \   (M\&  {\sf J}) \ \ {\sf in}\ \  { (M^\prime \& {\sf J^\prime})}:\Box B }
+    \end{mathpar}
+$$\Longrightarrow_{R}$$
+
+    \begin{mathpar}
+        \inferrule*[]{ \vdash M'[M/x]:B \\ \vdash {\sf J^{\prime}}[{\sf J}/s]:\llbracket B \rrbracket}{\Gamma\vdash { M^{\prime}[M/x]\& {\sf J^{\prime}}[{\sf j}/s]}:\Box B} 
+    \end{mathpar}
+
+  \end{frame}
+  \begin{frame}{$\beta$ reduction}
+    \begin{mathpar}
+        \inferrule*[]{
+            {\inferrule*[Left=$\Box_I$]{ \vdash M:A\\ \vdash {\sf j}:\llbracket A \rrbracket}{\Gamma\vdash M \& {\sf j}:\Box A}}\\{x:A\vdash M':B }\\ {s:\llbracket A\rrbracket \vdash {\sf j'}:\llbracket B \rrbracket}}
+        {\Gamma\vdash {\sf let} \ \ (x\& s)\ \ {\sf be}\ \   (M\&  {\sf J}) \ \ {\sf in}\ \  { (M^\prime \& {\sf J^\prime})}:\Box B }
+    \end{mathpar}
+$$\Longrightarrow_{R}$$
+
+    \begin{mathpar}
+        \inferrule*[]{ \vdash M'[M/x]:B \\ \vdash {\sf J^{\prime}}[{\sf J}/s]:\llbracket B \rrbracket}{\Gamma\vdash { M^{\prime}[M/x]\& {\sf J^{\prime}}[{\sf j}/s]}:\Box B} 
+    \end{mathpar}
+
+    Which gives $\beta-$equality rule:
+    \begin{mathpar}
+    \inferrule*[]{ \vdash M:A\\ \vdash {\sf j}:\llbracket A \rrbracket\\{x:A\vdash M':B }\\ 
+    {s:\llbracket A\rrbracket \vdash {\sf j'}:\llbracket B \rrbracket}}
+  {\Gamma\vdash {\sf let} \ \ (x\& s)\ \ {\sf be}\ \   (M\&  {\sf J}) \ \ {\sf in}\ \  { (M^\prime \& {\sf J^\prime}) =_\beta M^{\prime}[M/x]\& {\sf J^{\prime}}[{\sf j}/s]}:\Box B }
+    \end{mathpar}
+
+
   \end{frame}
   \begin{frame}{Local Completeness}
    Any deduction $\mathcal{D}: \Box A$ can be expanded as follows:
+     \[\begin{array} {c r} \begin{array}{c} \mathcal{D}\\ \Box A \end{array} & \Longrightarrow \\ \\ \inferrule* {{\begin{array}{c} \mathcal{D}\\ \Box A \end{array} } \\ {\begin{array}{c} \\ \overline{x:A} \end{array}} \\ {{\begin{array}{c} \\ \overline{s:\llbracket A\rrbracket} \end{array}}} }{\Box A} \end{array} \]
+    Which gives the $\eta$ equality judgment:
+    \begin{mathpar}
+    \inferrule*[]{ \Gamma\vdash M:\Box A} 
+    {\Gamma\vdash M =_\eta {\sf let} \ \ (x\&s) {\sf be} M {\sf in} \ x\&s:  \Box A}
+    \end{mathpar}
+  \end{frame}
+
+  \begin{frame}{Generalizing for the $\Box$ rule}
+    Or, generically, for arbitrary length of $\Gamma'$:
+    
+    \[\begin{array}{l} \inferrule* {{\forall A_k \in \Gamma^\prime . \ \Gamma \vdash N_k:\Box A_k}\\ { {\Gamma^\prime}\vdash {M:B}}\\{ {\llbracket\Gamma^\prime\rrbracket}\vdash {{\sf J}:\llbracket B \rrbracket} }} { {\Gamma} \vdash {{\sf let^{*}}\ (\Gamma^\prime, \llbracket\Gamma^\prime\rrbracket, Ns) \ {\sf in} \ ( M\& {\sf J}):\Box B}} \end{array} \]
+    With :
+    
+    \[\begin{array}{l} \nonumber {\sf let}^{*}\ (\circ;\ \circ;\ [\ ]) {\ \sf in\ } M:= M \ \\ \nonumber {\sf let}^{*}\ (x_1:A_1,\ldots, x_i:A_i\ ;\ s_1: \llbracket A_1\rrbracket, \ldots, s_i:\llbracket A_i\rrbracket;\ N_1,\ldots, N_i) \\ {\ \sf in\ } M \\:= \\ \ {\sf let} \ \{(x_1 \& s_1)\ {\sf be}\ N_1,\ldots, (x_i \& s_i)\ {\sf be}\ N_i\}\ {\sf in}\ M \\ \end{array} \]
+    With similary $\beta$ reduction rule:
+  \end{frame}
+  \begin{frame}{The rest of the system}:
+    \begin{itemize}
+    \item[] Proof terms for the rest of the system are standard
+    \item[] For the ${\sf \llbracket Prop_0\rrbracket}$ part we deploy justification logic:
+    \item[] Axioms get assigned to (parametrized) constants
+      \item Modues ponens is internalized by $*$
+  \end{itemize}
+\end{frame}
+ \section{Dynamic linking in presence of typed dependencies} 
+  \begin{frame}{Set up}
+   \begin{itemize}
+    \item Consider a language $I$ (source) interfacing a lower level language $J$ (target) via declared in a signature.
+    
+    \item We assume that the two languages share some basic types e.g. ${\sf int}$ 
+    (e.g $\llbracket int_I\rrbracket = int_J $) 
+    and function space (
+    $\llbracket A\rightarrow_I B\rrbracket =\llbracket A \rrbracket \rightarrow_J \llbracket B \rrbracket $
+    )
+   \end{itemize}
+   A typical interface for a stack will be declared as follows:\\
+   \texttt{
+       using type intstack\\
+      \ \ \    empty: intstack\\
+      \ \ \    push: int -> intstack -> intstack\\
+      \ \ \    pop: intstack -> int x intstack\\
+   }
+  \end{frame}
+   \begin{frame}{Semantics for source terms}
+   \begin{itemize}
+    \item Source expressions in such a setting have a 
+    dynamic meaning depending on the target implementations. 
+    
+    \item [] Take e.g. the expression:\texttt{pop (push (1+1) empty)}\\
+   \end{itemize}
+    This program involves two kinds of computations: 
+    \begin{itemize}
+      \item a redex $(1+1)$ that can be reduced using the internal semantics of the language ($1+1\rightsquigarrow_{I} 2$) 
+      \item and the signature calls ${\sf push, pop}$ 
+   \end{itemize}
+  \end{frame}
+
+   \begin{frame}{Dynamic linking}
+    \begin{itemize}
+      \item 
+      A dynamic linker is a metaprogramming construct that consumes a type correct implementation of 
+      the signature and produces a type correct residual program sensitive to the implementation.
+      \item Avoid type checking of the whole source in presence of new implementations 
+      \item Our calculus, is a calculus of such constructions.
+    \end{itemize}
+  \end{frame}
+    \begin{frame} {Dynamic linker construction}
+      Let ${\sf \Sigma}$  be the signature of the interface\\
+      Here are the steps towards the dynamic linker construction for the expression:
+      \begin{itemize}
+      \item Reduce the source code based on the operational semantics of $I$ until it doesn't have a redex:
+    
+      ${\sf \Sigma}; {\sf \circ {\vdash pop (push \ (1+1) \ Empty)\rightsquigarrow pop (push \ 2 \ Empty) :int}}$
+       \item Contextualize the use of the signature on previous step:
+      \[\begin{array}{c c} {\sf \Sigma;}& {\sf x_1:intstack, x_2:int\rightarrow intstack\rightarrow int\times intstack,}\\ & {\sf x_3:intstack\rightarrow int \vdash x_3 (x_2 \ 2\ x_1):int} \end{array} \]
+       
+      \end{itemize}
+
+  \end{frame}
+ \begin{frame} {Dynamic linker construction}
+  \begin{itemize}
+  \item Rewrite the previous judgment assuming references to foreign implementations for 
+  the corresponding missing elements.
+\[\begin{array}{c} {\sf s_1:\llbracket intstack\rrbracket, s_2:\llbracket int\rightarrow intstack\rightarrow intstack\rrbracket},\\ {\sf s_3:\llbracket intstack\rightarrow int\times intstack \rrbracket \vdash s_3 * (s_2 * \ \bar{2}\ * s_1):\llbracket int\rrbracket} \end{array} \]
+\item Merge the two judgments to construct a dynamic linker :
+\[\begin{array}{l} {\sf \Sigma}; {\sf {x_1^{\prime}:\Box intstack ,x_2^{\prime}:\Box(int\rightarrow intstack\rightarrow intstack)}},\\ {\sf x_3^{\prime}: \Box (intstack\rightarrow int\times instack)}\vdash \\ {\sf let\{ x_1\& s_1 {\ \sf be \ } x_1^{\prime}, \ x_2\& s_2 {\ \sf be \ } x_2^{\prime}, \ x_3\& s_3 {\ \sf be \ } x_3^{\prime} \}\ in}\ \\ \mathtt{(x_3 (x_2\ 2 \ x_1)\ \& \ s_3*(s_2* \bar{2}*s_1)):\Box int} \end{array} \]
+\end{itemize}
+  \end{frame}
+  \begin{frame}{Dynamic linker constuction}
+     Which gives by $\lambda$ abstractions:\\
+  \[\begin{array}{l l} \mathtt{\lambda x_1^{\prime}.\ \lambda x_2^{\prime}. \lambda x_3^{\prime}}. \\ {\sf let\{ x_1\& s_1 {\ \sf be \ } x_1^{\prime}, \ x_2\& s_2 {\ \sf be \ } x_2^{\prime}, \ x_3\& s_3 {\ \sf be \ } x_3^{\prime} \}\ in}\ \\ \mathtt{(x_3 (x_2\ 2 \ x_1)\ \& \ s_3*(s_2* \bar{2}*s_1)):}\\ {\sf \Box(intstack)\rightarrow \Box(int\rightarrow intstack\rightarrow intstack)} \\ {\sf \rightarrow \Box (intstack\rightarrow int\times intstack) \rightarrow \Box int} \end{array} \]  
+ 
+\end{frame} 
+ \begin{frame}
+     \begin{itemize}
+   \item Such a program behaves correctly consuming \textbf{only} conforming implementations of the interface 
+    \item and calculating the program's different “futures” with respect to different implementations.
   
-  \[\begin{array} {c r} \begin{array}{c} \mathcal{D}\\ \Box A \end{array} & \Longrightarrow \\ \\ \inferrule* {{\begin{array}{c} \mathcal{D}\\ \Box A \end{array} } \\ {\begin{array}{c} \\ \overline{x:A} \end{array}} \\ {{\begin{array}{c} \\ \overline{s:\llbracket A\rrbracket} \end{array}}} }{\Box A} \end{array} \]
-    \end{frame}
-\end{document}
+   E.g. with an array implementation we get :
+   \[\begin{array}{l} { \sf create\_array(): intarray} \ \ \text{for}\ \ {\sf empty}\\ {\sf add\_array: int \rightarrow intarray\rightarrow intarray}\ \ \text{for} \ \ {\sf push}\\ {\sf remove\_last: intarray\rightarrow intarray\times int }\ \text{for}\ {\sf pop} \end{array} \]
+   \end{itemize} 
+  \end{frame}
+  \begin{frame}
+    Conforming with the signature under the interpretation:\\
+    
+    \[ \begin{array}{l} \llbracket {\sf intstack} \rrbracket:= {\sf intarray} \\ \llbracket {\sf int \rightarrow intstack\rightarrow instack } \rrbracket:= {\sf int \rightarrow intarray\rightarrow intarray} \\ \llbracket {\sf intstack \rightarrow (int \times intstack)} \rrbracket:= {\sf int\rightarrow (int\times intarray)}\\ \end{array} \]
+    Hence we obtain values of $\Box$ types (bindings): \\
+    
+   \[ \begin{array}{l} { \sf empty \& \ create\_array():\Box intstack} \\ {\sf push \&\ add\_array :\Box (int \rightarrow intstack\rightarrow intstack)}\\ {\sf pop \&\ remove\_last: \Box (intarray\rightarrow intarray\times int)} \end{array} \]
+   \end{frame}
+   \begin{frame}
+   If we apply these values to the dynamic linker we obtain the assignment for the whole expression: after reducing all redexes ($\lambda$ and ${\sf let}$):
+   
+   \[\begin{array}{l l} {\sf pop (push\ 2 \ empty)} \& \\ {\sf remove\_last*(add\_array*\ 2 * create\_array())} \end{array} \]
+   
+   \alert{ As required in systems with separate compilation, the same process will compute a
+    different residual with a different set of conforming implementations}
+   \begin{frame}{Future work}
+    \begin{itemize}
+      
+    \end{itemize}
+  \end{frame}
+  \end{document}

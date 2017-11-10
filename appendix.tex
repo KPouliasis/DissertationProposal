@@ -1,44 +1,4 @@
 \section{Theorems}
-\begin{proposition}[Basic Facts about the type universe]
-\label{bftu}
-With $A, U$ metavariables ranging over the following grammar
-$$ A:= P_i |  A \supset  A |\Box  A | \llbracket A \rrbracket  $$
-and $$U:={\sf Prop_0}| {\sf Prop_1} | {\sf \llbracket Prop_0\rrbracket}$$
-\begin{enumerate}
-\item Given  any judgment of the scheme  $\begin{array}{c}
-         {\mathcal{ D}} \\
-           A \in U
-        \end{array}$ then $\mathcal{D}$ is the \textbf{unique} derivation of $ A \in U$. 
-
-From now on we will be omitting the type construction derivations and write, informally, $ A\in U$ (resp, $\Gamma\in U$) denoting the unique such derivation(s). 
-
-\item If $ A \in {\sf Prop}$ then one of the following holds exclusively : $ A \in {\sf Prop_0}$ or ${ A \in {\sf Prop_1}}$.
-\item If $A \in {\sf Prop}$ then $A \not\in\llbracket Prop_0\rrbracket$.
-\item If $\Box  A \in {\sf Prop}$ then $\Box  A \in {\sf Prop_1}$.
-\item If $\Box  A \in {\sf Prop_1}$ then $ A \in {\sf Prop_0}$.
-\item If $\Box  A \in {\sf Prop_1}$ then  $\llbracket  A\rrbracket \in { \llbracket {\sf Prop_0}\rrbracket}$.
-\item If $\llbracket  A \rrbracket \in U$ then $ U = { \llbracket {\sf Prop_0}\rrbracket } $ and $A\in {\sf Prop_0}$.
-
-\item If $A \in {\sf Prop_1}$ then $\llbracket A \rrbracket \not \in U$ for any $U$.
-\item If $ A$ is of the form $\Box\Box  A'$ then $ A\not\in U$ for any $U$.
-\item If $A\in U$ then $A$ cannot have any subformula of the form  $\Box\Box A'$. 
-\end{enumerate}
-\end{proposition}
-\begin{proof}
-
-\begin{enumerate}
-\item By double induction on the structure of the formula and the structure of the appropriate derivations.
-\item For the exclusive argument by double induction on the structure of the formula and the structure of the appropriate derivations.
-\item By contradiction. If $A\in \llbracket{\sf Prop_0} \rrbracket$ then $A$ is of the form $\llbracket A' \rrbracket$. By induction on the derivations: if $A\in {\sf Prop_{0,1}}$ it cannot be of such form. Using item $1$ we arrive in contradiction.
-\item Trivially by case analysis.
-\item Directly by the previous item.
-\item Trivial by previous item.
-\item Trivial by case analysis on the derivation
-\item By contradiction. Using the previous item and item $2$.
-\item By contradiction. Assume that $\Box\Box A' \in U$ is derivable. The only rule that could have been applied is {\sf $BOX$} which requires a proof of the premise $\Box A'\in {\sf Prop_0}$. That is impossible based on previous item.
-\item By induction on the derivations $A\in U$ and using the -- standard -- definition of subformula relation.
-\end{enumerate}
-\end{proof}
 \begin{proposition}[Basic Facts on Context Wellformedness] 
 \label{bfcw}
 For every derived  judgment of the scheme $\mathcal{ CX}\vdash\mathcal{ WF}$ with $\mathcal{WF}:= {\sf wf}\  |\  {\sf \llbracket  wf \rrbracket }$ and $\mathcal{ CX}$ a metavariable ranging over lists of labeled formulae.
@@ -230,9 +190,8 @@ The construction is identical to \cite{pfenning2004automated} (Chapter 3) for th
 \and
 \inferrule*[right= $E_\bot$] {{\Gamma^{\downarrow}\vdash^{-}\bot\downarrow }\\ A\in {\sf Prop}} {\Gamma^{\downarrow}\vdash^{-} A\Uparrow}
 \and
- 	\inferrule*[right=$\Box_{IE}$ ] {{\Gamma^\downarrow\vdash\Box \Gamma^{\prime}\downarrow}\\{\Gamma'^\downarrow\vdash A\Uparrow }\\ {\llbracket \Gamma^{\prime} \rrbracket\vdash \llbracket A \rrbracket}}{ {\Gamma^\downarrow\vdash \Box A\Uparrow }}
+ 	\inferrule*[right=$\Box_{IE}$ ] {{\Gamma\downarrow\vdash A\Uparrow }\\ {\llbracket \Gamma \rrbracket\vdash \llbracket A \rrbracket}}{ {\Box\Gamma\downarrow\vdash \Box A\Uparrow }}
  \end{mathpar}
-Where $\Gamma^\downarrow\vdash\Box \Gamma^{\prime}$ abbreviates $\forall A_i\in \Gamma'. \ \Gamma^{\downarrow}\vdash\Box A_i\downarrow$.
 We prove simultaneously by induction:
 \begin{theorem}[Soundness of Normal Deductions]
 The following hold:

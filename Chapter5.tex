@@ -84,9 +84,15 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
     are used in the assignment of proof terms for the $\Box_{IE}$ rule. Moreover, the reduction principle for such terms ($\beta$-rule) -- obtained following Gentzen's equalities for the $\Box$ connective --  
     is exactly the one that we just informally described. 
     
-    We can now move forward with the  proof term assignment for the $\Box_{IE}$ rule.  We show first the sub-cases for $\Gamma'$ empty (pure $\Box_I$)  and $\Gamma'$ singleton and explain the computational significance 
-    utilizing Gentzen's principles appropriated for the $\Box$ connective. We are  directly translating proof tree equalities from \ref{gprinc} to proof term equalities. 
-    We generalize for arbitrary $\Gamma'$ in the following subsection. We have, respectively, the following instances:
+    We can now move forward with the  proof term assignment 
+    for the $\Box_{IE}$ rule.  We show first the sub-cases for 
+    $\Gamma'$ empty (pure $\Box_I$)  and $\Gamma'$ 
+    singleton and explain the computational significance 
+    utilizing Gentzen's principles appropriated for the $\Box$ 
+    connective. We are  directly translating proof tree equalities 
+    from \ref{gprinc} to proof term equalities. 
+    We generalize for arbitrary $\Gamma'$ in the following subsection. 
+    We have, respectively, the following instances:
     
     \begin{mathpar}
         \inferrule*[]{ {\Gamma\in{\sf Prop_1}}\\{\Turn {\circ} { M:B}}\\{\Turn {\dagger} {{\sf J}:\llbracket  B\rrbracket} }} {\Turn {\Gamma} {  M\& {\sf J}:\Box  B}}
