@@ -1,10 +1,17 @@
 \documentclass{beamer}
   \usetheme{metropolis}
+  \setbeamercovered{invisible}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{footline}{\hfill\insertframenumber\hfill\vspace{3mm}}
+  \usetikzlibrary{matrix}
+  
   \usepackage[normalem]{ulem}
   \usepackage{stmaryrd}
   % \usepackage{minted}
-  
-  
+  \usepackage{tikz}
+  \usepackage{tikz-cd}
+  \let\OLDitemize\itemize
+  \renewcommand\itemize{\OLDitemize\addtolength{\itemsep}{150pt}}
   \newcommand{\Turnsi}[2]
 	{ {#1}\vdash  {#2}}
 
@@ -32,41 +39,44 @@
     \section{Introduction}
     \begin{frame}{Curry--Howard Isomorphism}
       \begin{itemize}
-\item sparked from the investigation of the connection of 
+\item[] Sparked from the investigation of the connection of 
 explicit proofs in intuitionistic logic and 
 programs of a simple programming language (\emph{STLC})
 
-\item central topic of study in the field of type theory
+\item[] Central topic of study in the field of type theory
 
-\item standard theoretical tool for studying and designing programming languages
+\item[] Standard theoretical tool for studying and designing programming languages
       \end{itemize}
 \end{frame}
 \begin{frame}{\emph{CHI} in logic}
   \begin{itemize}
 
-  \item a  paradigm in logic studies that emphasizes proof relevance
+  \item[] A  paradigm in logic studies that emphasizes proof relevance
 
-  \item scales : the isomorphism holds for more complex logics and correspondingly captures complex programming language constructs.
+  \item[] \textbf{Scales} : the isomorphism holds for more complex logics and correspondingly captures complex programming language constructs.
 
-  \item We use proofs-as-programs(-as-morphisms) and CHI interchangeably.
+  \item[] We use proofs-as-programs(-as-morphisms) and CHI interchangeably.
   \end{itemize}
 \end{frame}
 \section{Intuitionistic Logic and STLC}
 \begin{frame}{Intuitionism and constructive mathematics}
   \begin{outline}
-    \1 {Continuation of Brouwer's program}
+    \1[] {Continuation of Brouwer's program}
     
-    \2{Notion of truth collides with the notion of proof}
+    \2[!]{Notion of truth collides with the notion of proof}
     
   
-  \1 Mathematical reasoning and logic is a human faculty
+  \1[] Mathematical reasoning and logic is a human faculty
   
-  \2 The creative subjects use mathematical language 
+  \2[!] The creative subjects use mathematical language 
   as a means to express their reasoning (proof) constructs
-  \2 
+  \2[!] 
   There are open problems
-  \2 
+  \2[!] 
   Propositions do not come with a pre-existing truth value
+  \3[!!] 
+  Default absence of excluded middle
+  \1[] Heraclitus got it right pretty early: truth is  "what everyone believes and each one can individually witness/attest"
 \end{outline}
 \end{frame}
 
@@ -75,13 +85,13 @@ programs of a simple programming language (\emph{STLC})
 
 \1[] The object of logic is the study of ``sane'' proof constructs independently of formal systems
 
-\1[] The traditional chasm between ``syntax'' and ``semantics'' is no longer that very fruitful at least when “engineering” new logics.
+\1[] The traditional chasm between ``syntax'' and ``semantics'' is no longer  very fruitful at least when “engineering” new logics.
 \end{outline}
 \begin{columns}[T,onlytextwidth]
   \column{0.5\textwidth}
 
     \begin{alertblock}{Verificationist}
-    \begin{quote}The meaning of a connective is the ways that one can prove it\end{quote} (Martin Lof - Verificationist approach)
+    \begin{quote}The meaning of a connective is the ways that one can prove it\end{quote}
     \end{alertblock}
 
 
@@ -126,6 +136,14 @@ programs of a simple programming language (\emph{STLC})
       } \end{array} \]
         \end{exampleblock}
   \end{columns}
+\end{frame}
+\begin{frame}{Example: rules $\supset$}
+  \begin{mathpar}
+  \inferrule[]{{\begin{array}[b]{c} \overline{x:A}\\ {\mathcal{D}} \\ A   \end{array}} }{A\supset B }
+  \and
+  \inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\supset B  \end{array}}\\ {\begin{array}[b]{c} {\mathcal{E}} \\ A  \end{array}}}{B}
+    
+  \end{mathpar}
 \end{frame}
 \begin{frame}{Harmony}
   \begin{columns}[T,onlytextwidth]
@@ -688,9 +706,77 @@ $$\Longrightarrow_{R}$$
    
    \alert{ As required in systems with separate compilation, the same process will compute a
     different residual with a different set of conforming implementations}
-   \begin{frame}{Future work}
-    \begin{itemize}
+   \end{frame}
+   \begin{frame}
+    \frametitle{Does it scale?}
+    \begin{columns}
+      \column{0.5\textwidth}
+    \includegraphics[scale=0.05, trim={10cm 0 10cm 0}, clip]{pics/20171111_163222_Film1}
+    \column{0.3\textwidth}
+    \includegraphics[scale=0.035, trim={5cm 0 10cm 0}, clip]{pics/20171111_141821_Film1}
+    
+  \end{columns}
+    \end{frame}
+    \begin{frame}
+      \frametitle{Does it scale?}
+      \begin{columns}
+        \column{0.6\textwidth}
+      \includegraphics[scale=0.05]{pics/20171111_141413_Film1}
+      \column{0.3\textwidth}
+          Yes! Takes  a bit more syntax
+    \end{columns}
+      \end{frame}
+    
+    \begin{frame}{From order theory to category theory?}
+      \begin{itemize}
       
+      \item it requires the symbol  (or,$\llbracket\bullet\rrbracket$) to be interpeted as a "good" (preserving connectives) functor
+      \item the source of the semantical triplet  would be a  Cartesian Closed Category (instead of a heyting algebra)
+      \item the rule would look like this 
+      \begin{mathpar}
+        \inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i}$] %{}
+        {{\forall A_k \in \Gamma^\prime . \   \Gamma \vdash N_k:\Box A_k}\\
+            {\Turnsi {\Gamma^\prime} {M:B}}\\{\Turnsi {\llbracket\Gamma^\prime\rrbracket} {{\sf \llbracket M\rrbracket}:\llbracket B \rrbracket} }} 
+        {\Turnsi {\Gamma} {{\sf let^{*}}\ (\Gamma^\prime, \llbracket\Gamma^\prime\rrbracket, Ns) \ {\sf in}  \ ( M\& {\sf \llbracket M\rrbracket}):\Box B}}
+    \end{mathpar}
     \end{itemize}
   \end{frame}
+   \begin{frame}{From order theory to category theory?}
+    \begin{itemize}
+      \item A ccc models equalities between terms (as equalities between arrows)
+      \item A functor betwenn cccs is a functional on arrows ($M=N \Rightarrow FM=FN$)
+      \item Hence we need to talk about equality in the level of justifications
+      \item the $SK$ calculus can be extended equationally to preserve the $\lambda$calculus computationally
+      \item We need to add rules that axiomatize $\llbracket M\rrbracket$ on terms
+    \end{itemize}
+  \end{frame}
+    \begin{frame}{What about stronger modality?}
+      A Galois connection is 
+      a pair of order preserving functions $L:\mathcal{D}\rightarrow C$, $R:\mathcal{C}\rightarrow{D}$
+      such that there is an isomorphism:
+      $\forall d\in  D, c\in C Ld\le c \longleftrightarrow d\le R c$
+      
+      Take the relation of classical and intuitionistic logic as a prototype:
+      \begin{mathpar}
+        \inferrule*[right=$\downarrow\uparrow$] {\llbracket\Gamma\rrbracket\vdash_{class}\phi}{\Gamma\vdash_I\neg\neg \phi}
+    
+      \end{mathpar}
+    This is a typical case of a Galois connection (or an adjunction)\\
+    To mimic such a notion in $Jcalc$ one should add another function symbol to 
+    correspond to $R$ and add the rule:  
+    \begin{mathpar}
+        \inferrule*[right=$R$]{\llbracket\Gamma\rrbracket\vdash_J {\sf j}:\phi}
+        {\Gamma\vdash {\sf return} \ \  {\sf j} :R\phi} 
+    \end{mathpar}
+    
+    
+    \end{frame}
+    \begin{frame}
+      This is enough to obtain a generalized notion of Factivity that is:
+      \begin{mathpar}
+          \inferrule*[right=$R$]{\Box\Gamma\vdash M:\Box\phi}
+          {\Box\Gamma\vdash \sf {let} \ \_\_ \ \&\ s \ {\sf be\ } M \ \  {\sf in}\  {\sf return} (s):R\llbracket\phi\rrbracket} 
+      \end{mathpar}
+  \[\begin{array}{l l} \mathtt{\lambda x_1^{\prime}.\ \lambda x_2^{\prime}. \lambda x_3^{\prime}}. \\ {\sf let \_\_ \&\  s\  be} \\ ({\sf let\{ x_1\& s_1 {\ \sf be \ } x_1^{\prime}, \ x_2\& s_2 {\ \sf be \ } x_2^{\prime}, \ x_3\& s_3 {\ \sf be \ } x_3^{\prime} \}\ in}\ \\ \mathtt{(x_3 (x_2\ 2 \ x_1)\ \& \ s_3*(s_2* \bar{2}*s_1)))}\\ {\sf in}\\ {\sf return}(s) \ + \ 5: \\  {\sf \Box(intstack)\rightarrow \Box(int\rightarrow intstack\rightarrow intstack)} \\ {\sf \rightarrow \Box (intstack\rightarrow int\times intstack) \rightarrow int} \end{array} \]  
+  \end{frame}  
   \end{document}

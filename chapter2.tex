@@ -41,7 +41,11 @@ Here are the the rules for constructing proof trees with labeled assumptions\foo
 	\and
 	\inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\wedge B\true  \end{array}} }{B \true}
 \end{mathpar}
+
 \begin{mathpar}
+\inferrule[]{{\begin{array}[b]{c} \overline{x:A}\\ {\mathcal{D}} \\ A \true  \end{array}} }{A\supset B \true}
+\and
+\inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\supset B\true  \end{array}}\\ {\begin{array}[b]{c} {\mathcal{E}} \\ A\true  \end{array}}}{B  \true}
 	
 \end{mathpar}
 
