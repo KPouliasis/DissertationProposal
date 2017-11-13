@@ -1,46 +1,5 @@
 \section{Theorems}
-\begin{proposition}[Basic Facts on Context Wellformedness] 
-\label{bfcw}
-For every derived  judgment of the scheme $\mathcal{ CX}\vdash\mathcal{ WF}$ with $\mathcal{WF}:= {\sf wf}\  |\  {\sf \llbracket  wf \rrbracket }$ and $\mathcal{ CX}$ a metavariable ranging over lists of labeled formulae.
-\begin{enumerate}
-\item If $ \mathcal{ WF}= {\sf wf}$ then $\mathcal{CX}=\Gamma$ where, exclusively, either $\Gamma\in {\sf Prop}$ or $\Gamma=\bullet$, and $\Gamma\centernot\vdash \llbracket {\sf wf}\rrbracket$.
-\item If $ \mathcal{ WF}= {\sf\llbracket wf\rrbracket}$ then $\mathcal{CX}=\Delta$ where exclusively, either $\Delta\in {\sf \llbracket Prop_0\rrbracket}$ or $\Delta = \circ$,  and $\Delta\centernot\vdash {\sf wf}$.
-\item If $\mathcal{CX}= \Gamma, x:A$ then $ \mathcal{ WF}= {\sf wf}$, $A\in {\sf Prop}$ and,  $\Gamma\vdash {\sf wf}$.
-\item If $\mathcal{CX}= \Delta, s:A $ then $ \mathcal{ WF}= { \llbracket {\sf wf} \rrbracket}$, $A\in { \llbracket {\sf Prop_0}\rrbracket}$  and $\Delta\vdash{ \llbracket {\sf wf}\rrbracket}$.
-\item If $\mathcal{CX}=\llbracket \Gamma \rrbracket$ for some $\Gamma\vdash{\sf wf}$ then  $\mathcal{ WF}={\llbracket {\sf wf}\rrbracket}$ and either, $\Gamma = \bullet$ or $\Gamma \in {\sf Prop_0}$.
-%\in Prop$ and   
-%$Ctx\vdash WF$ is of the form $Ctx\vdash {\sf wf}$ with then $Ctx=\Gamma$ with $\Gamma \in Prop$ and $\Gamma\centernot $
-\end{enumerate}
-\end{proposition}
-\begin{proof}
-\begin{itemize}
 
-\item
-Items $1,2$ are trivial by case analysis on the derivations for context wellformedness. For items $3,4$ notice that $x,x_i$ labels can only be part of a ${\sf Prop}$ context and similarly for $s,s_1$ labels.
-\item
-By contradiction, assume $A\in\Gamma$ s.t. $A\not\in {\sf Prop_0}$ from $1$ it can only be $A\in {\sf Prop}$.
-Hence $A\in {\sf Prop_1}$ (using item $1$ in \ref{bftu}) but then $\llbracket A \rrbracket$ is not an element of any universe (using item $8$ in \ref{bftu}) and hence it cannot be in the co--domain of any well formed context.
-\end{itemize}
-\end{proof}
-\begin{lemma}[Guarded $\Box_{IE}$ rule application]
-	All instances of the $\Box_{IE}$  rule apply with context $\Gamma^{\prime}\in {\sf Prop_0}$.
-\end{lemma}
-\begin{proof}
-Trivially by the previous item.
-\end{proof}
-\begin{lemma}[Separation of Judgments]
-\label{spjp}
-For every judgment of the scheme $Ctx\vdash A$ with a derivation in JCalc one of the two holds exclusively:
-\begin{enumerate}
-\item (\textbf{${\sf Prop}$ Judgments}) $Ctx =\Gamma$  with $\Gamma\vdash {\sf wf}$ and $\Gamma,  A\in {\sf Prop}$
-or, \item(\textbf{${\sf\llbracket  Prop_0\rrbracket}$ Judgments}) $Ctx=\Delta$ with $\Delta\vdash {\sf \llbracket wf\rrbracket}$ and $\Delta,  A \in \llbracket {\sf Prop_0}\rrbracket$
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-By induction on the derivations of this scheme. Using some obvious inversion facts such as 
-if $\llbracket   A_1\supset   A_2\rrbracket \in \llbracket{\sf Prop_0}\rrbracket$ then $  A\supset   A_2\in {\sf Prop_0}$
-and whence, $  A_2 \in {\sf Prop_0}$ and $\llbracket   A_2 \rrbracket \in \llbracket {\sf Prop_0}\rrbracket$ and facts in \ref{bfcw}.
-\end{proof}
 \begin{theorem}[Deduction Theorem for Validity Judgments]
 	\label{deduct}
 With $\Delta\vdash \llbracket\sf wf\rrbracket$, if $\Delta, s:\llbracket   A\rrbracket \vdash\llbracket B \rrbracket $ then $\Delta \vdash\llbracket   A \supset B \rrbracket $. 
