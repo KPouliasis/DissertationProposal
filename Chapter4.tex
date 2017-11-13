@@ -182,7 +182,7 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	\subsection{Natural Deduction for Jcalc$^{-}$}
 	The treatment of necessity in the previous section is completely orthogonal to the underlying systems \
 	(it just assumes the basic requirements stated for the behavior $\llbracket\dot\rrbracket$). 
-	In this section we will provide a full calculus and in congruence with justification logic we will
+	In this section we will provide a full natural deduction and in congruence with justification logic we will
 	assume that the underlying system ($I$) is a fragment of intuitionistic logic (the `negative' to be precise).
 	The host theory $J$ can still remain unspecified, but the choice of $I$ informs for some specifications ( in order to preserve
 	completeness of logical deductions).   
@@ -538,7 +538,7 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 					\and
 					\inferrule*[right=$\bot_L$] { } {\Gamma, \bot \Rightarrow A}
 					\and
-					\inferrule*[right=$\Box_{LR}$] {{\Box\Gamma,\Gamma\Rightarrow A}\\{\llbracket\Gamma\rrbracket\Rightarrow \llbracket A \rrbracket }}{\Box\Gamma\Rightarrow \Box A}
+					\inferrule*[right=$\Box_{LR}$] {{\Gamma\Rightarrow A}\\{\llbracket\Gamma\rrbracket\Rightarrow \llbracket A \rrbracket }}{\Box\Gamma\Rightarrow \Box A}
 					%\inferrule*[right=$\supset$E] {{\Turn {\Gamma} { A\supset  B}}\\{\Turn {\Gamma} { A}}} {\Turn {\Gamma} {   B}}
 					%\and
 					%\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}

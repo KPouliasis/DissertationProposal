@@ -98,7 +98,7 @@ The natural deduction system of \ac{IPL} is given below:
 \begin{mdframed}
 \textbf{Context Formation}
 \begin{mathpar}
-\inferrule*[right=Nil] { } {{\sf nil}\  \context}
+\inferrule*[right=Nil] { } {{\sf \circ}\  \context}
 \and
 \inferrule*[right=$\Gamma$-Ext] {{\Gamma\ } {\sf \context}  \\ {\phi \in {\sf Prop}}} {{\Gamma, \phi \true} \ \context}
 \end{mathpar}
@@ -292,7 +292,7 @@ Finally, to axiomatize \emph{HAs} we require the existence of exponentials for e
 \begin{theorem}\label{thm:cmpha}
 $\Gamma\vdash_{IPL} \phi \true$ iff for any \vocab{Heyting Algebra} $H$ we have $\Gamma^+\leq\phi^{*}$ where $*$ is  defined as the lifting of any map of $\prop$s to elements of $H$ and $(+)$ is defined inductively on the length of $\Gamma$ as follows
 \begin{alignat*}{2}
-  {\sf nil}^+  &&\quad = & \quad\top\\
+  {\sf \circ}^+  &&\quad = & \quad\top\\
   (\Gamma,\phi)^+&&\quad = &\quad
   \Gamma^+\wedge\phi* \
 \end{alignat*}

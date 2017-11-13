@@ -254,7 +254,7 @@ Next we move with devising a sequent calculus formulation corresponding to norma
 			\and
 			\inferrule*[right=$\bot_L$] { } {\Gamma, \bot \Rightarrow A}
 			\and
-			\inferrule*[right=$\Box_{LR}$] {{\Box\Gamma',\Gamma'\Rightarrow A}\\{\llbracket\Gamma'\rrbracket\Rightarrow \llbracket A \rrbracket } \\{\Gamma \in{\sf Prop}}}{\Gamma,\Box\Gamma'\Rightarrow \Box A}
+			\inferrule*[right=$\Box_{LR}$] {{\Gamma\Rightarrow A}\\{\llbracket\Gamma\rrbracket\Rightarrow \llbracket A \rrbracket }}{\Box\Gamma\Rightarrow \Box A}
 			%\inferrule*[right=$\supset$E] {{\Turn {\Gamma} { A\supset  B}}\\{\Turn {\Gamma} { A}}} {\Turn {\Gamma} {   B}}
 			%\and
 			%\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}

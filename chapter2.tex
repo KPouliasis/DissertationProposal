@@ -2,9 +2,9 @@
 \section{From intuitionistic provability to  proof trees}
 \vocab{IPL} can be viewed as a declarative axiomatization of proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
-	\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {\phi_1\true}\\
-	{\Turnsi {\Gamma} {\phi_2 \true}}} {\Turnsi {\Gamma} 
-	{  \phi_1 \wedge\phi_2 \true}}
+	\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {A\true}\\
+	{\Turnsi {\Gamma} {B \true}}} {\Turnsi {\Gamma} 
+	{  A \wedge B \true}}
 \end{mathpar}
 
 The rule says, ``given the existence a proof of $\phi$ and a proof of $\psi$ from assumptions $\Gamma$, there exists a proof of $\phi\wedge\psi$ from assumptions $\Gamma$ at hand ".
@@ -192,11 +192,11 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \and
 \inferrule*[right=Bottom] { } {\bot \in {\sf Type}}
 \and
-\inferrule*[right=Arr] {{\phi_1 \in {\sf Type }}\\ {\phi_2 \in {\sf Type}}} {\phi_1\rightarrow\phi_2\in {\sf Type}}
+\inferrule*[right=Arr] {{A \in {\sf Type }}\\ {B \in {\sf Type}}} {A\rightarrow B\in {\sf Type}}
 \and
-\inferrule*[right=Prod] {{\phi_1 \in {\sf Type }}\\ {\phi_2 \in {\sf Type}}} {\phi_1\times \phi_2\in {\sf Type}}
+\inferrule*[right=Prod] {{A \in {\sf Type }}\\ {B \in {\sf Type}}} {A\times B\in {\sf Type}}
 \and
-\inferrule*[right=Union] {{\phi_1 \in {\sf Type }}\\ {\phi_2 \in {\sf Type}}} {\phi_1 + \phi_2\in {\sf Type}}
+\inferrule*[right=Union] {{A \in {\sf Type }}\\ {B \in {\sf Type}}} {A + B\in {\sf Type}}
 \end{mathpar}
 \end{mdframed}
 
@@ -205,15 +205,15 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mathpar}
 \inferrule*[right=Nil] { } {{\sf nil}\  \context}
 \and
-\inferrule*[right=$\Gamma$-Add] {{\Gamma\ } {\sf \context}  \\ {\phi \in {\sf Type}}\\ x\text{ fresh  in }\Gamma} {{\Gamma,\  x:\phi} \ \context}
+\inferrule*[right=$\Gamma$-Add] {{\Gamma\ } {\sf \context}  \\ {A \in {\sf Type}}\\ x\text{ fresh  in }\Gamma} {{\Gamma,\  x:A} \ \context}
 \end{mathpar}
 \end{mdframed}
 
 \begin{mdframed}
 \textbf{Context Reflection}
 \begin{mathpar}
-\inferrule*[right=$\Gamma$-Refl] { {\Gamma}\ {\sf \context}\\ {x:\phi  \in \Gamma}}
-{\Turnsi {\Gamma} {x:\phi}}
+\inferrule*[right=$\Gamma$-Refl] { {\Gamma}\ {\sf \context}\\ {x:A  \in \Gamma}}
+{\Turnsi {\Gamma} {x:A}}
 \end{mathpar}
 \end{mdframed}
 
@@ -222,7 +222,7 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mathpar}
 \inferrule*[right=$\top$I] { } {\Turnsi {\Gamma} { \langle \rangle:\top }}
 \and
-\inferrule*[right=$\bot$E] {\Turnsi {\Gamma} {M:\bot } } {\Turnsi {\Gamma} { abort[\phi](M) :\phi}}
+\inferrule*[right=$\bot$E] {\Turnsi {\Gamma} {M:\bot } } {\Turnsi {\Gamma} { abort[A](M) : A}}
 \end{mathpar}
 
 \end{mdframed}
@@ -230,45 +230,45 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mdframed}
 \textbf{Function Construction and Application}
 \begin{mathpar}
-\inferrule*[right=$\lambda-$Abs] {\Turnsi {\Gamma, x:\phi_1 } {M:\phi_2 }} {\Turnsi {\Gamma} { \lambda x. M:\phi_1\rightarrow \phi_2 }}
+\inferrule*[right=$\lambda-$Abs] {\Turnsi {\Gamma, x:A } {M:B }} {\Turnsi {\Gamma} { \lambda x:A.\  M:A\rightarrow B }}
 \and
-\inferrule*[right=App] {\Turnsi {\Gamma} {M:\phi_1\rightarrow\phi_2 }\\{\Turnsi {\Gamma} {M^{'}:\phi_1}}} {\Turnsi {\Gamma} {  (M M^{'}):\phi_2 }}
+\inferrule*[right=App] {\Turnsi {\Gamma} {M:A\rightarrow B }\\{\Turnsi {\Gamma} {M^{'}:A}}} {\Turnsi {\Gamma} {  (M M^{'}):B }}
 \end{mathpar}
 \end{mdframed}
 \begin{mdframed}
 \textbf{Tuple Construction and Projections}
 \begin{mathpar}
-\inferrule*[right=Tup] {\Turnsi {\Gamma} {M:\phi_1}\\{\Turnsi {\Gamma} { M^{'}:\phi_2}}} {\Turnsi {\Gamma} {  
-\langle M,M^{'}\rangle:\phi_1\times \phi_2 }}
+\inferrule*[right=Tup] {\Turnsi {\Gamma} {M:A}\\{\Turnsi {\Gamma} { M^{'}:B}}} {\Turnsi {\Gamma} {  
+\langle M,M^{'}\rangle:A\times B }}
 \end{mathpar}
 \begin{mathpar}
-\inferrule*[right=LPrj] {\Turnsi {\Gamma} {M:\phi_1\times\phi_2 }} {\Turnsi {\Gamma} {\operatorname{fst}(M):  \phi_1}}
+\inferrule*[right=LPrj] {\Turnsi {\Gamma} {M:A\times B }} {\Turnsi {\Gamma} {\operatorname{fst}(M):  A}}
 \and
-\inferrule*[right=RPrj] {\Turnsi {\Gamma} {M:\phi_1\times\phi_2}} {\Turnsi {\Gamma} {\operatorname{snd}(M):  \phi_2}}
+\inferrule*[right=RPrj] {\Turnsi {\Gamma} {M:A\times B}} {\Turnsi {\Gamma} {\operatorname{snd}(M):  B}}
 \end{mathpar}
 \end{mdframed}
 \begin{mdframed}
 \textbf{Union Construction and Elimination}
 \begin{mathpar}
-\inferrule*[right=InjL] {\Turnsi {\Gamma} {M:\phi_1}} {\Turnsi {\Gamma} {  inj_l[\phi_2](M):\phi_1+\phi_2}}
+\inferrule*[right=InjL] {\Turnsi {\Gamma} {M:A}} {\Turnsi {\Gamma} {  inj_l[B](M):A+B}}
 \and
-\inferrule*[right=InjR] {\Turnsi {\Gamma} {M:\phi_2 }} {\Turnsi {\Gamma} {inj_r[\phi_1](M) : \phi_1+\phi_2}}
+\inferrule*[right=InjR] {\Turnsi {\Gamma} {M:B }} {\Turnsi {\Gamma} {inj_r[A](M) : A+B}}
 \end{mathpar}
 
 
 \begin{mathpar}
 \inferrule*[right=$\vee$E] 
-{ {\Turnsi {\Gamma} {  M:\phi_1 + \phi_2}}\\
-{\Turnsi {\Gamma,x:\phi_1 } {N:\phi }}\\
-{\Turnsi {\Gamma,y:\phi_2} {O:\phi }}
+{ {\Turnsi {\Gamma} {  M:A + B}}\\
+{\Turnsi {\Gamma,x:A } {N:C }}\\
+{\Turnsi {\Gamma,y:B} {O:C }}
 }
- {\Turnsi {\Gamma} {\text{case }M \text{ of } inj_l(  x)\longmapsto N  |\  inj_r (y)\longmapsto O : \phi}}
+ {\Turnsi {\Gamma} {\text{case }M \text{ of } inj_l(  x)\longmapsto N  |\  inj_r (y)\longmapsto O : C}}
 \end{mathpar}
 
 \end{mdframed}
 \subsection{Definitional Equality: Proof tree equalities as term equalities}
 
-Gentzen's principles transliterate to an equational system for terms. In the following we are defining a congruence relation on proof terms  which is usually coined as \emph{definitional equality} and denoted $M\equiv M':A$. We want definitional equality $\equiv$ to be the least congruence closed under the $\beta, \eta$ rules that directly reflect Gentzen's principles in term form.
+Gentzen's principles transliterate to an equational system for terms. In the following we are defining a congruence relation on proof terms  which is usually coined as \emph{definitional equality} and denoted $M= M':A$. We want definitional equality $=$ to be the least congruence closed under the $\beta, \eta$ rules that directly reflect Gentzen's principles in term form.
 
 
 \begin{mdframed}
@@ -279,8 +279,8 @@ Gentzen's principles transliterate to an equational system for terms. In the fol
      \item	that commutes with  operators  E.g. 
      \begin{mathpar}
      	\inferrule*[]
-     	{\Gamma \entails M\equiv M':A\times B}
-     	{\Gamma\entails \operatorname{fst}(M)\equiv\operatorname{fst}(M'):A}
+     	{\Gamma \entails M= M':A\times B}
+     	{\Gamma\entails \operatorname{fst}(M)=\operatorname{fst}(M'):A}
      	\end{mathpar} 
      \end{itemize}
 \end{mdframed}
@@ -288,59 +288,65 @@ Gentzen's principles transliterate to an equational system for terms. In the fol
 Informally , we should be able to replace ``equals with equals" everywhere in a term.
 
 
-\subsubsection{Inversion Principle}\label{ge:in}
-
-Gentzen's Inversion Principle captures the idea that ``elim is post-inverse to intro," or ``local soundness", which is the informal notion that the elimination rules should cancel the introduction rules. The so called  $\beta$ equality rules are as follows:
+\subsubsection{Local Soundness}\label{ge:in}
+Local soundness captures the idea that  ``elimintation rules are not too strong" or ``local soundness", which is the informal notion that the 
+elimination rules should cancel the introduction rules and give nothing new. 
+The so called  $\beta$ equality rules are as follows:
 
 
 \begin{mdframed}
 	\begin{mathpar}
 		
 		\inferrule*[right=$\beta\wedge_1$] 
-		{{\Turnsi {\Gamma} {  M:\phi_1}}\\
-			{\Turnsi {\Gamma} {N :\phi_2 }}  } {{\Turnsi {\Gamma} {\operatorname{fst}(  \langle M,N\rangle)\equiv M:\phi_1} }}
+		{{\Turnsi {\Gamma} {  M:A}}\\
+			{\Turnsi {\Gamma} {N :B }}  } {{\Turnsi {\Gamma} {\operatorname{fst}(  \langle M,N\rangle)= M:A} }}
 		
 		\and
 		\inferrule*[right=$\beta\wedge_2$] 
-		{{\Turnsi {\Gamma} {  M:\phi_1}}\\
-			{\Turnsi {\Gamma} {N :\phi_2 }}} { {\Turnsi {\Gamma} {\operatorname{snd}(  \langle M,N\rangle)\equiv N:\phi_2} }}
+		{{\Turnsi {\Gamma} {  M:A}}\\
+			{\Turnsi {\Gamma} {N :B }}} { {\Turnsi {\Gamma} {\operatorname{snd}(  \langle M,N\rangle)= N:B} }}
 		\and
 		\inferrule*[right=$\beta\supset$] 
 		{{\Gamma,x:A\vdash M:B}\\ {\Gamma\vdash N:A}}
-		{\Gamma\vdash(\lambda x.M)(N)\equiv [N/x]M:B}
+		{\Gamma\vdash(\lambda x:A .\ M)(N)= [N/x]M:B}
 		\and
 		\inferrule*[right=$\beta\vee_1$]
 		{ {\Gamma,x
-				:\phi_1\vdash N:\psi}\\{\Gamma,y:\phi_2 \vdash O:\psi}\\{\Gamma\vdash P:\phi_1} }
-		{\Gamma\vdash  ({\text{case } inj_l(P) \text{ of } inj_l(x) \longmapsto N  |\  inj_r (y)\longmapsto O) \equiv[P/x]N: \psi}}
+				:A\vdash N:\psi}\\{\Gamma,y:B \vdash O:\psi}\\{\Gamma\vdash P:A} }
+		{\Gamma\vdash  ({\text{case } inj_l(P) \text{ of } inj_l(x) \longmapsto N  |\  inj_r (y)\longmapsto O) =[P/x]N: \psi}}
 		\and
 		\inferrule*[right=$\beta\vee_2$]
 		{ {\Gamma,x
-				:\phi_1\vdash N:\psi}\\{\Gamma,y:\phi_2 \vdash O:\psi}\\{\Gamma\vdash Q:\phi_2} }
-		{\Gamma\vdash  ({\text{case } inr_r(Q) \text{ of } inj_l(x)  \longmapsto N  |\  inj_r(y) \longmapsto O) \equiv[Q/y]O: \psi}}
+				:A\vdash N:\psi}\\{\Gamma,y:B \vdash O:\psi}\\{\Gamma\vdash Q:B} }
+		{\Gamma\vdash  ({\text{case } inJ_r(Q) \text{ of } inj_l(x)  \longmapsto N  |\  inj_r(y) \longmapsto O) =[Q/y]O: \psi}}
 	\end{mathpar}
 \end{mdframed}
 
-\subsubsection{Uniqueness of Forms}
+\subsubsection{Local completeness}
 
-Gentzen's Uniqueness Principles on the other hand capture the idea that ``elim is inverse to intro" (a.k.a ``local completeness"). There should be only one way -- modulo definitional equivalence -- to prove something. The ``$\beta$" rules give rise to computational dynamics via reduction. The so called ``$\eta$" equality rules impose properties that the computational model should satisfy.
+Local completeness on the other hand captures the idea that 
+``elim rules are not to weak". Given any proof of a specific type
+one should be able to reintroduce is by extracting its constituents 
+via elimination rules. Another way to see this is that canonical
+forms of a certain type structure should have certain shape. 
+
 
 The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 
 \begin{mdframed}
 	\begin{mathpar}
-		\inferrule*[right=$\eta\top$]{\Gamma\vdash M:\top}{\Gamma\vdash M\equiv \langle \ \rangle: \top} 
+		\inferrule*[right=$\eta\top$]{\Gamma\vdash M:\top}{\Gamma\vdash M= \langle \ \rangle: \top} 
 		\and
 		
-		\inferrule*[right=$\eta\times$]{\Gamma\vdash M:A\times B}{\Gamma\vdash M\equiv \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\times B }
+		\inferrule*[right=$\eta\times$]{\Gamma\vdash M:A\times B}{\Gamma\vdash M= \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\times B }
 		\and
-		\inferrule*[right=$\eta\rightarrow$]{\Gamma\vdash M:\phi\rightarrow \psi}{\Gamma\vdash M\equiv \lambda x. M x: \phi\rightarrow\psi} 
+		\inferrule*[right=$\eta\rightarrow$]{\Gamma\vdash M:A\rightarrow B}{\Gamma\vdash M= \lambda x. M x: A\rightarrow B} 
 		\and
 		\inferrule*[right=$\eta\vee$]
-		{\Gamma\vdash M:\phi_1+\phi_2}
+		{\Gamma\vdash M:A+B}
 		{{
 				\begin{tabular}[b]{ rl}
-					$\Gamma\vdash M \equiv \text{case }  M \text{ of }$  & $| inj_l(x) \mapsto inj_l(x)$
+					$\Gamma\vdash M = \text{case }  M \text{ of }$  & $| inj_l(x) \mapsto inj_l(x)$
 					\\
 					& $ inj_r(y)\mapsto inj_r(y)) : \psi$
 					\\
@@ -352,7 +358,8 @@ The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 \end{mdframed}
 
 \section{Operational (a.k.a ``term") Semantics} 
-It is obvious that the system is consistent in terms of provability. It's forgetful projection is exactly \ac{IPL} for which we have provided order-theoretic models. We would like to show consistency for the proof relevant model. One way is operational semantic.
+It is obvious that the system is consistent in terms of provability. It's forgetful projection is exactly \ac{IPL} for which we have provided order-theoretic models. We would like to show consistency for the proof relevant model. One way is operational semantics.
+We will be discussing only the $\rightarrow$, $\wedge$ fragment.
 
 The first step toward operational semantics is to break the symmetry of the definitional equivalence and construct a one-way reduction 
 relation  on lambda terms. 
@@ -360,7 +367,7 @@ Towards this definition we first define the notion of a  \textit{redex}\footnote
 \begin{mdframed}
 \begin{definition}	
 \begin{itemize}
-\item A $\beta$-redex is every term of the form:  $$(\lambda x:\phi. N) M |  \operatorname{fst}\langle M, N \rangle| \operatorname{snd}\langle M, N \rangle $$
+\item A $\beta$-redex is every term of the form:  $$(\lambda x:A. N) M |  \operatorname{fst}\langle M, N \rangle| \operatorname{snd}\langle M, N \rangle $$
 \item  An $\eta$-redex is every term of the form:
 $$\lambda x: M x | \langle \operatorname{fst} , M\operatorname{snd} M \rangle  $$    
 \end{itemize}
@@ -374,7 +381,7 @@ Now we have enough tools to define the \textit{(one-step) $\beta\eta$-reduction}
 \begin{mdframed}
 	\textbf{One-step $\mapsto_{\beta\eta}$  reduction}
 	\begin{mathpar}
-		\inferrule*[right=($\beta$)]{} {(\lambda x:\phi. N) M \mapsto [M/x]N }
+		\inferrule*[right=($\beta$)]{} {(\lambda x: A. N) M \mapsto [M/x]N }
 		\and
 		\inferrule*[right=($\beta$)] {}{\operatorname{fst}\langle M, N \rangle\mapsto M}
 		\and
@@ -400,17 +407,17 @@ Now we can define the  reflexive, transitive closure of the previous relation as
 		
 	\end{theorem}	
 \end{mdframed}
- The first consistency result for the equational system comes straight from the Church--Rosser properties. Since, it is  easy to show that for any terms $M$, $N$ s.t where $\Gamma\vdash M\equiv N: A$ based on the $\equiv$ axiomatization there exists a finite sequence of terms $N_0,\ldots, N_i$ such that $M\mapsto_{\beta\eta}^{*}N_0\mapsfrom_{\beta\eta}^{*} N_1\mapsto_{\beta\eta}^{*} N_2\mapsfrom_{\beta\eta}^{*}\ldots \mapsfrom_{\beta\eta} N_i$. Now we can obtain:
+ The first consistency result for the equational system comes straight from the Church--Rosser properties. Since, it is  easy to show that for any terms $M$, $N$ s.t where $\Gamma\vdash M= N: A$ based on the $=$ axiomatization there exists a finite sequence of terms $N_0,\ldots, N_i$ such that $M\mapsto_{\beta\eta}^{*}N_0\mapsfrom_{\beta\eta}^{*} N_1\mapsto_{\beta\eta}^{*} N_2\mapsfrom_{\beta\eta}^{*}\ldots \mapsfrom_{\beta\eta} N_i$. Now we can obtain:
  \begin{mdframed}
  \begin{theorem}	\textbf{Definitional equality implies common contractum}
- 	For any terms, $M$,$N$ if $\Gamma\vdash M\equiv N:A$ then there exists tern $L$ s.t. $M,N\mapsto_{\beta\eta}^{*} L$
+ 	For any terms, $M$,$N$ if $\Gamma\vdash M= N:A$ then there exists term $L$ s.t. $M,N\mapsto_{\beta\eta}^{*} L$
  	
  \end{theorem}
 \end{mdframed}
  And as a result:
  \begin{mdframed}	
  \begin{theorem}	\textbf{Consistency of definitional equality of terms}
- 	The definitional equality $\equiv$ is not trivial i.e. it won't equate any two terms.
+ 	The definitional equality $=$ is not trivial i.e. it won't equate any two terms.
  \end{theorem}	
 \end{mdframed}
 Moving toward consistency of the whole system (i.e. there is not term of type $\bot$), we prove a theorem for the existence of normal forms.
@@ -495,152 +502,3 @@ There is no (closed) term $M$ for which $\vdash M:\bot$
 The proofs of normalization above are essentially of the same "proof strength" (induction principles) as the logical proof of cut elimination. In a nutshell, eliminating cuts is the same as normalizing proof terms (and the corresponding proof trees).
 
 In reality, the slogan of the Curry-Howard isomorphism and, in general, of a type theoretic treatment to logic should be "Normalization as Cut Elimination". This aspect of the isomorphism can be shown explicitly follow Sieg's extraction method ~\cite{Sieg1998}, that  showcases how a construction of the Cut-free sequent calculus comes naturally from an analysis of normal proofs in the natural deduction. 
-
- 
-\subsection{Propositions as Types}
-
-
-
-There is a correspondence between propositions and types:
-\begin{center}
-  \begin{tabular}{@{} cc @{}}
-
-    Propositions & Types \\
-
-    $\top$ & $1$ \\
-    $A\wedge B$ & $A\times B$ \\
-    $A\supset B$ & function $A\rightarrow B$ or $B^A$ \\
-    $\bot$ & $0$ \\
-    $A\vee B$ & $A+B$\\
-
-  \end{tabular}
-\end{center}
-
-
-
-\section{Categories for proof relevant \vocab{IPL}}
-
-In a Heyting Algebra, we have a preorder (or, partial order in the 
-``textbook" definition) $\phi\leq \psi$ when $\phi$ implies $\psi$. \emph{HAs} are insufficient, however, for the treatment of proof objects (there can be at most one instance of $\phi\leq\psi$ for specific $\phi$,$\psi$). We can  keep track of proofs, so if $M$ is a proof from  $\Gamma$ to $\psi$, we want to think of it as a map $M:\Gamma+\Longrightarrow \psi+$. In category theory ~\cite{awodey2010category}, the analog of a Heyting Algebra is that of a Bi--Cartesian Closed Category (\emph{BiCCC}). That is a category with all finite products, co--products and exponentials. For an exposition of BiCCCs and their relation with intuitionistic logic ~\cite{Lambek1985}. The axiomatization of a category (in general), finite (and nullary) products and co-products and exponentials is given in this section. 
-
-\subsection{Definitions and Axioms of a Category}
-A category has \emph{objects} $\phi,\psi, \ldots$ and \emph{arrows} $f,g,h\ldots$ Each arrow goes from an object to an object. To say that $g$ goes from $\phi$ to $\psi$ we write $g:\phi\Rightarrow\psi$, or say that $\phi$ is the domain of $g$, and $\psi$ the \emph{co--domain}. We write $Dom(g)=\phi$ and $Cod(g)=\psi$.
-We say that two arrows $f$ and $g$ are \emph{composable} with $Dom(f)=Cod(g)$. If $f$ and $g$ are composable, they have a \emph{composite}, an arrow called $f\circ g$. There is an \emph{identity} for every object $\phi$.
-\begin{mdframed}
-\begin{mathpar}
-\inferrule*[right=$\text{ID}_{ex}$]{ }
-{\operatorname{id}:\phi\Longrightarrow \phi}
-\and
-\inferrule*[right=Comp]{{f:\phi\Longrightarrow\psi } \\{g:\psi\Longrightarrow\chi}}
-{g\circ f:\phi\Longrightarrow \chi}
-\and
-\inferrule*[right=$\text{ID}_l$]{f:\phi\Longrightarrow\psi }
-{id_{\psi}\circ f=f:\phi\Longrightarrow \psi}
-\and
-\inferrule*[right=idr]{f:\phi\Longrightarrow\psi }
-{f\circ id_{\phi} =f:\phi\Longrightarrow \psi}
-\and
-\inferrule*[right=idr]{{f:\phi\Longrightarrow\psi }\\{g:\psi\Longrightarrow\chi}\\{h:\chi\Longrightarrow\omega}}
-{h\circ (g\circ f) =(h\circ g)\circ f:\phi\Longrightarrow \omega}
-\end{mathpar}
-\end{mdframed}
-
-
-
-\subsection{Terminal, Co-Terminal objects, Products and Co-Products}
-Now we can think about objects in the category that correspond to propositions given in the correspondence.
-
-\paragraph{Terminal Object}
-$1$ is the terminal object, also called the final object, which corresponds to $\top$. For any object $\Gamma$ there is a unique map $\Gamma\Longrightarrow 1$. 
-\begin{mdframed}
-\begin{mathpar}
-
-\inferrule*[right=Existence]
-{ } {\langle \ \rangle:\phi\Longrightarrow 1}
-\and
-\inferrule*[right=Unicity($\eta$)]
-{M:\Gamma\Longrightarrow 1}{M=\langle \ \rangle:\Gamma\Longrightarrow 1}
-\end{mathpar}
-\end{mdframed}
-
-
-
-\paragraph{Product} 
-For any objects $\phi$ and $\psi$ there is an object $\chi=\phi\times \psi$ equipped with arrows $\operatorname{fst}:\phi\times\psi\Longrightarrow\phi$ and $\operatorname{snd}:\phi\times\psi\Longrightarrow\psi$ that is the \emph{product} of $\phi$ and $\psi$, which corresponds to the join $\phi\wedge \psi$. For any other object $\Gamma$ with arrows $M:\Gamma\Longrightarrow\phi$ and $\Gamma\Longrightarrow\psi$ there  exists \emph{unique} arrow, $\langle M,N \rangle$ s.t. $\operatorname{fst}\circ\langle M, N\rangle=M(\beta\times_1)$ and
-$\operatorname{snd}\circ\langle M, N\rangle=N(\beta\times_2)$.
-\begin{mdframed}
-\begin{mathpar}
-
-\inferrule*[right=Exist$_1$]{{M:\Gamma\Longrightarrow \phi} \\{ N:\Gamma\Longrightarrow \psi}} {\langle M,N\rangle : \Gamma\Longrightarrow \phi\times \psi} 
-\and
-\inferrule*[right=Exist$_2$($\beta_1$)]{{M:\Gamma\Longrightarrow \phi} \\{ N:\Gamma\Longrightarrow \psi}} {\operatorname{fst}\circ\langle M,N\rangle : \Gamma\Longrightarrow \phi}
-\and 
-\inferrule*[right=Exist$_3$($\beta_2$)]{{M:\Gamma\Longrightarrow \phi} \\{ N:\Gamma\Longrightarrow \psi}} {\operatorname{snd}\circ\langle M,N\rangle : \Gamma\Longrightarrow \phi} 
-\and
-\inferrule*[right=Un($\eta$)]{{P:\Gamma\Longrightarrow \phi\times \psi} \\{ \operatorname{fst}\circ P=M:\Gamma\Longrightarrow \phi}\\ {\operatorname{snd}\circ P=N:\Gamma\Longrightarrow \psi}} {P=\langle M,N\rangle : \Gamma\Longrightarrow \phi\times \psi}
-\end{mathpar}
-Diagrammatically:
-\begin{equation*}
-  \begin{tikzcd}
-    {} & \Gamma \arrow[bend right]{ddl}[swap]{M} \arrow[bend left]{ddr}{N}\dar[dashed]{\langle M,N\rangle} & {} \\
-    {} & \phi \times \psi \dlar{\text{fst}}\drar[swap]{\text{snd}} & {} \\
-    \phi & {} & \psi
-  \end{tikzcd}
-\end{equation*}
-\end{mdframed}
-
-
-
-
-\paragraph{Exponentials}
-Given objects $A$ and $B$, an exponential $B^A$ (which corresponds to $A\supset B$) is an object with the following universal property:
-\[
-\begin{tikzcd}
-C \arrow[dashed]{dd}[swap]{\lambda(h)}&{C\times A}\arrow{ddrr}{h} \arrow[dashed]{dd}[swap]{\lambda(h)\times \operatorname{id}_A} &&\\
-&& {}	&{}\\
-B^A&{B^A\times A}\arrow{rr}[swap]{\operatorname{ap}} &{}&{B}
-\end{tikzcd}
-\]
-such that the diagram commutes.
-
-This means that there exists a map $\operatorname{ap}:B^A\times A\Longrightarrow B$ (application map) that corresponds to implication elimination.
-
-The universal property is that for all objects $C$ that have a map $h:C\times A\Longrightarrow B$, there exists a unique map $\lambda(h):C\Longrightarrow B^A$ such that
-\[
-\operatorname{ap}\circ (\lambda(h)\times \operatorname{id}_A )=h:C\times A\Longrightarrow B
-\]
-This means that the diagram commutes. Another way to express the induced map is $\lambda(h)\times \operatorname{id}_A = \langle \lambda(h)\circ\operatorname{fst},\operatorname{snd}\rangle$.
-
-The map $\lambda(h):C\Longrightarrow B^A$ is unique, meaning that
-\begin{mathpar}
-\inferrule*{\operatorname{ap}\circ(g\times \operatorname{id_A})=h:C\times A\Longrightarrow B}{g=\lambda(h):C\Longrightarrow B^A}
-\end{mathpar}
-
-\paragraph{Co--Products}
-For any objects $\phi$ and $\psi$ there is an object $\chi=\phi + \psi$ equipped with arrows $\operatorname{inl}:\phi\Longrightarrow\phi+\psi$ and $\operatorname{inr}:\psi\Longrightarrow\phi+\psi$ that is the \emph{co-product} of $\phi$ and $\psi$, which corresponds to the meet $\phi\wedge \psi$. For any other object $\omega$ with arrows $M:\omega\Longrightarrow\phi\vee\psi$ and $N:\omega\Longrightarrow\phi\vee\psi$ there  exists \emph{unique} arrow, ${ M,N }$ s.t. $\{M,N\}\circ\operatorname{inl}=M$ and
-$\{M,N\}\circ\operatorname{inr}=N$.
-
-\begin{mdframed}
-\begin{mathpar}
-
-\inferrule*[right=Exist$_1$]{O:\Gamma\Longrightarrow \phi}{ \operatorname{inl}\circ O:\Gamma\Longrightarrow\phi + \psi}  
-\and
-
-\inferrule*[right=Exist$_2$]{P:\Gamma\Longrightarrow \psi}{ \operatorname{inr}\circ P:\Gamma\Longrightarrow\phi + \psi}
-\and
-\inferrule*[right=Exist$_3$($\beta_1$)]{{O:\Gamma\Longrightarrow \phi} \\{M:\phi\Longrightarrow\omega}\\{N:\psi\Longrightarrow\omega}} {\{M,N\}\circ\operatorname{inl}\circ O=M\circ O : \Gamma\Longrightarrow \omega}
-\and 
-\inferrule*[right=Exist$_3$($\beta_2$)]{{P:\Gamma\Longrightarrow \psi} \\{M:\phi\Longrightarrow\omega}\\{N:\psi\Longrightarrow\omega}} {\{M,N\}\circ\operatorname{inr}\circ P=N\circ P : \Gamma\Longrightarrow \omega}
-\and
-\inferrule*[right=Exist$_3$($\beta_2$)]{{M:\Gamma\Longrightarrow \phi} \\{ N:\Gamma\Longrightarrow \psi}} {\operatorname{snd}\circ\langle M,N\rangle : \Gamma\Longrightarrow \phi} 
-\and
-\inferrule*[right=Un($\eta$)]{ { O :\Gamma\Longrightarrow \phi} \\ {P:\Gamma\Longrightarrow \psi}\\{U:\phi + \psi\Longrightarrow\omega}\\{M:\phi\Longrightarrow\omega}\\{N:\psi\Longrightarrow\omega} \\{U\circ \operatorname{inl}\circ O=M} \\
- \\{U\circ \operatorname{inr}\circ N =M}} {U=\{M,N\} }  
-\end{mathpar}
-Diagrammatically:
-\begin{tikzcd}
-\phi\drar{\inl}\arrow[bend right]{ddr}{(\beta)}[swap]{M}  & {} & \psi\dlar[swap] {\inr}\arrow[bend left]{ddl}{N}[swap]{(\beta)}	\\
-{} & \phi+\psi\dar[bend right]{(\eta)}[swap]{M}\dar[bend left]{\{M,N\}} & {}	\\
-{} & C & {}
-\end{tikzcd}
-\end{mdframed}

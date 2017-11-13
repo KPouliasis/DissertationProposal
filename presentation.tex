@@ -120,6 +120,8 @@ programs of a simple programming language (\emph{STLC})
  \end{itemize}
 \end{frame}
 \begin{frame}{Harmony}
+\begin{alertblock}{Elim rules are not too strong}\end{alertblock}
+    
       \[ \begin{array}{l c r} {\inferrule*[right=Elim1]{\inferrule*[right=Intro] { {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \\{\begin{array}{c} \mathcal{E} \\ {B} \end{array} }} {A\wedge B}}{A}} & = & {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \end{array} \]
       \[ \begin{array}{l c r} {\inferrule*[right=Elim2]{\inferrule*[right=Intro] { {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \\{\begin{array}{c} \mathcal{E} \\ {B} \end{array} }} {A\wedge B}}{B}} & = & {\begin{array}{c} \mathcal{E}\\ {B} \end{array} } \end{array} \]
 \end{frame}
@@ -137,18 +139,18 @@ programs of a simple programming language (\emph{STLC})
         \end{exampleblock}
   \end{columns}
 \end{frame}
-\begin{frame}{Example: rules $\supset$}
+\begin{frame}{Example:  $\supset$ rules}
   \begin{mathpar}
-  \inferrule[]{{\begin{array}[b]{c} \overline{x:A}\\ {\mathcal{D}} \\ A   \end{array}} }{A\supset B }
+  \inferrule*[Right=$\supset^{x}$]{{\begin{array}[b]{c} \overline{x:A}\\ {\mathcal{D}} \\ A   \end{array}} }{A\supset B }
   \and
-  \inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\supset B  \end{array}}\\ {\begin{array}[b]{c} {\mathcal{E}} \\ A  \end{array}}}{B}
+  \inferrule*[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\supset B  \end{array}}\\ {\begin{array}[b]{c} {\mathcal{E}} \\ A  \end{array}}}{B}
     
   \end{mathpar}
 \end{frame}
 \begin{frame}{Harmony}
   \begin{columns}[T,onlytextwidth]
     \column{0.5\textwidth}
-    
+  \begin{alertblock}{Not too strong}\end{alertblock}    
    \[\begin{array}{c c c}
     {\inferrule{
     {\inferrule[]{
@@ -161,6 +163,7 @@ programs of a simple programming language (\emph{STLC})
   
   \end{array}\]
   \column{0.5\textwidth}
+\begin{exampleblock}{ Not too weak}\end{exampleblock}
   \[\begin{array}{c c c}
 	{\begin{array}[b]{c}  {\mathcal{D}} \\ A\supset B  \end{array}}
 			& = &
@@ -176,34 +179,76 @@ programs of a simple programming language (\emph{STLC})
 \end{columns}
 \end{frame}
 \begin{frame}{Calculi for free}
-  \begin{itemize} 
-  \item[] trees $\mapsto$ \emph{terms} (inhabitation judgments)
-  \item[] local soundness $\mapsto$ $\beta$ reduction (equality judgments), 
-  \item [] local completeness $\mapsto$ $\eta$ expansion (equality judgments)
-  \end{itemize}
+    \begin{itemize} 
+      \item[] trees of $A$ with open $\Gamma$ $\mapsto$ {terms} ($M:A$) (inhabitation judgments)
+      \item[] local soundness $\mapsto$ $\beta$ reduction (equality judgments), 
+      \item [] local completeness $\mapsto$ $\eta$ expansion (equality judgments)
+      \end{itemize}
 \end{frame}
+
 \begin{frame}
 \begin{mathpar}
+  \inferrule*[right=Refl] {x:A\in\Gamma}{\Turnsi {\Gamma} { x:A }}
+  
     \inferrule*[right=$\top$I] { } {\Turnsi {\Gamma} { \langle \rangle:\top }}
-    \and
-    \inferrule*[right=Tup] {\Turnsi {\Gamma} {M:\phi_1}\\{\Turnsi {\Gamma} { M^{'}:\phi_2}}} {\Turnsi {\Gamma} {  
-      \langle M,M^{'}\rangle:\phi_1\times \phi_2 }}
-      \and
-      \inferrule*[right=LPrj] {\Turnsi {\Gamma} {M:\phi_1\times\phi_2 }} {\Turnsi {\Gamma} {\operatorname{fst}(M):  \phi_1}}
-      \and
-      \inferrule*[right=RPrj] {\Turnsi {\Gamma} {M:\phi_1\times\phi_2}} {\Turnsi {\Gamma} {\operatorname{snd}(M):  \phi_2}}
-      \and
-  \inferrule*[right=$\lambda-$Abs] {\Turnsi {\Gamma, x:\phi_1 } 
-  {M:\phi_2 }} {\Turnsi {\Gamma} { \lambda x. M:\phi_1\rightarrow \phi_2 }}
-  \inferrule*[right=App] {\Turnsi {\Gamma} {M:\phi_1\rightarrow\phi_2 }\\{\Turnsi {\Gamma} {M^{'}:\phi_1}}} {\Turnsi {\Gamma} {  (M M^{'}):\phi_2 }}
+\end{mathpar}  
+\begin{mathpar}
+    \inferrule*[right=Tup] {\Turnsi {\Gamma} {M:A}\\{\Turnsi {\Gamma} { M^{'}:B}}} {\Turnsi {\Gamma} {  
+      \langle M,M^{'}\rangle:A\times B }}
 \end{mathpar}
-\alert{Plus equality judgments}
-e.g. \[\inferrule*[right=$\beta\supset$] 
-{{\Gamma,x:A\vdash M:B}\\ {\Gamma\vdash N:A}}
-{\Gamma\vdash(\lambda x.M)(N)\equiv [N/x]M:B}\]
-\alert{plus congruence axiomatization}
-\alert{plus context judgments}
+\begin{mathpar}
+      \inferrule*[right=LPrj] {\Turnsi {\Gamma} {M:A\times B }} {\Turnsi {\Gamma} {\operatorname{fst}(M):  A}}
+      \and
+      \inferrule*[right=RPrj] {\Turnsi {\Gamma} {M:A\times B}} {\Turnsi {\Gamma} {\operatorname{snd}(M):  B}}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule*[right=$\lambda-$Abs] {\Turnsi {\Gamma, x:A } 
+  {M:B }} {\Turnsi {\Gamma} { \lambda x:A.\  M:A\rightarrow B }}
+  \and
+  \inferrule*[right=App] {\Turnsi {\Gamma} {M:A\rightarrow B }\\{\Turnsi {\Gamma} {M^{'}:A}}} {\Turnsi {\Gamma} {  (M M^{'}):B }}
+\end{mathpar}
+
 \end{frame}
+\begin{frame}
+  \alert{Plus equality judgments}
+  e.g. \[\inferrule*[right=$\beta\supset$] 
+  {{\Gamma,x:A\vdash M:B}\\ {\Gamma\vdash N:A}}
+  {\Gamma\vdash(\lambda x:\phi.M)(N)=_{\beta} [N/x]M:B}\]
+  \[\inferrule*[right=$\eta\supset$] 
+  {{\Gamma\vdash f:A\supset B}}
+  {\Gamma\vdash f =_{\eta}\lambda x:A.\ (f x):B}\]
+  \alert{plus congruence axiomatization}
+\end{frame}
+\begin{frame}{Metatheory for (almost) free}
+  \begin{outline}
+    \1 []  The good old  way
+        \2[!] Forget about variables/ terms/ equalities and prove that $\Gamma\vdash A$ has an order theoretic model
+
+    \1[] Intercalation and Cut elimination (core of CHI)
+      \2[!]  Create a restricted version that:
+      \3[!!] does not permit (Elim - After- Intro) 
+      \3[!!] does not permit Reflection on hypothesis in non-atomic formulas
+      \2[!] Prove that your restricted system of proof trees proves the same stuff 
+      by inventing a corresponding sequent calculus and proving cut elimination
+     
+    \end{outline}
+\end{frame}
+\begin{frame}
+  \begin{outline}
+  \1[] \textbf{In proof terms}\\
+  For any term $\Gamma\vdash M:A$ the process 
+  of fully $\eta$ expanding and then, $\beta$ reducing it ($M\rightarrow^{*}_\eta N\rightarrow_\beta^{*} O$) 
+  is terminating in a normal form
+  \2[!] Your programming language has an \textit{evaluation strategy}
+  \2[!] As a lemma you can show that the system cannot inhabit the $\bot$
+  with a closed term
+  \1[] Trivially, any two terms that map to the same normal form are provenly equal
+  in the system        
+\1[] Proving additionally Church Rosser you get:
+  \2[!] Any two terms that are equated in the system lead to the \textit{same} normal form
+  \end{outline}
+\end{frame}
+
 \section{JCalc: Motivation}
 
 \begin{frame}{Motivation}
@@ -216,121 +261,78 @@ ${\sf J A}$ is in ${\sf cl}$  so $J$ can be seen as an embedding.
 In general though the connective can be treated indepenedently of the details
 of the two systems
 \end{frame}
-\begin{frame}{Relating Deductive systems}  
+\begin{frame}{Deductive systems}  
   \begin{outline}
-  \1 Assume deductive systems 
-  \2 $I$:with propositions in $U_I$
-  a possibly non-empty signature of axioms $\Sigma_I$
-  an entailment relation $\Sigma_I;\Gamma\vdash_{I}A$
-  \2 $J$ with: $U_J$, $\Sigma_J$, and $\Sigma_J;\Delta\vdash_J \phi$ respectively.
+    A deductive system is a $\Gamma\vdash\phi$ relation with the following (minimal) properties:
+    
+  \1[] Reflexivity :
   
-  \1 Deductive System Requirements
+  \2[*]$A \in \Gamma \Longrightarrow \Gamma\vdash_{I}A$\\
+  %$\phi \in \Delta \Longrightarrow \Delta\vdash_{J}\phi$
+  \1[] Compositionality:
   
-  \2 Reflexivity :
+  \2[*]$\Gamma\vdash A$ and $\Gamma^{\prime}, A\vdash B \Longrightarrow \Gamma,\Gamma^{'}\vdash B$
+  \1[] Top element:
   
-  $A \in \Gamma \Longrightarrow \Gamma\vdash_{I}A$\\
-  $\phi \in \Delta \Longrightarrow \Delta\vdash_{J}\phi$
-  \2 Compositionality:
-  
-  $\Gamma\vdash_I A$ and $\Gamma^{\prime},A\vdash_{I} B \Longrightarrow \Gamma,\Gamma^{'}\vdash_I B $\\
-  $\Delta\vdash_J\phi$ and $\Delta^{\prime},\phi\vdash_{J} \psi \Longrightarrow \Delta,\Delta^{'}\vdash_J \psi$
-  \1 Top elements :
-  
-  $\Gamma\vdash_{I}\top_I $ and $\Delta\vdash_{J}\top_J $
+  \2[*]$\Gamma\vdash\top $
   \end{outline}
 \end{frame}
 
-\begin{frame}{Interpetations and Validations}
+\begin{frame}{ Completeness in deductive systems}
   
   \begin{outline}
-  \1An interpretation for $I$, ($\llbracket\bullet \rrbracket_J$) is a pair $(J,\llbracket\bullet\rrbracket)$ of a deductive system $J$ together with a (functional) mapping $\llbracket \bullet \rrbracket: U_I\rightarrow U_J$ on propositions of $I$ into propositions of $J$ extended to multisets of formulae of $U_I$ s.t.
-  \2 $\llbracket\top_I \rrbracket = \top_J$
+  \1[] A deductive system $J$ is complete for $I$ (or a conservative extension) iff  there exists mapping 
+  $\llbracket \bullet \rrbracket: U_I\rightarrow U_J$ on propositions of $I$ into propositions of $J$
+   s.t. 
+   \2[*]$\Gamma\vdash_I A \Longrightarrow \llbracket\Gamma\rrbracket\vdash_J \llbracket A\rrbracket $
+  \2[*] $\llbracket\top_I \rrbracket = \top_J$
   
-  \2 For $\Gamma$ of the form $A_1,\ldots, A_n$: $\llbracket\Gamma \rrbracket=\llbracket A_1 \rrbracket,\ldots, \llbracket A_n\rrbracket$
-  
-  \1 Given a deductive system $I$ and an interpretation function $\llbracket\bullet\rrbracket_J:U_I\rightarrow U_J$ of $I$ into $J$ we define:
-  
-  \2 A validation of a deduction $\Sigma_I;\Gamma\vdash_I A$ to be a deduction $\Sigma_J;\Delta\vdash_{J} \phi$ in $J$ such that $\llbracket A \rrbracket=\phi$ and $\Delta=\llbracket \Gamma \rrbracket $ . We will be writing $ \llbracket \Sigma_I;\Gamma\vdash_I A\rrbracket_J$
+  \2[*] For $\Gamma$ of the form $A_1,\ldots, A_n$: 
+  \3[]$\llbracket\Gamma \rrbracket=\llbracket A_1 \rrbracket,\ldots, \llbracket A_n\rrbracket$
   \end{outline}
 \end{frame}
-\begin{frame}{Interpetations and Validations}
+
+
+\begin{frame}{ $\Box$ as double theoremhood}
   
   \begin{outline}
-  \1An interpretation for $I$, ($\llbracket\bullet \rrbracket_J$) is a pair $(J,\llbracket\bullet\rrbracket)$ of a deductive system $J$ together with a (functional) mapping $\llbracket \bullet \rrbracket: U_I\rightarrow U_J$ on propositions of $I$ into propositions of $J$ extended to multisets of formulae of $U_I$ s.t.
-  \2 $\llbracket\top_I \rrbracket = \top_J$
+  \1[] When $J$ is complete with respect to $I$ then double theoremhood 
+   $\langle \vdash A, \vdash \llbracket A \rrbracket\rangle$ 
+  is a basic modality
+  \1[*] Intuitively $A\vdash  B$ implies $\llbracket A\rrbracket \vdash \llbracket B\rrbracket$ 
+    and thus a double proof of $A$ ($\Box A$)  gives a double proof of $B$($\Box B$) 
+  \1[*] The basic rule of $K$ modality is admissible 
+    $$\inferrule*[] {A\vdash B} {\Box A\vdash \Box B} $$  
+  % \2[*] $\llbracket\top_I \rrbracket = \top_J$
   
-  \2 For $\Gamma$ of the form $A_1,\ldots, A_n$: $\llbracket\Gamma \rrbracket=\llbracket A_1 \rrbracket,\ldots, \llbracket A_n\rrbracket$
-  
-  \1 Given a deductive system $I$ and an interpretation function $\llbracket\bullet\rrbracket_J:U_I\rightarrow U_J$ of $I$ into $J$ we define:
-  
-  \2 A validation of a deduction $\Sigma_I;\Gamma\vdash_I A$ to be a deduction $\Sigma_J;\Delta\vdash_{J} \phi$ in $J$ such that $\llbracket A \rrbracket=\phi$ and $\Delta=\llbracket \Gamma \rrbracket $ . We will be writing $ \llbracket \Sigma_I;\Gamma\vdash_I A\rrbracket_J$
+  % \2[*] For $\Gamma$ of the form $A_1,\ldots, A_n$: 
+  % %\3[]$\llbracket\Gamma \rrbracket=\llbracket A_1 \rrbracket,\ldots, \llbracket A_n\rrbracket$
   \end{outline}
 \end{frame}
-\begin{frame}{Logical Completeness}
+
+
+\begin{frame}{My thesis in a slide}
   \begin{outline}
-  
-  \1 Given a deductive system $I$, we say that $J$ is logically complete under $\llbracket\bullet \rrbracket_J$ when for all purely logical deductions $\mathcal{D}$ in $I$ there exists a (purely logical) validation $\mathcal{E}$ in $J$. i.e: 
-  $\forall \mathcal{D}. \ \mathcal{D}:\Gamma\vdash_I A \Longrightarrow \exists\mathcal{E}: \llbracket \Gamma\vdash A\rrbracket_J$
- \1 Spoiler: our system axiomatizes (extensions) of logical validations and treats 
- boxes as points of such validations  
- \1 Without loss of generality we focus on the case where $I$ is
- based on minimal intuitinistic logic
+    \1[*] A natural deduction  with three kinds of judgments: 
+    \2[] $\Gamma\vdash\sf {A}$  that follows intuitionistic logic 
+    \2[] $\llbracket\Gamma \rrbracket\vdash \llbracket A\rrbracket $ that axiomatizes
+    the notion of conservative extension
+    \2[] $\Box \Gamma \vdash \Box A$ for "double theoremhood"
+   \1[*] Its order theoretic semantics
+   \1[*] Analysis  of the new connective a la Gentzen to get
+   \2 proof terms/trees and equalities/ reductions 
+   \1[*] Its Cut elimination/ normalization
+   \1[*] An implementation in the metatheoretic framework "Makam" (work in progress)
+   \1[*] Some good reasons to think that this idea is extensible
 \end{outline}
 \end{frame}
-\begin{frame}{Roadmad}
-  \begin{itemize}
- \item Create a system with two kinds of judgments 
- $A \ {\sf true}$ (as in $\Gamma\sf{true}\vdash_I \sf {true}$) and 
- $A\ {\sf valid}:=\llbracket A \rrbracket  
- {\sf true}$ as in $\Delta {\sf true}\vdash_J\llbracket A \rrbracket$ 
- and treat necessity as “double theoremhood”
-\item obtain a system of basic constructive modality investigating the minimal relation between these two systems
-\item Use justification logic to axiomatize validity $\llbracket \sf {judgments}\rrbracket$.
-\end{itemize}
-\end{frame}
-\begin{frame}{Roadmad}
-  \begin{itemize}
- \item Create a system with two kinds of judgments 
- $A \ {\sf true}$ (as in $\Gamma\sf{true}\vdash_I \sf {true}$) and 
- $A\ {\sf valid}:=\llbracket A \rrbracket  
- {\sf true}$ as in $\Delta {\sf true}\vdash_J\llbracket A \rrbracket$ 
- and treat necessity as “double theoremhood”
-\item obtain a system of basic constructive modality investigating the minimal relation between these two systems
-\item Use justification logic to axiomatize validity $\llbracket \sf {judgments}\rrbracket$.
-\item focus on a minimal system based on $K$ modal logic and intuitionistic implication
-\item \item add proof terms and show that such type systems are useful p
-
-\item show that this approach scales with stronger modality
-\end{itemize}
-\end{frame}
-
-
-\begin{frame}{$K$-$\Box$ rule}
-  One modal rule for elimination and introduction to relate judgments $A\ {\sf valid}$, $ A\ {\sf true}$, $ \Box A {\sf true}$:
-  
-  \[ \inferrule* {{\begin{array}{c}\mathcal{D}\\ \Box A\end{array}} \\ {\inferrule* {}{{\begin{array}{c} \overline{x:A} \\ \mathcal{E} \\ {B} \end{array} } \\ {\begin{array}{c} \overline{s:\llbracket A \rrbracket} \\ \mathcal{F} \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
-  
-\end{frame}
-
-\begin{frame}  {Modal Rule (Generically)}
-  
-  Or, generalizing for assumptions
-  
-  $\Gamma:=x_1:A_1, \ldots, x_i: A_i\ \text{and } \Delta:= s_1:\llbracket A_i \rrbracket, \ldots s_i:\llbracket A_i\rrbracket$:
-
-  \[ \inferrule* {{\Box A_1, \ldots, \Box A_i} \\ {\inferrule* {}{{\begin{array}{c} \overline{\Gamma} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \overline{\Delta} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
-  \end{frame}
-\begin{frame} {Modal Rule ($\Box$ Introduction)}
-  
-  We defined the connective negatively but we obtain $\Box$ constuctors by the very same rule for $\Gamma,\Delta$ empty and derivations $\mathcal{\overline{D},\overline{E}}$ closed for substitutions.
-  
-  \[ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}} \\ {B} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}} \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
-  
-\end{frame}
 
 
 
-\section{Jcalc: provability}
+
+
+
+\section{Jcalc: provability (the good old way)}
 \begin{frame}{Type Universe}
   \begin{mathpar}
     \inferrule*[right= Atom] { } {P_k \in {\sf Prop_0}}
@@ -355,7 +357,7 @@ of the two systems
 \end{frame}
 \begin{frame} {Natural deduction for ${\sf Prop_0}$}
   \begin{mathpar}
-    \inferrule*[right=$\Gamma_0$-Refl] {x: A \in \Gamma}{\Turnsi {\Gamma} { A}}
+    \inferrule*[right=$\Gamma_0$-Refl] {A \in \Gamma}{\Turnsi {\Gamma} { A}}
     \and
     \inferrule*[right=$\top_0$I] { }{\Turnsi {\Gamma} { \top}}
   \end{mathpar}
@@ -368,6 +370,7 @@ of the two systems
   \end{mathpar}
   \begin{mathpar}
     \inferrule*[right=$\supset_0$I] {{\Turnsi {\Gamma, x: A} { B}}} {\Turnsi {\Gamma} {   A\supset  B}}
+    \and
     \inferrule*[right=$\supset_0$E] {{\Turnsi {\Gamma} { A\supset  B}}\\{\Turnsi {\Gamma} { A}}} {\Turnsi {\Gamma} {   B}}
     
     %\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
@@ -376,29 +379,48 @@ of the two systems
 \end{frame}
 \begin{frame} {Natural deduction for ${\sf \llbracket Prop_0\rrbracket}$}
     \begin{mathpar}
-      \inferrule*[right=$\Delta$-Refl] {s:\llbracket  A\rrbracket \in \Delta}{\Turnsi {\Delta} {\llbracket  A\rrbracket}}
-      \inferrule*[right=Ax$_1$] { } {\Turnsi {\Delta} {\llbracket  \top\rrbracket}}
+      \inferrule*[right=$\Delta$-Refl] {\llbracket  A\rrbracket \in \Delta}{\Turnsi {\Delta} {\llbracket  A\rrbracket}}
       \and
+      \inferrule*[right=Ax$_1$] { } {\Turnsi {\Delta} {\llbracket  \top\rrbracket}}
+    \end{mathpar}
+    \begin{mathpar}
       \inferrule*[right=  Ax$_2$]{  A, B \in {\sf Prop_0} }   {\Delta\vdash \llbracket   A \supset (B \supset   A)\rrbracket }
       \and
       \inferrule*[right=  Ax$_3$]{ {  A,B, C \in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\supset (B \supset C) \supset ((  A\supset B) \supset (  A \supset C))\rrbracket}
-      \and
+    \end{mathpar}
+  \end{frame}
+  \begin{frame}
+    \begin{mathpar}
       \inferrule*[right = Ax$_4$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\supset (B \supset A\wedge B) \rrbracket}
       \and
       \inferrule*[right = Ax$_5$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\wedge B \supset A  \rrbracket}
       \and
       \inferrule*[right = Ax$_6$]{ {  A,B\in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\wedge B \supset B  \rrbracket}
-      \and					
+    \end{mathpar}
+    \begin{mathpar}				
       \inferrule*[right=MP] {{\Turnsi {\Delta} { \llbracket  A \supset  B \rrbracket}}\\ {\Turnsi{\Delta} {\llbracket  A \rrbracket}}}{\Turnsi {\Delta} {\llbracket  B\rrbracket}}
     \end{mathpar}
 \end{frame}
 \begin{frame}{Natural Deduction ( ${\sf Prop_1}$ ) with $\Gamma\in {\sf Prop_1}$}
 
-\[\begin{array}{c} \inferrule*{x^{\prime}: \Box A \in \Gamma}{ {\Gamma}\vdash {\Box A}} \\ \\ \inferrule*{{(\forall A_i \in \Gamma^{\prime}. \ {\Gamma}\vdash{\Box A_i})}\\{{\Gamma^{\prime}}\vdash { B}}\\ { {\llbracket \Gamma^{\prime} \rrbracket}\vdash {\llbracket B\rrbracket} }} { {\Gamma}\vdash\Box B} \\ \\ \inferrule* {{ {\Gamma, x^{\prime}: \Box A} \vdash { \Box B}}} { {\Gamma}\vdash { \Box A\supset \Box B}} \\ \\ \inferrule* {{ {\Gamma} \vdash { \Box A\supset \Box B}}\\{ {\Gamma} \vdash { \Box A}}} { {\Gamma}\vdash { \Box B}} \end{array} \]
+\[\begin{array}{c} \inferrule*{ \Box A \in \Gamma}{ {\Gamma}\vdash {\Box A}} \\ \\ 
+  \inferrule*{{(\forall A_i \in \Gamma^{\prime}. \ {\Gamma}\vdash{\Box A_i})}\\{{\Gamma^{\prime}}\vdash { B}}\\ { {\llbracket \Gamma^{\prime} \rrbracket}\vdash {\llbracket B\rrbracket} }} { {\Gamma}\vdash\Box B} \\ \\ 
+\end{array} \]
+\end{frame}
+
+\begin{frame}
   \begin{mathpar}
-    \inferrule*[right=$\wedge_0$I] {{\Turnsi {\Gamma} { \Box A}}\\{\Turnsi {\Gamma} { \Box B}}} {\Turnsi {\Gamma} {   \Box A\wedge \Box B}}
-    \inferrule*[right=$\wedge_0$E1] {{\Turnsi {\Gamma} {\Box A\wedge \Box B}}} {\Turnsi {\Gamma} {  \Box A}}
-    \inferrule*[right=$\wedge_0$E2] {\Turnsi {\Gamma} {\Box A\wedge \Box B}} {\Turnsi {\Gamma} {   \Box B}}
+    \inferrule*[right= $\supset_1$I] {{ {\Gamma, \Box A} \vdash { \Box B}}} { {\Gamma}\vdash { \Box A\supset \Box B}} 
+    \and
+    \inferrule*[right= $\supset_1$] {{ {\Gamma} \vdash { \Box A\supset \Box B}}\\{ {\Gamma} \vdash { \Box A}}} { {\Gamma}\vdash { \Box B}} 
+  \end{mathpar}
+  \begin{mathpar}
+    \inferrule*[right=$\wedge_1$I] {{\Turnsi {\Gamma} { \Box A}}\\{\Turnsi {\Gamma} { \Box B}}} {\Turnsi {\Gamma} {   \Box A\wedge \Box B}}
+  \end{mathpar}
+  \begin{mathpar}
+    \inferrule*[right=$\wedge_1$E1] {{\Turnsi {\Gamma} {\Box A\wedge \Box B}}} {\Turnsi {\Gamma} {  \Box A}}
+    \and
+    \inferrule*[right=$\wedge_1$E2] {\Turnsi {\Gamma} {\Box A\wedge \Box B}} {\Turnsi {\Gamma} {   \Box B}}
   \end{mathpar}
 \end{frame}
 
@@ -415,11 +437,11 @@ of the two systems
 \section{Jcalc: Order Theory}
 \begin{frame}{Semi HAs}
   \begin{outline}
-  \1 A \textit{(meet) semi-lattice} is a non-empty \emph{partial order} 
+  \1[*] A \textit{(meet) semi-lattice} is a non-empty \emph{partial order} 
   (i.e. reflexive, antisymmetric and transitive) 
   with finite meets.
   
- \1
+ \1[*]
   A \textit{bounded (meet) semi-lattice} $(L,\le)$ is a (meet) 
   semi-lattice that additionally has 
   \2 \emph a {greatest element} (we name it $1$), which satisfies\\
@@ -448,6 +470,8 @@ of the two systems
     \end{enumerate}    
   \end{frame}
  \begin{frame}{$Jcalc$-triplet}
+  \textbf{Definition}
+  
     A \emph{$Jcalc$-triplet} is 
     
   \begin{enumerate}
@@ -461,37 +485,45 @@ of the two systems
   \end{enumerate}
 \end{frame}
 \begin{frame}{$\Box^F HA$ pair algebra}
+  \textbf{Definition}
+  
 Given a $Jcalc-$triplet ($HA$,$F$,$J$)  define the induced algebra of $F$-points:
 $\Box^F HA$:
 \begin{enumerate}
-\item elements are pairs  $\langle A,FA\rangle$ (name them, $\Box A$)
-\item $\Box A\le \Box B$ iff $\A\le B$ and $FA\le FB$ 
+\item elements are pairs  $\langle A,FA\rangle$ (name them, $\Box^F A$)
+\item $\Box^F A\le \Box^F B$ iff $ A\le B$ and $FA\le FB$ 
 \end{enumerate}
 We can show:
 \begin{itemize}
-  \item It is reflexive, transitive and antisymmetric (a \textit{partial} order)
-  \item It is a (semi) Heyting algebra with:
-  \begin{itemize}
+  \item[*] It is reflexive, transitive and antisymmetric (a \textit{partial} order)
+  \item[*] It is a (semi) Heyting algebra with:
+  \begin{enumerate}
     \item $\Box^F \top$ being the top element (name it $\top_{\Box^F}$)
     \item For any two elements $\Box^F A$, $\Box^F B$: 
-    $\Box^F (A\times B)$ is their product (name it, $\Box^{F} A\wedge\Box^{F} B$)
+    $\Box^F (A\times B)$ is their product (name it, $\Box^{F} A\times\Box^{F} B$)
     \item For any two elements $\Box^F A$, $\Box^F B$:
     $\Box^F (A\rightarrow B)$ is their exponential 
     (name it, $\Box^F A\rightarrow\Box^B A$)
-  \end{itemize}
+  \end{enumerate}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{$Jcalc$ Algebra}
-  \begin{itemize}
-  \item Given a $Jcalc$ triplet unionize the $\le$s ($HA$, $F(HA)$, $\Box^{F}HA$)
-  \item We call the result  \textit{jcalc} -algebra
-  \item Jcalc is sound and complete w.r.t jcalc algebras :
+\begin{frame}{$Jcalc$ Algebra, Soundness and Completeness}
+  \textbf{Definition}
+   Given a $Jcalc$ triplet unionize the $\le$s ($HA$, $F(HA)$, $\Box^{F}HA$)
+   We call the result  $Jcalc$-algebra
   
-    $\Gamma\vdash_{Jcal}\phi$ iff for any \textit{Jcalc Algebra}  $JC$ ($HA,F,J$)
+  \begin{theorem}
+  Jcalc is sound and complete w.r.t $Jcalc$ algebras :
+  
+    $\Gamma\vdash_{Jcalc}\phi$ iff for any \textit{Jcalc Algebra}  $JC$ ($HA,F,J$)
     $\Gamma^+\leq\phi^{*}$ 
-  \item $*$ is any extension of a mapping from atomic propositions of ${\sf Prop_0}$
-  to elements of $HA$ with the following properties:
+  \end{theorem}
+\end{frame}
+\begin{frame}
+  \begin{itemize}
+    \item[] With $(\bullet)*$  any map that extends a mapping of atomic propositions
+    to elements of $HA$ with the following properties:
   \begin{alignat*}{2}
     (\top)* &&\quad= & \quad\top\\
     (A\wedge B \in Prop_0)*  &&\quad = & \quad  A*\times_{HA}B*\\
@@ -500,14 +532,36 @@ We can show:
     (\Box A)* &&\quad = & \quad\Box^F A* \\
     (\Box A\supset \Box B)*  &&\quad = & \quad\Box^F A* \rightarrow{\Box^F B*}\\
     (\Box A\wedge\Box B)*  &&\quad = & \quad\Box^F A*\times{\Box^F B*}\\
+    \\
+    (\Gamma,\phi)^+ &&\quad = & \quad  (\Gamma)^+\times(\phi)*\\
+    (\circ)^+ &&\quad = & \quad\top
   \end{alignat*}
-
-  \end{itemize}
-
+\end{itemize}
 \end{frame}
 
-\section{Terms calculus for Jcalc}
+\section{Term calculus for Jcalc}
+\begin{frame}{$K$-$\Box$ rule}
+  One modal rule for elimination and introduction to relate judgments $A\ {\sf valid}$, $ A\ {\sf true}$, $ \Box A {\sf true}$:
+  
+  \[ \inferrule* {{\begin{array}{c}\mathcal{D}\\ \Box A\end{array}} \\ {\inferrule* {}{{\begin{array}{c} \overline{x:A} \\ \mathcal{E} \\ {B} \end{array} } \\ {\begin{array}{c} \overline{s:\llbracket A \rrbracket} \\ \mathcal{F} \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
+  
+\end{frame}
 
+\begin{frame}  {Modal Rule (Generically)}
+  
+  Or, generalizing for assumptions
+  
+  $\Gamma:=x_1:A_1, \ldots, x_i: A_i\ \text{and } \Delta:= s_1:\llbracket A_i \rrbracket, \ldots s_i:\llbracket A_i\rrbracket$:
+
+  \[ \inferrule* {{\Box A_1, \ldots, \Box A_i} \\ {\inferrule* {}{{\begin{array}{c} \overline{\Gamma} \\ \vdots \\ {B} \end{array} } \\ {\begin{array}{c} \overline{\Delta} \\ \vdots \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
+  \end{frame}
+\begin{frame} {Modal Rule ($\Box$ Introduction)}
+  
+  We defined the connective negatively but we obtain $\Box$ constuctors by the very same rule for $\Gamma,\Delta$ empty and derivations $\mathcal{\overline{D},\overline{E}}$ closed for substitutions.
+  
+  \[ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}} \\ {B} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}} \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
+  
+\end{frame}
 \begin{frame}{{\sf let} bindings}
   \begin{itemize}
 \item Standard construct in modern programming languages
@@ -515,9 +569,8 @@ We can show:
   \texttt{let (x,y) = (2,4) in (x+1,y+1)}
 \item The expression above has a $\beta$-redex and it reduces:\\
 \texttt{let (x,y) = (2,4) in (x+1,y+1)} $\rightarrow_{\beta}$ \texttt{(x+1,y+1)[2/x][3/y]}
-$\rightarrow_\beta$\\
-\item We obtain similar semantics from the $\Box$ rules applying the slogans
-\texttt{(3,4)}
+$\rightarrow_\beta$\\ \texttt{(3,4)}
+\item We obtain similar terms and semantics for the $\Box$ rules applying the slogans
   \end{itemize}
 \end{frame}
 \begin{frame}{Proof term assignment: subcases of the rule }
@@ -539,7 +592,7 @@ $\rightarrow_\beta$\\
   \item[]
   \[\inferrule*{{(\forall A_i \in \Gamma^{\prime}. \ {\Gamma}\vdash{\Box A_i})}\\{{\Gamma^{\prime}}\vdash { B}}\\ { {\llbracket \Gamma^{\prime} \rrbracket}\vdash {\llbracket B\rrbracket} }} { {\Gamma}\vdash\Box B}\]
   \item[]
-  \[\inferrule*[Right=$\Gamma'$ unary]{{x:A\vdash { B}\\ {s:\llbracket A\rrbracket\vdash {\llbracket B\rrbracket} }}} 
+  \[\inferrule*[Right=$\Gamma'$ unary]{{\Gamma \vdash \Box A}\\{x:A\vdash { B}\\ {s:\llbracket A\rrbracket\vdash {\llbracket B\rrbracket} }}} 
    { {\Gamma}\vdash\Box B}\]
    \item[]
    \[\inferrule*[Right=$\Gamma'$ unary]{{ \Turnsi {\Gamma}{N:\Box  A}}\\{\Turnsi {x:A} { M:B}}\\{\Turnsi {s:\llbracket A \rrbracket} {{\sf J}:\llbracket  B\rrbracket} }} {\Turnsi {\Gamma} {{\sf let} \ (x\& s \ \ {\sf be\ } N) \ {\sf in}\  (M\& {\sf J}):\Box  B}} \]
@@ -568,7 +621,7 @@ $$\Longrightarrow_{R}$$
   \begin{frame}{$\beta$ reduction}
     \begin{mathpar}
         \inferrule*[]{
-            {\inferrule*[Left=$\Box_I$]{ \vdash M:A\\ \vdash {\sf j}:\llbracket A \rrbracket}{\Gamma\vdash M \& {\sf j}:\Box A}}\\{x:A\vdash M':B }\\ {s:\llbracket A\rrbracket \vdash {\sf j'}:\llbracket B \rrbracket}}
+            {\inferrule*[Left=$\Box_I$]{ \vdash M:A\\ \vdash {\sf J}:\llbracket A \rrbracket}{\Gamma\vdash M \& {\sf J}:\Box A}}\\{x:A\vdash M^{\prime}:B }\\ {s:\llbracket A\rrbracket \vdash {\sf J^{\prime}}:\llbracket B \rrbracket}}
         {\Gamma\vdash {\sf let} \ \ (x\& s)\ \ {\sf be}\ \   (M\&  {\sf J}) \ \ {\sf in}\ \  { (M^\prime \& {\sf J^\prime})}:\Box B }
     \end{mathpar}
 $$\Longrightarrow_{R}$$
@@ -586,16 +639,6 @@ $$\Longrightarrow_{R}$$
 
 
   \end{frame}
-  \begin{frame}{Local Completeness}
-   Any deduction $\mathcal{D}: \Box A$ can be expanded as follows:
-     \[\begin{array} {c r} \begin{array}{c} \mathcal{D}\\ \Box A \end{array} & \Longrightarrow \\ \\ \inferrule* {{\begin{array}{c} \mathcal{D}\\ \Box A \end{array} } \\ {\begin{array}{c} \\ \overline{x:A} \end{array}} \\ {{\begin{array}{c} \\ \overline{s:\llbracket A\rrbracket} \end{array}}} }{\Box A} \end{array} \]
-    Which gives the $\eta$ equality judgment:
-    \begin{mathpar}
-    \inferrule*[]{ \Gamma\vdash M:\Box A} 
-    {\Gamma\vdash M =_\eta {\sf let} \ \ (x\&s) {\sf be} M {\sf in} \ x\&s:  \Box A}
-    \end{mathpar}
-  \end{frame}
-
   \begin{frame}{Generalizing for the $\Box$ rule}
     Or, generically, for arbitrary length of $\Gamma'$:
     
@@ -605,14 +648,66 @@ $$\Longrightarrow_{R}$$
     \[\begin{array}{l} \nonumber {\sf let}^{*}\ (\circ;\ \circ;\ [\ ]) {\ \sf in\ } M:= M \ \\ \nonumber {\sf let}^{*}\ (x_1:A_1,\ldots, x_i:A_i\ ;\ s_1: \llbracket A_1\rrbracket, \ldots, s_i:\llbracket A_i\rrbracket;\ N_1,\ldots, N_i) \\ {\ \sf in\ } M \\:= \\ \ {\sf let} \ \{(x_1 \& s_1)\ {\sf be}\ N_1,\ldots, (x_i \& s_i)\ {\sf be}\ N_i\}\ {\sf in}\ M \\ \end{array} \]
     With similary $\beta$ reduction rule:
   \end{frame}
+  \begin{frame}{Local Completeness}
+   Any deduction $\mathcal{D}: \Box A$ can be expanded as follows:
+     \[\begin{array} {c r} \begin{array}{c} \mathcal{D}\\ \Box A \end{array} & \Longrightarrow \\ \\ \inferrule* {{\begin{array}{c} \mathcal{D}\\ \Box A \end{array} } \\ {\begin{array}{c} \\ \overline{x:A} \end{array}} \\ {{\begin{array}{c} \\ \overline{s:\llbracket A\rrbracket} \end{array}}} }{\Box A} \end{array} \]
+    Which gives the $\eta$ equality judgment:
+    \begin{mathpar}
+    \inferrule*[]{ \Gamma\vdash M:\Box A} 
+    {\Gamma\vdash M =_\eta {\sf let} \ \ (x\&s)\ \  {\sf be}\  M \ \ {\sf in} \ x\&s:  \Box A}
+    \end{mathpar}
+  \end{frame}
+
+
   \begin{frame}{The rest of the system}:
     \begin{itemize}
     \item[] Proof terms for the rest of the system are standard
     \item[] For the ${\sf \llbracket Prop_0\rrbracket}$ part we deploy justification logic:
     \item[] Axioms get assigned to (parametrized) constants
-      \item Modues ponens is internalized by $*$
+      \item Modus ponens is internalized by $*$
   \end{itemize}
 \end{frame}
+\begin{frame}{Metatheory for the term system}
+  \begin {itemize}
+    \item  We have shown cut elimination for natural deduction (which implies strong normalization of proof trees / termination of $\beta$ reduction)
+    \item  We have shown termination under \textit{call-by-value} semantics 
+    
+\end{itemize}
+\end{frame}
+\begin{frame}{Call by value}
+  \begin{mathpar}
+    \inferrule*[] { }{\lambda x. M {\ \sf  value}}
+    \and
+    \inferrule*[] { } {C_i {\ \sf \ value}}
+    \and
+    \inferrule*[] {{\sf J_1} {\ \sf value} \\ {{\sf J_2} {\ \sf value}} }  {{\sf J_1*J_2} {\ \sf value}}
+    \and
+    \inferrule*[] {M\  {\sf value} \\ {{\sf J}\  {\sf value}} }  {M \&{\sf J} {\sf \ value}}
+    \and
+    \inferrule*[] {M \rightarrow M^\prime}  {M \&{\sf J}\rightarrow M^\prime \& {\sf J}}
+   
+   
+    %\and
+    %\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
+\end{mathpar}
+\end{frame}
+\begin{mathpar}
+  \inferrule*[] {{N_1 \ {\sf value}\  \ldots\text{ \ }  N_{k-1} \ {\sf value}}\\{N_k\rightarrow N_k^{\prime}}}  {{\sf let} \{(x_1 \& s_1) {\ \sf {be}\ } N_1,\ldots,
+  \  (x_{k} \& s_{k}) {\ \sf {be } \ } N_k{\text{,}} \ldots\}    {\ \sf in}\  M \rightarrow \\
+  {\sf let} \{(x_1 \& s_1) {\ \sf {be}\ } N_1,\ldots,
+  \  (x_{k} \& s_{k}) {\ \sf {be } \ } N_k^{\prime}{\text{,}} \ldots\}    {\ \sf in}\  M }
+\and
+\inferrule*[] {M_1 \& {\sf J_1 \ value\ } \ldots\text{\ }  M_i \& {\sf J_i \ value}}  {{\sf let} \{(x_1 \& s_1) {\ \sf be\ } (M_1\& {\sf J_1}),\ldots,  (x_i \& s_i) {\ {\sf be}\ }
+  (M_i\& {\sf J_i})\}\ {\sf in}\  (M \&  {\sf J})\rightarrow \\
+  {  M[M_1/x_1, \ldots,  M_i/x_i] \& {\sf J}[{\sf J_1}/s_1,\ldots, {\sf J_i}/s_i]}}
+  \and 
+  \inferrule*[] {M \rightarrow M^{\prime}}  {(MN) \rightarrow (M^\prime N)}
+  \and
+  \inferrule*[] {N \rightarrow N^{\prime} }  {((\lambda x. M)N) \rightarrow ((\lambda x. M)N^\prime) }
+  \and
+  \inferrule*[] {N {\ \sf value}}  {((\lambda x. M)N) \rightarrow [N/x]M }
+\end{mathpar}
+
  \section{Dynamic linking in presence of typed dependencies} 
   \begin{frame}{Set up}
    \begin{itemize}
@@ -645,7 +740,7 @@ $$\Longrightarrow_{R}$$
       \item and the signature calls ${\sf push, pop}$ 
    \end{itemize}
   \end{frame}
-
+ 
    \begin{frame}{Dynamic linking}
     \begin{itemize}
       \item 
@@ -707,54 +802,26 @@ $$\Longrightarrow_{R}$$
    \alert{ As required in systems with separate compilation, the same process will compute a
     different residual with a different set of conforming implementations}
    \end{frame}
-   \begin{frame}
-    \frametitle{Does it scale?}
-    \begin{columns}
-      \column{0.5\textwidth}
-    \includegraphics[scale=0.05, trim={10cm 0 10cm 0}, clip]{pics/20171111_163222_Film1}
-    \column{0.3\textwidth}
-    \includegraphics[scale=0.035, trim={5cm 0 10cm 0}, clip]{pics/20171111_141821_Film1}
-    
-  \end{columns}
-    \end{frame}
+ 
     \begin{frame}
-      \frametitle{Does it scale?}
+      \frametitle{Higher $\Box$ types?}
       \begin{columns}
         \column{0.6\textwidth}
       \includegraphics[scale=0.05]{pics/20171111_141413_Film1}
       \column{0.3\textwidth}
-          Yes! Takes  a bit more syntax
+          Yes! Takes  a bit more syntax and using the bang operator of justification logic
     \end{columns}
       \end{frame}
-    
-    \begin{frame}{From order theory to category theory?}
-      \begin{itemize}
-      
-      \item it requires the symbol  (or,$\llbracket\bullet\rrbracket$) to be interpeted as a "good" (preserving connectives) functor
-      \item the source of the semantical triplet  would be a  Cartesian Closed Category (instead of a heyting algebra)
-      \item the rule would look like this 
-      \begin{mathpar}
-        \inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i}$] %{}
-        {{\forall A_k \in \Gamma^\prime . \   \Gamma \vdash N_k:\Box A_k}\\
-            {\Turnsi {\Gamma^\prime} {M:B}}\\{\Turnsi {\llbracket\Gamma^\prime\rrbracket} {{\sf \llbracket M\rrbracket}:\llbracket B \rrbracket} }} 
-        {\Turnsi {\Gamma} {{\sf let^{*}}\ (\Gamma^\prime, \llbracket\Gamma^\prime\rrbracket, Ns) \ {\sf in}  \ ( M\& {\sf \llbracket M\rrbracket}):\Box B}}
-    \end{mathpar}
-    \end{itemize}
-  \end{frame}
-   \begin{frame}{From order theory to category theory?}
-    \begin{itemize}
-      \item A ccc models equalities between terms (as equalities between arrows)
-      \item A functor betwenn cccs is a functional on arrows ($M=N \Rightarrow FM=FN$)
-      \item Hence we need to talk about equality in the level of justifications
-      \item the $SK$ calculus can be extended equationally to preserve the $\lambda$calculus computationally
-      \item We need to add rules that axiomatize $\llbracket M\rrbracket$ on terms
-    \end{itemize}
-  \end{frame}
+    \begin{frame}{Order theory to category theory?}
+      \begin{columns}
+       
+      \end{columns}
+    \end{}
     \begin{frame}{What about stronger modality?}
       A Galois connection is 
       a pair of order preserving functions $L:\mathcal{D}\rightarrow C$, $R:\mathcal{C}\rightarrow{D}$
       such that there is an isomorphism:
-      $\forall d\in  D, c\in C Ld\le c \longleftrightarrow d\le R c$
+      $\forall d\in  D, c\in C. \  Ld\le c \longleftrightarrow d\le R c$
       
       Take the relation of classical and intuitionistic logic as a prototype:
       \begin{mathpar}
@@ -774,9 +841,8 @@ $$\Longrightarrow_{R}$$
     \begin{frame}
       This is enough to obtain a generalized notion of Factivity that is:
       \begin{mathpar}
-          \inferrule*[right=$R$]{\Box\Gamma\vdash M:\Box\phi}
-          {\Box\Gamma\vdash \sf {let} \ \_\_ \ \&\ s \ {\sf be\ } M \ \  {\sf in}\  {\sf return} (s):R\llbracket\phi\rrbracket} 
-      \end{mathpar}
-  \[\begin{array}{l l} \mathtt{\lambda x_1^{\prime}.\ \lambda x_2^{\prime}. \lambda x_3^{\prime}}. \\ {\sf let \_\_ \&\  s\  be} \\ ({\sf let\{ x_1\& s_1 {\ \sf be \ } x_1^{\prime}, \ x_2\& s_2 {\ \sf be \ } x_2^{\prime}, \ x_3\& s_3 {\ \sf be \ } x_3^{\prime} \}\ in}\ \\ \mathtt{(x_3 (x_2\ 2 \ x_1)\ \& \ s_3*(s_2* \bar{2}*s_1)))}\\ {\sf in}\\ {\sf return}(s) \ + \ 5: \\  {\sf \Box(intstack)\rightarrow \Box(int\rightarrow intstack\rightarrow intstack)} \\ {\sf \rightarrow \Box (intstack\rightarrow int\times intstack) \rightarrow int} \end{array} \]  
-  \end{frame}  
+          \inferrule*[right=$R$]{\Gamma\vdash M:\Box\phi}
+          {\Gamma\vdash \sf {let} \ \_\_ \ \&\ s \ {\sf be\ } M \ \  {\sf in}\  {\sf return} (s):R\llbracket\phi\rrbracket} 
+      \end{mathpar}  
+    \end{frame}  
   \end{document}

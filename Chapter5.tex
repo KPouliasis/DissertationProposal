@@ -1,7 +1,11 @@
 \chapter{The computational side of Jcalc $^{-}$}
 \label{jcalccom}
-In this section we add proof terms to represent natural deduction constructions. The  meaning of these terms emerges naturally from Gentzen's principles that give reduction (computational $\beta$-rules) and expansion (i.e. extensionality $\eta$-rules) equalities for the each construct. We focus on the new constructs of the calculus that emerge from the judgmental interpretation of the $\Box$ connective as explained in 
-section \ref{lsjcalc}.
+In this section we add proof terms to represent natural deduction constructions. 
+The  meaning of these terms emerges naturally from Gentzen's principles that give reduction 
+(computational $\beta$-rules) and expansion (i.e. extensionality $\eta$-rules) equalities for 
+ each construct. We focus on the new constructs of the calculus that emerge from the judgmental interpretation of the $\Box$ connective as explained in 
+section \ref{lsjcalc}. In addition we focus on the \textit{implicational} part. The proof term assignment
+for $\wedge$ rules is standard and can be added.
 
 There will be no computational (reduction) rules on  provability terms. 
 This conforms with our reading of these terms  as \textit{references} to proof constructs of an \textit{abstracted} theory $J$ that can be realized 
@@ -167,10 +171,11 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
             \end{array}$$}
         \subsection{Strong Normalization and small-step semantics}
         In the appendix (\ref{norm}) we provide a proof of normalization for  natural deduction (via cut elimination). 
-        This is ``essentially" a strong normalization result for the proof term system also. In general we have shown the congruence obtained from $=_{\beta\eta}$ rules gives a  consistent equational system.
-        Nevertheless, we leave this for an extended version of this paper. Instead, we sketch briefly a weaker result: normalization under a  deterministic,``call-by-value" reduction strategy for $\beta$-rules.
+        This is ``essentially" a strong normalization result for the proof term system also. A  weaker result is 
+        normalization under a  deterministic,``call-by-value" reduction strategy for $\beta$-rules.
         This   gives
-        an idea of how the system computes  and we can use it in the applications in the next section. As usual we characterize a subset of the closed terms as values and we provide rules for the reduction of the non-value closed terms.
+        an idea of how the system computes  and we can use it in the applications in the next section. 
+        As usual we characterize a subset of the closed terms as values and we provide rules for the reduction of the non-value closed terms.
         Note that for the constants of validity and their applicative closure we do not observe reduction properties but treat them as values -- again conforming with the idea of $J$ (and its reduction principles) being ``black boxed''.
         \begin{mdframed}[nobreak=true,frametitle={\footnotesize Small step, call-by-value reduction $\rightarrow$}]
             \begin{mathpar}
