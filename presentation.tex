@@ -41,31 +41,40 @@
       \begin{itemize}
 \item[] Sparked from the investigation of the connection of 
 explicit proofs in intuitionistic logic and 
-programs of a simple programming language (\emph{STLC})
+programs of a simple programming language (\emph{Simply Typed Lamda Calculus})
 
 \item[] Central topic of study in the field of type theory
 
 \item[] Standard theoretical tool for studying and designing programming languages
       \end{itemize}
 \end{frame}
-\begin{frame}{\emph{CHI} in logic}
+\begin{frame}{\emph{CHI} and logic}
   \begin{itemize}
 
-  \item[] A  paradigm in logic studies that emphasizes proof relevance
-
-  \item[] \textbf{Scales} : the isomorphism holds for more complex logics and correspondingly captures complex programming language constructs.
-
-  \item[] We use proofs-as-programs(-as-morphisms) and CHI interchangeably.
+  \item[] A  paradigm that emphasizes proof relevance
+  \item[] The view of propositions--as--types has been extended to many logics
+  \item[] As a result it can capture more complex programming language features. 
+   (\textbf{scalability})
   \end{itemize}
 \end{frame}
-\section{Intuitionistic Logic and STLC}
+\begin{frame}{Justification logic}
+  \begin{itemize}
+    \item[] A logic for explicitly witnessed modality
+    \item[] Started as a solution to the problem  of providing 
+    constructive semantics to intuitionistic logic via explicit provability
+    \item [] A proof relevant analysis of $S4$ modality 
+    \item[] Scales to other systems of modal logic
+    \item[] Applications in epistemology, epistemic game theory and programming language theory
+  \end{itemize}
+\end{frame}
+
+\section{Intuitionistic Logic and STLC} 
 \begin{frame}{Intuitionism and constructive mathematics}
   \begin{outline}
     \1[] {Continuation of Brouwer's program}
     
     \2[!]{Notion of truth collides with the notion of proof}
     
-  
   \1[] Mathematical reasoning and logic is a human faculty
   
   \2[!] The creative subjects use mathematical language 
@@ -113,9 +122,10 @@ programs of a simple programming language (\emph{STLC})
   \begin{itemize}
   \item[] Proof trees are objects of logic and - as mathematical objects - are equipped with equality
 
-  \item[]\alert{Logic is “algebrized”}
+  \item[]\alert{Logic is “algebraized”}
   
-  \item[]Equalities should provide for the “harmony” of the Introduction – Elimination (constructors– destructors)
+  \item[]Equalities should provide for the ''harmony'' of the Introduction/ Elimination 
+  (constructors– destructors)
   
  \end{itemize}
 \end{frame}
@@ -180,7 +190,7 @@ programs of a simple programming language (\emph{STLC})
 \end{frame}
 \begin{frame}{Calculi for free}
     \begin{itemize} 
-      \item[] trees of $A$ with open $\Gamma$ $\mapsto$ {terms} ($M:A$) (inhabitation judgments)
+      \item[] trees of $A$ with open $\Gamma$ $\mapsto$ {terms} ($\Gamma\vdash M:A$) (inhabitation judgments)
       \item[] local soundness $\mapsto$ $\beta$ reduction (equality judgments), 
       \item [] local completeness $\mapsto$ $\eta$ expansion (equality judgments)
       \end{itemize}
@@ -222,32 +232,31 @@ programs of a simple programming language (\emph{STLC})
 \begin{frame}{Metatheory for (almost) free}
   \begin{outline}
     \1 []  The good old  way
-        \2[!] Forget about variables/ terms/ equalities and prove that $\Gamma\vdash A$ has an order theoretic model
+        \2[!] Forget about variables/ terms/ equalities and prove that $\Gamma\vdash A$ 
+        has an order theoretic model ()
 
-    \1[] Intercalation and Cut elimination (core of CHI)
-      \2[!]  Create a restricted version that:
-      \3[!!] does not permit (Elim - After- Intro) 
-      \3[!!] does not permit Reflection on hypothesis in non-atomic formulas
+    \1[] Cut elimination (core of CHI)
+      \2[!]  Create a restricted versions of your calculus/ proof trees:
+      \3[!!] does not permit Elim - After- Intro/ $\beta$ redexes 
       \2[!] Prove that your restricted system of proof trees proves the same stuff 
       by inventing a corresponding sequent calculus and proving cut elimination
-     
     \end{outline}
 \end{frame}
-\begin{frame}
-  \begin{outline}
-  \1[] \textbf{In proof terms}\\
-  For any term $\Gamma\vdash M:A$ the process 
-  of fully $\eta$ expanding and then, $\beta$ reducing it ($M\rightarrow^{*}_\eta N\rightarrow_\beta^{*} O$) 
-  is terminating in a normal form
-  \2[!] Your programming language has an \textit{evaluation strategy}
-  \2[!] As a lemma you can show that the system cannot inhabit the $\bot$
-  with a closed term
-  \1[] Trivially, any two terms that map to the same normal form are provenly equal
-  in the system        
-\1[] Proving additionally Church Rosser you get:
-  \2[!] Any two terms that are equated in the system lead to the \textit{same} normal form
-  \end{outline}
-\end{frame}
+% \begin{frame}
+%   \begin{outline}
+%   \1[] \textbf{In proof terms}\\
+%   For any term $\Gamma\vdash M:A$ the process 
+%   of fully $\eta$ expanding and then, $\beta$ reducing it ($M\rightarrow^{*}_\eta N\rightarrow_\beta^{*} O$) 
+%   is terminating in a normal form
+%   \2[!] Your programming language has an \textit{evaluation strategy}
+%   \2[!] As a lemma you can show that the system cannot inhabit the $\bot$
+%   with a closed term
+%   \1[] Trivially, any two terms that map to the same normal form are provenly equal
+%   in the system        
+% \1[] Proving additionally Church Rosser you get:
+%   \2[!] Any two terms that are equated in the system lead to the \textit{same} normal form
+%   \end{outline}
+% \end{frame}
 
 \section{JCalc: Motivation}
 
@@ -256,10 +265,12 @@ programs of a simple programming language (\emph{STLC})
   {\vdash A} {\vdash \Box A}\]
   \[\inferrule*[right=$\Box_I$] 
   {{\vdash A}\\ {\vdash  {\sf J A}}} {\vdash \Box A}\]
-In JL the motivation is that ${\vdash A}$ is ${\sf int}$ and
-${\sf J A}$ is in ${\sf cl}$  so $J$ can be seen as an embedding.
-In general though the connective can be treated indepenedently of the details
+\begin{outline}
+  \1[] In JL the motivation is that ${\vdash A}$ is ${\sf Int}$ and
+${\sf J A}$ is in ${\sf CL}$  so $J$ can be seen as an embedding.
+\1[] In general the (justified) connective can be treated indepenedently of the details
 of the two systems
+\end{outline}
 \end{frame}
 \begin{frame}{Deductive systems}  
   \begin{outline}
@@ -299,9 +310,9 @@ of the two systems
   \1[] When $J$ is complete with respect to $I$ then double theoremhood 
    $\langle \vdash A, \vdash \llbracket A \rrbracket\rangle$ 
   is a basic modality
-  \1[*] Intuitively $A\vdash  B$ implies $\llbracket A\rrbracket \vdash \llbracket B\rrbracket$ 
+  \1[!] Intuitively $A\vdash  B$ implies $\llbracket A\rrbracket \vdash \llbracket B\rrbracket$ 
     and thus a double proof of $A$ ($\Box A$)  gives a double proof of $B$($\Box B$) 
-  \1[*] The basic rule of $K$ modality is admissible 
+  \1[!] The basic rule of $K$ modality is admissible 
     $$\inferrule*[] {A\vdash B} {\Box A\vdash \Box B} $$  
   % \2[*] $\llbracket\top_I \rrbracket = \top_J$
   
@@ -313,17 +324,17 @@ of the two systems
 
 \begin{frame}{My thesis in a slide}
   \begin{outline}
-    \1[*] A natural deduction  with three kinds of judgments: 
-    \2[] $\Gamma\vdash\sf {A}$  that follows intuitionistic logic 
-    \2[] $\llbracket\Gamma \rrbracket\vdash \llbracket A\rrbracket $ that axiomatizes
+    \1[!] A natural deduction  with three kinds of judgments: 
+    \2[!] $\Gamma\vdash\sf {A}$  that follows intuitionistic logic 
+    \2[!] $\llbracket\Gamma \rrbracket\vdash \llbracket A\rrbracket $ that axiomatizes
     the notion of conservative extension
-    \2[] $\Box \Gamma \vdash \Box A$ for "double theoremhood"
-   \1[*] Its order theoretic semantics
-   \1[*] Analysis  of the new connective a la Gentzen to get
-   \2 proof terms/trees and equalities/ reductions 
-   \1[*] Its Cut elimination/ normalization
-   \1[*] An implementation in the metatheoretic framework "Makam" (work in progress)
-   \1[*] Some good reasons to think that this idea is extensible
+    \2[!] $\Box \Gamma \vdash \Box A$ for "double theoremhood"
+   \1[!] Its order theoretic semantics
+   \1[!] Analysis  of the new connective a la Gentzen to get
+   \2 [*]proof terms/trees and equalities/ reductions 
+   \1[!] Its Cut elimination/ normalization
+   \1[!] An implementation in the metatheoretic framework "Makam" (work in progress)
+   \1[!] Some good reasons to think that this idea is extensible
 \end{outline}
 \end{frame}
 
@@ -659,12 +670,12 @@ $$\Longrightarrow_{R}$$
   \end{frame}
 
 
-  \begin{frame}{The rest of the system}:
+  \begin{frame}{The rest of the system}
     \begin{itemize}
     \item[] Proof terms for the rest of the system are standard
     \item[] For the ${\sf \llbracket Prop_0\rrbracket}$ part we deploy justification logic:
     \item[] Axioms get assigned to (parametrized) constants
-      \item Modus ponens is internalized by $*$
+    \item[] Modus ponens is internalized by $*$
   \end{itemize}
 \end{frame}
 \begin{frame}{Metatheory for the term system}
@@ -710,54 +721,51 @@ $$\Longrightarrow_{R}$$
 
  \section{Dynamic linking in presence of typed dependencies} 
   \begin{frame}{Set up}
-   \begin{itemize}
-    \item Consider a language $I$ (source) interfacing a lower level language $J$ (target) via declared in a signature.
+   \begin{outline}
+    \1[] Consider a language $I$ (source) interfacing another language $J$ (target) 
+    via a declared signature $\Sigma$.
     
-    \item We assume that the two languages share some basic types e.g. ${\sf int}$ 
-    (e.g $\llbracket int_I\rrbracket = int_J $) 
-    and function space (
-    $\llbracket A\rightarrow_I B\rrbracket =\llbracket A \rrbracket \rightarrow_J \llbracket B \rrbracket $
-    )
-   \end{itemize}
-   A typical interface for a stack will be declared as follows:\\
-   \texttt{
-       using type intstack\\
-      \ \ \    empty: intstack\\
-      \ \ \    push: int -> intstack -> intstack\\
-      \ \ \    pop: intstack -> int x intstack\\
-   }
+    \1[!] We assume that the two languages share some basic types e.g. ${\sf int}$ 
+    
+      \2[*] e.g $\llbracket int_I\rrbracket = int_J $ 
+      \2[*]  function space $\llbracket A\rightarrow_I B\rrbracket =\llbracket A \rrbracket \rightarrow_J \llbracket B \rrbracket $
+      \2[*] pair types $\llbracket A\times_I B\rrbracket$ = $\llbracket A\rrbracket\times_J\llbracket B\rrbracket$  
+    
+    
+   \end{outline}
+
   \end{frame}
+
    \begin{frame}{Semantics for source terms}
-   \begin{itemize}
-    \item Source expressions in such a setting have a 
-    dynamic meaning depending on the target implementations. 
     
-    \item [] Take e.g. the expression:\texttt{pop (push (1+1) empty)}\\
-   \end{itemize}
-    This program involves two kinds of computations: 
+      
+     A typical interface for a stack will be declared as follows:\\
+    \texttt{
+        using type intstack\\
+       \ \ \    empty: intstack\\
+       \ \ \    push: int -> intstack -> intstack\\
+       \ \ \    pop: intstack -> int x intstack\\
+    }
     \begin{itemize}
-      \item a redex $(1+1)$ that can be reduced using the internal semantics of the language ($1+1\rightsquigarrow_{I} 2$) 
-      \item and the signature calls ${\sf push, pop}$ 
-   \end{itemize}
+      \item[!] Source expressions in such a setting have a 
+      dynamic meaning depending on the target implementations
+      \item[!] E.g. the term ${\sf \Sigma}; {\sf \circ {\vdash pop (push \ (1+1) \ Empty)\rightsquigarrow pop (push \ 2 \ Empty) :int}}$
+      \item [!] Its continuation depends on the implementations of the signature
+    \end{itemize}
   \end{frame}
- 
-   \begin{frame}{Dynamic linking}
+  \begin{frame}{Dynamic linking}
     \begin{itemize}
       \item 
-      A dynamic linker is a metaprogramming construct that consumes a type correct implementation of 
+      [!]A dynamic linker is a metaprogramming construct that consumes a type correct implementation of 
       the signature and produces a type correct residual program sensitive to the implementation.
-      \item Avoid type checking of the whole source in presence of new implementations 
-      \item Our calculus, is a calculus of such constructions.
+      \item[!] Avoid type checking of the whole source in presence of new implementations 
+      \item[!] Our calculus, is a calculus of such constructions.
     \end{itemize}
   \end{frame}
     \begin{frame} {Dynamic linker construction}
-      Let ${\sf \Sigma}$  be the signature of the interface\\
       Here are the steps towards the dynamic linker construction for the expression:
       \begin{itemize}
-      \item Reduce the source code based on the operational semantics of $I$ until it doesn't have a redex:
-    
-      ${\sf \Sigma}; {\sf \circ {\vdash pop (push \ (1+1) \ Empty)\rightsquigarrow pop (push \ 2 \ Empty) :int}}$
-       \item Contextualize the use of the signature on previous step:
+       \item[!] Contextualize the use of the:
       \[\begin{array}{c c} {\sf \Sigma;}& {\sf x_1:intstack, x_2:int\rightarrow intstack\rightarrow int\times intstack,}\\ & {\sf x_3:intstack\rightarrow int \vdash x_3 (x_2 \ 2\ x_1):int} \end{array} \]
        
       \end{itemize}
@@ -765,10 +773,10 @@ $$\Longrightarrow_{R}$$
   \end{frame}
  \begin{frame} {Dynamic linker construction}
   \begin{itemize}
-  \item Rewrite the previous judgment assuming references to foreign implementations for 
+  \item[!] Rewrite the previous judgment assuming references to foreign implementations for 
   the corresponding missing elements.
 \[\begin{array}{c} {\sf s_1:\llbracket intstack\rrbracket, s_2:\llbracket int\rightarrow intstack\rightarrow intstack\rrbracket},\\ {\sf s_3:\llbracket intstack\rightarrow int\times intstack \rrbracket \vdash s_3 * (s_2 * \ \bar{2}\ * s_1):\llbracket int\rrbracket} \end{array} \]
-\item Merge the two judgments to construct a dynamic linker :
+\item[!] Merge the two judgments to construct a dynamic linker :
 \[\begin{array}{l} {\sf \Sigma}; {\sf {x_1^{\prime}:\Box intstack ,x_2^{\prime}:\Box(int\rightarrow intstack\rightarrow intstack)}},\\ {\sf x_3^{\prime}: \Box (intstack\rightarrow int\times instack)}\vdash \\ {\sf let\{ x_1\& s_1 {\ \sf be \ } x_1^{\prime}, \ x_2\& s_2 {\ \sf be \ } x_2^{\prime}, \ x_3\& s_3 {\ \sf be \ } x_3^{\prime} \}\ in}\ \\ \mathtt{(x_3 (x_2\ 2 \ x_1)\ \& \ s_3*(s_2* \bar{2}*s_1)):\Box int} \end{array} \]
 \end{itemize}
   \end{frame}
@@ -779,8 +787,8 @@ $$\Longrightarrow_{R}$$
 \end{frame} 
  \begin{frame}
      \begin{itemize}
-   \item Such a program behaves correctly consuming \textbf{only} conforming implementations of the interface 
-    \item and calculating the program's different “futures” with respect to different implementations.
+   \item[!] Such a program behaves correctly consuming \textbf{only} conforming implementations of the interface 
+    \item[!] and calculating the program's different “futures” with respect to different implementations.
   
    E.g. with an array implementation we get :
    \[\begin{array}{l} { \sf create\_array(): intarray} \ \ \text{for}\ \ {\sf empty}\\ {\sf add\_array: int \rightarrow intarray\rightarrow intarray}\ \ \text{for} \ \ {\sf push}\\ {\sf remove\_last: intarray\rightarrow intarray\times int }\ \text{for}\ {\sf pop} \end{array} \]
@@ -817,6 +825,7 @@ $$\Longrightarrow_{R}$$
        
       \end{columns}
     \end{frame}
+    \section{The future (lasts long)}
     \begin{frame}{What about stronger modality?}
       A Galois connection is 
       a pair of order preserving functions $L:\mathcal{D}\rightarrow C$, $R:\mathcal{C}\rightarrow{D}$
@@ -833,7 +842,7 @@ $$\Longrightarrow_{R}$$
     correspond to $R$ and add the rule:  
     \begin{mathpar}
         \inferrule*[right=$R$]{\llbracket\Gamma\rrbracket\vdash_J {\sf j}:\phi}
-        {\Gamma\vdash {\sf return} \ \  {\sf j} :R\phi} 
+        {\Gamma\vdash {\sf eval_J} \ \  {\sf j} :R\phi} 
     \end{mathpar}
     
     
@@ -842,7 +851,17 @@ $$\Longrightarrow_{R}$$
       This is enough to obtain a generalized notion of Factivity that is:
       \begin{mathpar}
           \inferrule*[right=$R$]{\Gamma\vdash M:\Box\phi}
-          {\Gamma\vdash \sf {let} \ \_\_ \ \&\ s \ {\sf be\ } M \ \  {\sf in}\  {\sf return} (s):R\llbracket\phi\rrbracket} 
+          {\Gamma\vdash \sf {let} \ \_\_ \ \&\ s \ {\sf be\ } M \ \  {\sf in}\  {\sf eval} (s):R\llbracket\phi\rrbracket} 
       \end{mathpar}  
     \end{frame}  
+    \begin{frame}{Concluding}
+    \begin{itemize}
+     \item[] Justification logic has richer  higher order features and reflection!
+     \item[] I see this as a first part of a project for utilizing it 
+      to provide foundations of \textit{typed programming language interaction} 
+    \end{itemize}
+  \end{frame}
+    \begin{frame}
+      Thank you!
+    \end{frame}
   \end{document}
