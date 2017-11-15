@@ -51,7 +51,7 @@ functions as shown in the schema.
 
 
 In a nutshell, instead 
-of one function symbol $\llbracket \rrbracket$ 
+of one function symbol $\llbracket\bullet \rrbracket$ 
 the system can 
 be axiomatized to reason about chains of 
 composable (provability) preserving functions. 
@@ -88,7 +88,7 @@ To account, hence, for
 a categorical semantics of the system one has to account for equality
 in the higher level of the system (i.e. on justifications).
 
-This idea is actually not foreign in the litarature that explores the relation
+This idea is actually not foreign in the literature that explores the relation
 between lambda calculus and (typed) combinatory logic and, in addition,
 it is tempting to introduce equality between justifications so that one
 could more accurately describe computational phenomena arising when 
@@ -98,31 +98,11 @@ Generalizing, from the order theoretic semantics, we would expect a system
 in which $\llbracket\rrbracket$ would correspond to functors 
 (preserving the connectives and hence, $\beta\eta$ equalities). 
 We are expecting the extension of Jcalc with rules for $\beta\eta$ equalities 
-on the level of justifications to fit exactly the bill. The required 
-equalities that correspond to $\beta$ reduction are standard in presentations of 
-the $SK$ calculus. 
-\begin{mdframed}
-    \begin{mathpar}
-        \inferrule*[right=$K_\beta$]{}{\Delta\vdash K*J_1*J_2 = J_1}
-        \and
-        \inferrule*[right=$S_\beta$]{} {\Delta\vdash S*J_1*J_2*J_3 = J_1*J_3(J_2*J_3)}
-    \end{mathpar}
-    \end{mdframed}
-Rules corresponding to $\eta$ equality are less obvious 
-but can be found in the excellent \cite{}. Similarly, equalities regarding (\wedge)
-combinators can be introduced. 
-We also need an axiom  that expressed 
-that $\llbracket\rrbracket$ (or, $F_0$ in an extended system) is functorial (functional)
-on terms
-\begin{mdframed}
-    \begin{mathpar}
-        \inferrule*[right=$K_\beta$]{\Gamma\vdash M =_{\beta\eta} N :A}{\Delta\vdash \llbracket M\rrbracket=\rrbracket N\rrbracket :
-        \llbracket A \rrbracket}    
-    \end{mathpar}
-\end{mdframed}
+on the level of justifications to fit exactly the bill.
+
 We expect that such a system is a full axiomatization  of functors
 that preserve products and exponentials (of cartesian closed categories) 
-Which are common in the litarature in proofs of the (syntactical) 
+Which are common in the literature in proofs of the (syntactical) 
 embedding of the lambda calculus into combinatory logic.
 
 
@@ -138,8 +118,8 @@ an important role in functional programming theory as the backbone
 of monadic computation. 
 
 We would expect that the view of necessity as 
-relating two proof systems could be extended to cover the notion of an adjunction.
-In order theoretic terms an adjunction between two preorders $\mathcal{C},\mathcal{D}$
+relating two proof systems could be extended to cover such a notion.
+In order theoretic terms an adjunction between two partial orders $\mathcal{C},\mathcal{D}$
 is a pair of order preserving functions $L:\mathcal{D}\rightarrow C$, $R:\mathcal{C}\rightarrow{D}$
 such that there is an isomorphism:
 $\forall d\in  D, c\in C Ld\ le c \longleftrightarrow d\le R c$. A logically interesting example of 
@@ -165,6 +145,10 @@ Such extensions can capture phenomena in which a language is giving control to a
 to perform a computation externally but then it retains to control to calculate the continuation
 of the client program. Refine example above.
 
+To conclude, our system captures a basic fragment of justification logic within
+a Curry--Howard isomorphism. Justification logic provides a rich, higher-order system
+with reflection. We expect that it can deployed to provide foundations for richer
+type programming language interaction.
 
 
 

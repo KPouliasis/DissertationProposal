@@ -1,4 +1,4 @@
-\section{Theorems}
+\chapter{Theorems}
 
 \begin{theorem}[Deduction Theorem for Validity Judgments]
 	\label{deduct}
@@ -79,49 +79,9 @@ All previous $9$ theorems can be stated for proof terms too. We should discuss t
 	If $\Gamma A \in {\sf Prop_0}$ and $\Gamma\vdash M: A$ then there exists ${\sf j}$ s.t. $\llbracket \Gamma\rrbracket \vdash {\sf j}:\llbracket   A \rrbracket$. 
 \end{lemma}
 In both theorems the existence of this ${\sf j,j'}$ is algorithmic following the induction proof. 
-\section{Linking on the function space}
-The above mentioned algorithms permit  for translating $\lambda$ abstractions to polynomials of $S,K$ combinators which is a standard result in the literature. We do not give the details here but the translation is  syntax driven as it can be seen by the inductive nature of the proofs.
 
-Henceforth, we can generalize the construction in \ref{dlinker} so that it permits for dynamic linking of functions of the client (with missing implementations) such as  $\mathtt{\lambda n:int. push\  n\  empty}$ dynamically given that the host actually implements a higher-order function space (that is it implements the combinators $S,K$ in, say, own lambda calculus $\lambda^{J}$). Given implementations of $\mathtt{push\_impl}$, $\mathtt{empty\_impl}$ the linker produces an application expression consisting of $\mathtt{push\_impl}$, $\mathtt{empty\_impl}$, $S$ and $K$.   The execution of the target expression will happen in the host after dereferencing  ${\sf push\_impl, empty\_impl}$ (dynamic part) and the combinators $S,K$ (constant part) as, say, lambdas (e.g. $K=\lambda^{J} x.\lambda^{J} y. x$).
 
-\section{Gentzen's reduction Principle for $\Box$(General)}
-\label{redmult}
-\mbox{\footnotesize
-	\begin{mathpar}
-		\inferrule*[right=$  I_{\Box B} E_{\Box   A}^{x,s}$]{
-			\inferrule*{}
-			{\inferrule*[]{}{ \inferrule*[]	{\inferrule*[]{}{\PrTri{$D_1$} \\ \PrTri{$E_1$}}\\\\
-						\inferrule*[]{}{ \ A_1\\ \ \qquad\ \ \  \llbracket   A_1\rrbracket}}{\Box   A_1 }}}\ldots 
-			{\inferrule*[]{}{ \inferrule*[]	{\inferrule*[]{}{\PrTri{$D_i$} \\ \PrTri{$E_1$}}\\\\
-						\inferrule*[]{}{\    A_i\\ \ \qquad \llbracket   A_i\rrbracket}}{\Box   A_i }}}
-			\quad
-			\inferrule*{}
-			{\inferrule*[vdots=1.0em, right=$\vec{x}$]{ }{ A_1\dots A_i}\\\\
-				\inferrule*[]{}{B}} 	   \qquad 
-			\inferrule*{}
-			{\inferrule*[vdots=1.0em, right=$\vec{s}$]{ }{\llbracket   A_1 \ldots A_i \rrbracket}\\\\
-				\inferrule*[]{}{\llbracket B\rrbracket}} 	
-		}
-		{\Box B} 
-	\end{mathpar}
-}
-$$\Longrightarrow_{R}$$
-\mbox{\footnotesize
-	\begin{mathpar}
-		\inferrule*[right=$I_{\Box B}$]{
-			\inferrule*{}
-			{\inferrule*[vdots=1.0em]{}{\PrTri{$D_1$}\ \PrTri{$D_i$} \\\\ A_1\ldots\ldots  \ \  A_i}\\\\
-				\inferrule*[]{}{B}}
-			\qquad 
-			\inferrule*{}
-			{\inferrule*[vdots=1.0em]
-				{}{\PrTri{$E_1$} \PrTri{$E_i$}\\\\\llbracket   A_1\ldots\ldots A_i\rrbracket}\\\\
-				\inferrule*[]{}{\llbracket B \rrbracket}} 
-		}{\Box B}
-		
-	\end{mathpar}
-}
-\section{Notes on the cut elimination proof and normalization of natural deduction}
+\chapter{Notes on the cut elimination proof and normalization of natural deduction}
 \label{norm}
 Standardly, we add the bottom type and elimination rule in the natural deduction and show that in Jcalc + $\bot$: $\centernot\vdash\bot$. The addition goes as follows:
 

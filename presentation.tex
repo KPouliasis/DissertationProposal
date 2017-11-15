@@ -59,7 +59,7 @@ programs of a simple programming language (\emph{Simply Typed Lamda Calculus})
 \end{frame}
 \begin{frame}{Justification logic}
   \begin{itemize}
-    \item[] A logic for explicitly witnessed modality
+    \item[] A logic of (explicitly) witnessed modality
     \item[] Started as a solution to the problem  of providing 
     constructive semantics to intuitionistic logic via explicit provability
     \item [] A proof relevant analysis of $S4$ modality 
@@ -85,14 +85,14 @@ programs of a simple programming language (\emph{Simply Typed Lamda Calculus})
   Propositions do not come with a pre-existing truth value
   \3[!!] 
   Default absence of excluded middle
-  \1[] Heraclitus got it right pretty early: truth is  "what everyone believes and each one can individually witness/attest"
+  \2[!] As Heraclitus puts it truth is "an homodoxy (common belief) that each can individually witness"
 \end{outline}
 \end{frame}
 
 \begin{frame}{Logic within constructive mathematics}
 \begin{outline} 
 
-\1[] The object of logic is the study of ``sane'' proof constructs independently of formal systems
+\1[] The object of logic is the study of ``sane'' proof constructs 
 
 \1[] The traditional chasm between ``syntax'' and ``semantics'' is no longer  very fruitful at least when “engineering” new logics.
 \end{outline}
@@ -124,13 +124,13 @@ programs of a simple programming language (\emph{Simply Typed Lamda Calculus})
 
   \item[]\alert{Logic is “algebraized”}
   
-  \item[]Equalities should provide for the ''harmony'' of the Introduction/ Elimination 
+  \item[]Equalities should provide for the ''harmony'' of the Introduction and Elimination rules 
   (constructors– destructors)
   
  \end{itemize}
 \end{frame}
 \begin{frame}{Harmony}
-\begin{alertblock}{Elim rules are not too strong}\end{alertblock}
+\begin{alertblock}{Elim rules are not too strong a.k.a Local Soundness}\end{alertblock}
     
       \[ \begin{array}{l c r} {\inferrule*[right=Elim1]{\inferrule*[right=Intro] { {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \\{\begin{array}{c} \mathcal{E} \\ {B} \end{array} }} {A\wedge B}}{A}} & = & {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \end{array} \]
       \[ \begin{array}{l c r} {\inferrule*[right=Elim2]{\inferrule*[right=Intro] { {\begin{array}{c} \mathcal{D}\\ {A} \end{array} } \\{\begin{array}{c} \mathcal{E} \\ {B} \end{array} }} {A\wedge B}}{B}} & = & {\begin{array}{c} \mathcal{E}\\ {B} \end{array} } \end{array} \]
@@ -138,7 +138,7 @@ programs of a simple programming language (\emph{Simply Typed Lamda Calculus})
 \begin{frame}{Harmony}
   \begin{columns}[T,onlytextwidth]
     \column{0.7\textwidth}
-        \begin{exampleblock}{Elim rules are not too weak}
+        \begin{exampleblock}{Elim rules are not too weak a.k.a Local completeness}
         \[\begin{array}{l c r} {\begin{array}{c} \mathcal{D}\\ {A\wedge B} \end{array} } 
         & = & {\inferrule*[right=Intro]{
           {\inferrule*[right=Elim1] { {
@@ -233,13 +233,16 @@ programs of a simple programming language (\emph{Simply Typed Lamda Calculus})
   \begin{outline}
     \1 []  The good old  way
         \2[!] Forget about variables/ terms/ equalities and prove that $\Gamma\vdash A$ 
-        has an order theoretic model ()
+        has an order theoretic model ($\Gamma^*\le\phi^* $ )
 
     \1[] Cut elimination (core of CHI)
-      \2[!]  Create a restricted versions of your calculus/ proof trees:
-      \3[!!] does not permit Elim - After- Intro/ $\beta$ redexes 
+      \2[!]  Create  restricted versions of your calculus/ proof trees:
+      \3[!!] do not permit Elim - After- Intro/ $\beta$ redexes 
       \2[!] Prove that your restricted system of proof trees proves the same stuff 
       by inventing a corresponding sequent calculus and proving cut elimination
+      \3[!!] consistency (no normal form for bottom)
+      \2[!!] equality means equi-normalizibility (together with Church Rosser)
+
     \end{outline}
 \end{frame}
 % \begin{frame}
@@ -268,8 +271,9 @@ programs of a simple programming language (\emph{Simply Typed Lamda Calculus})
 \begin{outline}
   \1[] In JL the motivation is that ${\vdash A}$ is ${\sf Int}$ and
 ${\sf J A}$ is in ${\sf CL}$  so $J$ can be seen as an embedding.
-\1[] In general the (justified) connective can be treated indepenedently of the details
-of the two systems
+\1[] In general the (justified) connective can be treated independently of the details
+of the two deductive systems
+\1[] \alert{"Necessitation stems from internalization/ validation"}
 \end{outline}
 \end{frame}
 \begin{frame}{Deductive systems}  
@@ -397,7 +401,9 @@ of the two systems
     \begin{mathpar}
       \inferrule*[right=  Ax$_2$]{  A, B \in {\sf Prop_0} }   {\Delta\vdash \llbracket   A \supset (B \supset   A)\rrbracket }
       \and
-      \inferrule*[right=  Ax$_3$]{ {  A,B, C \in {\sf Prop_0}}}{\Delta\vdash\llbracket   A\supset (B \supset C) \supset ((  A\supset B) \supset (  A \supset C))\rrbracket}
+      \inferrule*[right=  Ax$_3$]{ 
+        {  A,B, C \in {\sf Prop_0}}}
+        {\Delta\vdash\llbracket   (A\supset (B \supset C)) \supset ((  A\supset B) \supset (  A \supset C))\rrbracket}
     \end{mathpar}
   \end{frame}
   \begin{frame}
@@ -437,37 +443,47 @@ of the two systems
 
 \begin{frame}{Basic facts}
   \begin{itemize}
-\item Logical completeness of $\llbracket\bullet \rrbracket$:\\
+    \item[!] Admissibility of deduction theorem or, $\llbracket\bullet \rrbracket$ preserves $\supset$:
+    $\llbracket\Gamma\rrbracket,  \llbracket A\rrbracket \vdash \llbracket B \rrbracket \Longrightarrow \llbracket \Gamma\rrbracket\vdash\llbracket A\supset B\rrbracket $,
+    
+\item[!] Logical completeness:\\
  $\forall \Gamma, A \in {\sf Prop_0}$ \ $\Gamma\vdash A \Longrightarrow \llbracket \Gamma\rrbracket\vdash\llbracket A\rrbracket $,
- \item Admissibility of (standard) $K$ rule:
+ \item[!] Admissibility of (standard) $K$ rule:
  $\forall \Gamma, A \in {\sf Prop_0}$ $\Gamma\vdash A \Longrightarrow \Box\Gamma\vdash\Box A$,
- \item Admissibility of Nec: 
+ \item[!] Admissibility of Nec: 
  $\vdash A  \Longrightarrow \vdash \Box A$
   \end{itemize}
 \end{frame}
 \section{Jcalc: Order Theory}
 \begin{frame}{Semi HAs}
   \begin{outline}
-  \1[*] A \textit{(meet) semi-lattice} is a non-empty \emph{partial order} 
+  \1[!] A \textit{(meet) semi-lattice} is a non-empty \emph{partial order} 
   (i.e. reflexive, antisymmetric and transitive) 
   with finite meets.
+  \2[*] $a\times b \le a$ and $a\times b\le b$ 
+  \2[*] $a \times b$ is the greatest such element:
+        $c\le a \ \text{and} \ c\le b \Longrightarrow c\le a\times b$
   
- \1[*]
+ \1[!]
   A \textit{bounded (meet) semi-lattice} $(L,\le)$ is a (meet) 
   semi-lattice that additionally has 
-  \2 \emph a {greatest element} (we name it $1$), which satisfies\\
-  $x \le 1$ for every $x$ in $L$  
- \1 A \textit{semi-HA} is a bounded (meet) semi-lattice $(L,\le, 1)$ 
+  \2[*] \emph a {greatest element} (we name it $1$), which satisfies\\
+  $c \le 1$ for every $x$ in $L$  
+  \end{outline}
+  \end{frame}
+\begin{frame}
+  \begin{outline}
+ \1[!] A \textit{semi-HA} is a bounded (meet) semi-lattice $(L,\le, 1)$ 
  s.t. for every $a,b\in L$ there exists an \textit{exponential} 
  (we name it $a\rightarrow b$) 
  with the properties: 
- \begin{enumerate}
- \item $a\rightarrow b\times a\le b $
- \item $a\rightarrow b$ is the greatest such element : \\ $c\times a\le b \Longrightarrow c\le a\rightarrow b $
- \end{enumerate}
+ \begin{itemize}
+ \item[*] $a\rightarrow b\times a\le b $
+ \item[*] $a\rightarrow b$ is the greatest such element : \\ $c\times a\le b \Longrightarrow c\le a\rightarrow b $
+ \end{itemize}
   \end{outline}
 \end{frame}
-\begin{frame}{"Good" order preserving functions}
+\begin{frame}{"Natural" order preserving functions}
   \textbf{Definition}
   A function $F$ between two (semi)-HAs ($H_1$, $H_2$)
    is order preserving
@@ -486,11 +502,11 @@ of the two systems
     A \emph{$Jcalc$-triplet} is 
     
   \begin{enumerate}
-  \item A semi-Hayting algebra $H$
+  \item A semi-Heyting algebra $HA$
   \item A partial order $J$
   \item An order preserving function $F$ from $H$ to $J$ s.t.
   \begin{enumerate}
-    \item The image $F(H)$ forms a semi-Heyting Algebra
+    \item The image $F(HA)$ forms a semi-Heyting Algebra
     \item $F$ preserves top, products and exponentials
   \end{enumerate}
   \end{enumerate}
@@ -521,7 +537,7 @@ We can show:
 
 \begin{frame}{$Jcalc$ Algebra, Soundness and Completeness}
   \textbf{Definition}
-   Given a $Jcalc$ triplet unionize the $\le$s ($HA$, $F(HA)$, $\Box^{F}HA$)
+   Given a $Jcalc$ triplet unionize the $\le$s ($HA$, $F(HA)$, $\Box^{F}HA$).
    We call the result  $Jcalc$-algebra
   
   \begin{theorem}
@@ -573,17 +589,7 @@ We can show:
   \[ \inferrule* {{\inferrule* {}{{\begin{array}{c} \mathcal{\overline{D}} \\ {B} \end{array} } \\ {\begin{array}{c} \mathcal{\overline{E}} \\ \llbracket B \rrbracket \end{array}} }}} {\Box B} \]
   
 \end{frame}
-\begin{frame}{{\sf let} bindings}
-  \begin{itemize}
-\item Standard construct in modern programming languages
-\item e.g.
-  \texttt{let (x,y) = (2,4) in (x+1,y+1)}
-\item The expression above has a $\beta$-redex and it reduces:\\
-\texttt{let (x,y) = (2,4) in (x+1,y+1)} $\rightarrow_{\beta}$ \texttt{(x+1,y+1)[2/x][3/y]}
-$\rightarrow_\beta$\\ \texttt{(3,4)}
-\item We obtain similar terms and semantics for the $\Box$ rules applying the slogans
-  \end{itemize}
-\end{frame}
+
 \begin{frame}{Proof term assignment: subcases of the rule }
   $\Gamma \in {\sf Prop_1}$
   \begin{itemize}
@@ -596,6 +602,17 @@ $\rightarrow_\beta$\\ \texttt{(3,4)}
    \[\inferrule*[Right=$\Gamma'$ empty]{{\vdash { M: B}\\ { \vdash J:{\llbracket B\rrbracket} }}} 
    { {\Gamma}\vdash M\&J:\Box B}\]
  \end{itemize}
+\end{frame}
+\begin{frame}{{\sf let} bindings}
+  \begin{outline}
+\1[] Standard construct in modern programming languages
+\1[!] e.g.
+  \texttt{let (x,y) = (2,4) in (x+1,y+1)}
+\2 [*]The expression above has a $\beta$-redex and it reduces:\\
+\texttt{let (x,y) = (2,4) in (x+1,y+1)} $\rightarrow_{\beta}$ \texttt{(x+1,y+1)[2/x][3/y]}
+$\rightarrow_\beta$\\ \texttt{(3,4)}
+\1[!] We obtain similar terms and semantics for the $\Box$ rules applying the slogans
+  \end{outline}
 \end{frame}
 \begin{frame}{Proof term assignment: subcases of the rule }
   $\Gamma \in {\sf Prop_1}$
@@ -619,13 +636,13 @@ $\rightarrow_\beta$\\ \texttt{(3,4)}
   \begin{frame}{$\beta$ reduction}
     \begin{mathpar}
         \inferrule*[]{
-            {\inferrule*[Left=$\Box_I$]{ \vdash M:A\\ \vdash {\sf j}:\llbracket A \rrbracket}{\Gamma\vdash M \& {\sf j}:\Box A}}\\{x:A\vdash M':B }\\ {s:\llbracket A\rrbracket \vdash {\sf j'}:\llbracket B \rrbracket}}
+            {\inferrule*[Left=$\Box_I$]{ \vdash M:A\\ \vdash {\sf J}:\llbracket A \rrbracket}{\Gamma\vdash M \& {\sf J}:\Box A}}\\{x:A\vdash M':B }\\ {s:\llbracket A\rrbracket \vdash {\sf J'}:\llbracket B \rrbracket}}
         {\Gamma\vdash {\sf let} \ \ (x\& s)\ \ {\sf be}\ \   (M\&  {\sf J}) \ \ {\sf in}\ \  { (M^\prime \& {\sf J^\prime})}:\Box B }
     \end{mathpar}
 $$\Longrightarrow_{R}$$
 
     \begin{mathpar}
-        \inferrule*[]{ \vdash M'[M/x]:B \\ \vdash {\sf J^{\prime}}[{\sf J}/s]:\llbracket B \rrbracket}{\Gamma\vdash { M^{\prime}[M/x]\& {\sf J^{\prime}}[{\sf j}/s]}:\Box B} 
+        \inferrule*[]{ \vdash M'[M/x]:B \\ \vdash {\sf J^{\prime}}[{\sf J}/s]:\llbracket B \rrbracket}{\Gamma\vdash { M^{\prime}[M/x]\& {\sf J^{\prime}}[{\sf J}/s]}:\Box B} 
     \end{mathpar}
 
   \end{frame}
@@ -643,9 +660,9 @@ $$\Longrightarrow_{R}$$
 
     Which gives $\beta-$equality rule:
     \begin{mathpar}
-    \inferrule*[]{ \vdash M:A\\ \vdash {\sf j}:\llbracket A \rrbracket\\{x:A\vdash M':B }\\ 
-    {s:\llbracket A\rrbracket \vdash {\sf j'}:\llbracket B \rrbracket}}
-  {\Gamma\vdash {\sf let} \ \ (x\& s)\ \ {\sf be}\ \   (M\&  {\sf J}) \ \ {\sf in}\ \  { (M^\prime \& {\sf J^\prime}) =_\beta M^{\prime}[M/x]\& {\sf J^{\prime}}[{\sf j}/s]}:\Box B }
+    \inferrule*[]{ \vdash M:A\\ \vdash {\sf J}:\llbracket A \rrbracket\\{x:A\vdash M':B }\\ 
+    {s:\llbracket A\rrbracket \vdash {\sf J'}:\llbracket B \rrbracket}}
+  {\Gamma\vdash {\sf let} \ \ (x\& s)\ \ {\sf be}\ \   (M\&  {\sf J}) \ \ {\sf in}\ \  { (M^\prime \& {\sf J^\prime}) =_\beta M^{\prime}[M/x]\& {\sf J^{\prime}}[{\sf J}/s]}:\Box B }
     \end{mathpar}
 
 
@@ -657,7 +674,7 @@ $$\Longrightarrow_{R}$$
     With :
     
     \[\begin{array}{l} \nonumber {\sf let}^{*}\ (\circ;\ \circ;\ [\ ]) {\ \sf in\ } M:= M \ \\ \nonumber {\sf let}^{*}\ (x_1:A_1,\ldots, x_i:A_i\ ;\ s_1: \llbracket A_1\rrbracket, \ldots, s_i:\llbracket A_i\rrbracket;\ N_1,\ldots, N_i) \\ {\ \sf in\ } M \\:= \\ \ {\sf let} \ \{(x_1 \& s_1)\ {\sf be}\ N_1,\ldots, (x_i \& s_i)\ {\sf be}\ N_i\}\ {\sf in}\ M \\ \end{array} \]
-    With similary $\beta$ reduction rule:
+    With similar $\beta$ reduction rule ($i$ double substitutions).
   \end{frame}
   \begin{frame}{Local Completeness}
    Any deduction $\mathcal{D}: \Box A$ can be expanded as follows:
@@ -671,17 +688,34 @@ $$\Longrightarrow_{R}$$
 
 
   \begin{frame}{The rest of the system}
-    \begin{itemize}
-    \item[] Proof terms for the rest of the system are standard
-    \item[] For the ${\sf \llbracket Prop_0\rrbracket}$ part we deploy justification logic:
-    \item[] Axioms get assigned to (parametrized) constants
-    \item[] Modus ponens is internalized by $*$
-  \end{itemize}
+    \begin{outline}
+    \1[] Proof terms for the rest of the system are standard
+    \1[!] For the ${\sf \llbracket Prop_0\rrbracket}$ part we deploy justification logic:
+    \2[!] Axioms get assigned to (parametrized) constants
+    \2[!!] Modus ponens is internalized by $*$ operation on justifications
+    \1[!] For the rest of ${\sf Prop_1}$ trivially from the lambda calculus
+  \end{outline}
 \end{frame}
+\begin{frame}{The  implicative fragment of $\llbracket{\sf  Prop_0} \rrbracket$}
+
+\begin{mathpar}
+  \inferrule*[right=$\Delta$-Refl] {  {s:\llbracket  A\rrbracket \in \Delta}}{\Turnsi {\Delta} {s:\llbracket  A\rrbracket}}
+  \and
+  \inferrule*[right=  Ax$_1$]{ }   {\Delta\vdash C_{\top}: \llbracket  \top\rrbracket}
+  \and
+  \inferrule*[right=  Ax$_2$]{{  A, B \in {\sf Prop_0} }}   {\Delta\vdash C_{K^{A,B}}: \llbracket   A \supset (B \supset   A)\rrbracket }
+  \and
+  \inferrule*[right=  Ax$_3$]{ {  A,B, C \in {\sf Prop_0}}}
+  {\Delta\vdash C_{S^{A,B,C}}:\llbracket   (A\supset (B \supset C)) \supset ((  A\supset B) \supset (  A \supset C))\rrbracket}
+  \and
+  \inferrule*[right=App] {{\Turnsi {\Delta} { {\sf J}: \llbracket  A \supset  B \rrbracket}}\\ {\Turnsi{\Delta} {{\sf J'}:\llbracket  A \rrbracket}}}{\Turnsi {\Delta} { {\sf J*J^\prime}:\llbracket  B\rrbracket}}
+\end{mathpar}
+\end{frame}
+  
 \begin{frame}{Metatheory for the term system}
   \begin {itemize}
-    \item  We have shown cut elimination for natural deduction (which implies strong normalization of proof trees / termination of $\beta$ reduction)
-    \item  We have shown termination under \textit{call-by-value} semantics 
+    \item[!]  We have proven cut elimination for natural deduction (which implies strong normalization of proof trees / termination of $\beta$ reduction)
+    \item[!]  We have proven termination under \textit{call-by-value} semantics seperately
     
 \end{itemize}
 \end{frame}
@@ -699,7 +733,7 @@ $$\Longrightarrow_{R}$$
    
    
     %\and
-    %\inferrule*[right=$\bot$E] {{\Turn {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
+    %\inferrule*[right=$\bot$E] {{\Turnsi {\Gamma} {\bot}}}{\Turn {\Gamma} {   A}}
 \end{mathpar}
 \end{frame}
 \begin{mathpar}
@@ -765,7 +799,7 @@ $$\Longrightarrow_{R}$$
     \begin{frame} {Dynamic linker construction}
       Here are the steps towards the dynamic linker construction for the expression:
       \begin{itemize}
-       \item[!] Contextualize the use of the:
+       \item[!] Contextualize the use of the signature:
       \[\begin{array}{c c} {\sf \Sigma;}& {\sf x_1:intstack, x_2:int\rightarrow intstack\rightarrow int\times intstack,}\\ & {\sf x_3:intstack\rightarrow int \vdash x_3 (x_2 \ 2\ x_1):int} \end{array} \]
        
       \end{itemize}
@@ -788,7 +822,7 @@ $$\Longrightarrow_{R}$$
  \begin{frame}
      \begin{itemize}
    \item[!] Such a program behaves correctly consuming \textbf{only} conforming implementations of the interface 
-    \item[!] and calculating the program's different “futures” with respect to different implementations.
+    \item[!] calculating the program's different “futures” with respect to different implementations.
   
    E.g. with an array implementation we get :
    \[\begin{array}{l} { \sf create\_array(): intarray} \ \ \text{for}\ \ {\sf empty}\\ {\sf add\_array: int \rightarrow intarray\rightarrow intarray}\ \ \text{for} \ \ {\sf push}\\ {\sf remove\_last: intarray\rightarrow intarray\times int }\ \text{for}\ {\sf pop} \end{array} \]
@@ -805,12 +839,29 @@ $$\Longrightarrow_{R}$$
    \begin{frame}
    If we apply these values to the dynamic linker we obtain the assignment for the whole expression: after reducing all redexes ($\lambda$ and ${\sf let}$):
    
-   \[\begin{array}{l l} {\sf pop (push\ 2 \ empty)} \& \\ {\sf remove\_last*(add\_array*\ 2 * create\_array())} \end{array} \]
+   \[\begin{array}{l l} {\sf pop (push\ 2 \ empty)} \& \\ {\sf remove\_last*(add\_array*\ \bar{2} * create\_array())} \end{array} \]
    
    \alert{ As required in systems with separate compilation, the same process will compute a
     different residual with a different set of conforming implementations}
    \end{frame}
- 
+   \section{implementation} 
+   \begin{frame}{Tools for free}
+      \begin{itemize}
+         \item[!] Coq, LF are logic focused
+         \item[!] Makam, Beluga permit work from a programming language design point of view
+          \item[!] Makam is a meta programming framework for quick language prototyping
+        \end{itemize}
+      \end{frame}
+    \begin{frame}{Makam implementation}
+      \begin{itemize}
+      \item[!] Antonis Stampoulis and I have encoded   $Jcalc$ in Makam without much effort!
+      \item[!] We are able to typecheck programs like the ones presented
+      \item[!] You can check the code on github: \url{https://github.com/KPouliasis/makamjs/blob/as-check-in-makam-js/just.md}
+      
+      \end{itemize}
+    \end{frame}
+  \section{The future}
+        
     \begin{frame}
       \frametitle{Higher $\Box$ types?}
       \begin{columns}
@@ -821,7 +872,6 @@ $$\Longrightarrow_{R}$$
     \end{columns}
       \end{frame}
   
-    \section{The future (lasts long)}
     \begin{frame}{What about stronger modality?}
       A Galois connection is 
       a pair of order preserving functions $L:\mathcal{D}\rightarrow C$, $R:\mathcal{C}\rightarrow{D}$
@@ -838,7 +888,7 @@ $$\Longrightarrow_{R}$$
     correspond to $R$ and add the rule:  
     \begin{mathpar}
         \inferrule*[right=$R$]{\llbracket\Gamma\rrbracket\vdash_J {\sf j}:\phi}
-        {\Gamma\vdash {\sf eval_J} \ \  {\sf j} :R\phi} 
+        {\Gamma\vdash {\sf eval\_return} \ \  {\sf j} :R\phi} 
     \end{mathpar}
     
     
@@ -847,12 +897,15 @@ $$\Longrightarrow_{R}$$
       This is enough to obtain a generalized notion of Factivity that is:
       \begin{mathpar}
           \inferrule*[right=$R$]{\Gamma\vdash M:\Box\phi}
-          {\Gamma\vdash \sf {let} \ \_\_ \ \&\ s \ {\sf be\ } M \ \  {\sf in}\  {\sf eval} (s):R\llbracket\phi\rrbracket} 
+          {\Gamma\vdash \sf {let} \ \_\_ \ \&\ s \ {\sf be\ } M \ \  {\sf in}\  {\sf eval\_return} (s):R\llbracket\phi\rrbracket} 
       \end{mathpar}  
+     Ideas from the Artemov, Bonelli \textit{Intensional Lambda calculus} 
+     could be utilized to add evaluation at the level of justifications
     \end{frame}  
+
     \begin{frame}{Concluding}
     \begin{itemize}
-     \item[] Justification logic has richer  higher order features and reflection!
+     \item[] Justification logic has rich  higher order features and reflection!
      \item[] I see this as a first part of a project for utilizing it 
       to provide foundations of \textit{typed programming language interaction} 
     \end{itemize}
