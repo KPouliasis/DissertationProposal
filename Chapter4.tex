@@ -789,11 +789,14 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				For the ${\sf \llbracket Prop_0\rrbracket}$ part of the calculus again by induction.
 				Reflexion, of contexts is trivial. For the axiomatic cases, it is a well known result
 				that in any Heyting algebra (and thus in $F(HA)$ of any Jcalc algebra) 
-				elements of the shape of the axiomatic combinators are equivalent (equiprovable) to $\top$.
-				For example in any Heyting algebra  we have $\top\le A^{B^A}$ 
-				(using the definition of exponentials twice from the fact $\top\times A\times B\le A$) and as a result 
-				$\Gamma^+\leq\phi^{*}$ for any $\Gamma\in {\sf Prop_0}$.
-				For the modus ponens rule by the induction hypothesis and the definition of exponentials.
+				elements of the shape of the axiomatic combinators are equivalent 
+				(equiprovable) to $\top$.
+				For example in any Heyting algebra  we have $\top\le A\rightarrow(B\rightarrow A)$ 
+				(using the definition of exponentials twice from the fact $\top\times A\times B\le A$), 
+				the modus ponens case is handled by induction and the properties of $F$ (preserving exponentials). Hence,
+				$(\llbracket\Gamma\rrbracket)^{+}+\leq(\llbracket\phi\rrbracket)^{*}$ for any deduction in $\llbracket{\sf Prop_0} \rrbracket$.
+
+			
 				The interesting part of the proof is the $\Box$ rule which we present again here for readability:
 				\begin{mdframed}[nobreak=true, frametitle={\footnotesize Judgments on Necessity with $\Gamma\in {\sf Prop_1} \text{,{\ \sf length}}(\Gamma)=i\text{,\ }
 					\ 1\le k\le i  \text{\ and, }\Gamma^{\prime},A, A_k,  B\in {\sf Prop_0}$ }]
@@ -807,9 +810,9 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 				
 				By the induction hypothesis we have $(\Gamma^{'})^{+}\le B^{*}$
 				and $(\llbracket\Gamma^{'}\rrbracket)^{+}\le FB^{*}$ or equivalently by the properties of $F$
-				$F(\Gamma^{'})^{+}+\le F(B^{*})$ which gives $\Box^F{\Gamma^{'}^{+}}\le \Box^F B$
+				$F((\Gamma^{'})^{+})\le F(B^{*})$ which gives $\Box^F{(\Gamma^{'})^{+}}\le \Box^F B$
 				Additionally from induction hypothesis, for every $A_i$ in $\Gamma^{+}\Box^F A_i$
-				and by the product definition $\Gamma^{+}\le\Gamma^{'}^{+}$ and thus
+				and by the product definition $\Gamma^{+}\le(\Gamma^{'})^{+}$ and thus
 				$\Gamma^{+}\le\Box^F B*$.
 
 				For the inverse we create a Lindenbaum construction. We sketch the construction:
@@ -836,19 +839,13 @@ notion of ``deduction from assumptions'' in a Hilbert style axiomatization. We a
 						\item $\llbracket A\wedge B\rrbracket $ is product (trivial) and 
 						$\llbracket A\supset B \rrbracket$ (trivial given the deduction theorem which we have shown)
 						in $J$
-						\item $\Box A\vdash\Box B$ \textit{iff} $A\vdash B$ and $\llbracket A\rrbracket \vdash \llbracket A\rrbracket$
+						\item $\Box A\vdash\Box B$ \textit{iff} $A\vdash B$ and $\llbracket A\rrbracket \vdash \llbracket B\rrbracket$
 						Easy by induction on the derivations and usage of the lifting lemma.
 					\end{itemize}
 				\end{itemize}
 				Now assume that $\Gamma^{+}\le\phi*$ for any Jcalc algebra and 
-				mapping $*$ and consider  $*$ to extend  the identity mapping  
-				into the (free) J-calc algebra defined above. It is easy to see that in JCalc
-				$\Gamma\vdash\phi$. E.g. assume, without loss of generality,
-				that $\Gamma$ is of the form $\Box\phi_1,\ldots\Box\phi_n$ then
-				$\Box\phi_1\wedge\ldots\Box\phi_n\le\phi$ in the free JCalc algebra
-				under identity and
-				thus $\Box\phi_1\wedge\ldots\Box\phi_n\le\vdash\phi$ by the construction above which
-				gives trivially $\Gamma\vdash\phi$ (since $\Gamma\vdash\Box\phi_1\wedge\ldots\Box\phi_n$)
-
+				mapping $*$; consider  $*$ to extend  the identity mapping  
+				into the (free) J-calc algebra defined above. It is trivial to see that in JCalc
+				$\Gamma\vdash\phi$.
 			\end{proof}
 
