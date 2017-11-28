@@ -1,12 +1,12 @@
 \chapter{Introduction}\label{intro}
 The \acrfull{CHI}~\cite{curry1934functionality,howard1995formulae} was first established as a deep connection between explicit proofs in intuitionistic logic and programs of a simple programming 
 language that includes pairs, functions and union types ~\cite{Pierce:2002:TPL:509043,Srensen98lectureson}. This relation has been a central topic of study in the field of type theory and has turned into the standard
-foundational approach to studying and designing programming languages especially of the functional paradigm. Since  this relation has been  established the 
+foundational approach to studying and designing programming languages especially of the functional paradigm. Since  this relation has been  established, the 
 isomorphism has been extended to more complex logics and correspondingly to more complex programming language constructs.  
 In the following I will be using \acrfull{CHI} and \emph{proofs-as-programs} interchangeably.
 
 There are great benefits both for a logician
-and the programming language designer in viewing things through the lenses of such a relation. On the programming language perspective certain linguistic phenomena are given categorical characterizations that do not 
+and the programming language designer in viewing things through the lenses of such a relation. From the programming language perspective certain linguistic phenomena are given categorical characterizations that do not 
 depend on implementation specifics. 
 For example the designer of the next hot programming language  
 knows that adding pairs would have to adhere to the corresponding constructs of 
@@ -21,44 +21,57 @@ to languages of the object oriented paradigm. There are two main reasons for thi
 an old and a new. The older reason is mathematical correctness which is strongly 
 related to the fact that reasoning about programs (of the lambda calculus and its extensions) 
 can be done in an \textit{equational way}, a property that is heavily connected 
-to their underlying foundational principles as we will see. Features such as side effects or concurrency 
-to the language is reflected in the typing. For example,  
-a program that changes global state has a type that has to  says so, 
-a program that uses explicitly goto mechanisms - if permitted - would also say so in its type. Even ``unpure", non-functional constructs (state, mutable references) are added in a mathematical/ algebraic fashion under the \ac{CHI} disciple. As a result  reasoning about properties of such programs is significantly simpler. Moreover, under a strongly typed doctrine, important properties of programs are checked statically by the type-checker and prior to their execution. 
-As a result, the need for testing is reduced to verify only non-trivial properties. 
+to their underlying foundational principles as we will see. Features such as side effects 
+or concurrency in the language are reflected via typing. For example,  
+a program that changes global state has a type that  says so explicitly. Similarly,  
+a program that uses goto mechanisms  would also say register its behavior in its type. 
+Alas, even ``unpure", non-functional constructs (state, mutable references) are added 
+in a mathematical/ algebraic fashion under the \ac{CHI} disciple. 
+As a result, reasoning about properties of such programs is significantly simpler. 
+Moreover, under a strongly typed doctrine, important properties of programs are checked 
+statically by the type-checker and prior to their execution. 
+Henceforth, the need for testing is reduced to verify only non-trivial properties. 
 
 
 The renewed interest in functional programming owes a lot to the
  difficulties of scaling concurrent programs in traditional programming paradigms. 
  It is very hard  to scale programs that make unlimited use of side effects 
  (such as state change) in an implicit way (i.e. without leaving any trace in their typing)
-  from sequential to  multithreaded computation. Programming freedoms in traditional 
-  languages (plus the easiness and textbook familiarity with the Von Neumann model of 
-  computation) come at large cost regarding  (reasoning about) 
-  correctness and need for testing. The ``purity" of
-   programs in the lambda calculus -- and delimited ``impurity" in its extensions -- makes 
-   writing high-quality concurrent code an easier task. It is exciting to see that important metatheoretic results in the area of combinatory logic as e.g. the Church--Rosser 
+  from sequential to  multithreaded style of computation. Programming freedoms in traditional 
+  languages (paired with the easiness and textbook familiarity of the Von Neumann model) come 
+  at a large cost if one takes into account the need for proving 
+  correctness. The ``purity" of
+   programs in the lambda calculus -- and the delimited ``impurity" in its extensions -- makes 
+   writing high-quality concurrent code an easier task. 
+   It is exciting to see that important metatheoretic results in the area of combinatory logic as e.g. the Church--Rosser 
    property are the backbone of models for concurrent computation in modern functional languages. 
 
 
 
-On the other hand, the logician has good reasons to study logics as rules of program formation and reduction. First of all, such designs make logics implementable ``for free"
-in modern theorem provers using the programmistic side of the correspondence. Secondly the study of logic in such a way has put upfront a  Gentzen-style treatment of logical connectives where emphasis is given to the notion of proof, proof geometry and proof reduction. This  has sparked studies for more refined versions of proof relevant deduction  than the ones discovered under the standard ``axiomatic" approach (i.e. linear logics, substructural logics etc). As we will see, the Gentzen-- Brouwer initiative to  logic  does not merely call for change of axiomatization but for a ``proof relevant" interpretation of connectives that comes with a computational taste. Metatheory is also standardized once one studies logic this way;  scalable techniques have been developed within the area of ``proof-theoretic" semantics that make the passing from  natural deduction of a logic to its cut free calculus pretty standard ~\cite{Sieg1998,pfenning2000structural}. 
+On the other hand, the logician has good reasons to study logics as rules of program formation and reduction. First of all, 
+such designs make logics implementable ``for free"
+in modern theorem provers using the programmistic side of the correspondence. 
+Secondly the study of logic in such a way has put upfront a  Gentzen-style treatment of logical 
+connectives where emphasis is given to the notion of proof, proof structure and proof reduction. 
+This has sparked studies for more refined versions of proof relevant deduction than the ones 
+discovered under the standard ``axiomatic" approach (e.g. linear logics, substructural logics etc). 
+As we will see, the Gentzen-- Brouwer initiative in  logic  does not merely call for change of 
+axiomatization but for a ``proof relevant" interpretation of connectives that comes with a
+computational taste. Metatheory is also standardized once one studies logic this way;  
+scalable techniques have been developed within the area of ``proof-theoretic" semantics 
+that make the passing from  natural deduction of a logic to its cut free calculus pretty standard ~\cite{Sieg1998,pfenning2000structural}. 
 In other words, treating logics within a Curry -- Howard environment 
 enriches logic as a discipline with good organizing principles. 
 Finally, proof relevant treatments of logic -- pushed further by ideas of 
 \emph{Martin-L\"{o}f Type Theory}~\cite{martin1984intuitionistic} 
-have sparked  a renewed interest in a foundations of mathematics that begins from 
+have sparked  a renewed interest in  a foundation of mathematics that stems from 
 a  treatment of proofs as \textit{the} primitive objects of mathematics. 
-Programs like   \ac{HoTT} promise  a future in which submission 
-of proofs that accompany conference and journal papers would no 
-longer be hand-written or typeset arguments but executables that can
- run and be tested within a theorem prover.
+
 
 In this work, we are interested in the study of  extending  \acrfull{CHI} with basic 
 constructive  necessity of justification logic. 
 There is a good reason to believe that this should be doable. Justification logic
- is a logic that relates the concept of necessity with the existence of a proof construct
+ is a logic that relates logical necessity with the existence of a proof construct
   and that is exactly what working in  realm of proof relevancy and \ac{CHI} calls for. 
   There are challenges to this task, both syntactical and  semantical. First of all, there
    is a resemblance of the justification logic syntax with that of simple type theory 
@@ -66,20 +79,20 @@ There is a good reason to believe that this should be doable. Justification logi
     between the two systems. Of course, this is not a substantial issue since the two
      typing relations can be ``colored" in a syntactical way. 
      But resolving the syntactical overload would still leave a  ``meaning" question open;
-      namely, how can one read, both intuitively and formally, the need of having two
+      namely, how can one read  the need of having two
        proofs of the ``same thing" in a system. 
        The main contribution of this work  
        ~\cite{Pouliasis2016} it that it  shows how such a relation of binding two kinds of
         proof systems is quite natural and gives a basic reading of validity and necessity 
         on first, proof-theoretic principles.  
         We will treat justification logic as a logic of \textit{proof relevant validity}.
-         To give a hint, one should trace justification logic back to its 
+         by tracing justification logic back to its 
          origin as an explicit, classical semantics to \ac{BHK} proof constructs. 
          We will present a modal logic that is based on this relation and we will argue
           that such phenomena of binding two kinds of constructions abound both
-           in the realm  of mathematical proofs (and corresponding logics) 
-           but also in programming language design when related constructs 
-           such as modules and dynamic linkers.
+           in the realm  of mathematical proofs 
+           but also in the realm of programming languages  with constructs 
+           such as modules, foreign function calls and dynamic linkers.
 
            This work  is structured in three parts: 
            The first part (\cref{intui,lambda,jllogic}) is a revision of my second examination paper and constitutes 
@@ -89,7 +102,7 @@ There is a good reason to believe that this should be doable. Justification logi
            The relevant systems are introduced syntactically together with main 
             metatheoretic proof techniques which will be useful 
            in the rest of the thesis.
-           The second part (chapters ~\ref{proposal}, ~\ref{jcalcsem}, ~\ref{jcalccom}) 
+           The second part (\cref{proposal, jcalccom, jcalcsem}) 
            constitutes my main contributions.
            I will propose  
            a modal type system that extends simple type theory
@@ -102,13 +115,14 @@ There is a good reason to believe that this should be doable. Justification logi
            I will present full metatheoretic
            results obtained for this logic/ calculus utilizing techniques from the first part 
            and will provide proofs in the Appendix. 
-           In the appendix we will additionally provide some information about 
-           our implementation of this calculus 
-           (it's term and type systems, and its evaluation strategy)
-           in the metaprogramming framework \say{MAKAM} framework  
+           In the Appendix, the interested reader can find links to the active Github repo 
+           that contains an implementation of  this calculus 
+           (its term and type systems)
+           in the metaprogramming framework \say{Makam} 
            as an additional  ``proof of concept'' result,  
            Finally, I conclude this work with a small ``outro'', Chapter~\ref{ext},
            where I informally show that the ideas underlying my contributions 
            can be extended in interesting ways.
+
 
 

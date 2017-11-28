@@ -11,7 +11,7 @@ There will be no computational (reduction) rules on  provability terms.
 This conforms with our reading of these terms  as \textit{references} to proof constructs of an \textit{abstracted} theory $J$ that can be realized 
 differently for a concrete $J$.  
 %This is, we posit, the logical basis for \textit{dynamic linking} under separate compilation. The linker from a language $I$ to any host language $J$ (that satisfies certain specifications) creates residuals dynamically but is not concerned about the actual execution of such residuals. Execution of such residuals happens at a next phase when the references are dereferenced to code of the host and is not observed by the calculus.\footnote{ Such approach, also conforms with justification logic principles. Justifications are static, purely syntactical constructs that are not further analyzed.} 
-\subsection{Proof term assignment}
+\section{Proof term assignment}
 \label{basicpras}
 The following rules and their correspondence with natural deduction  constructs (\ref{jots}) should be obvious to the reader familiar with the simply typed  $\lambda$-calculus and basic justification logic.
 We do not repeat here the corresponding $\beta, \eta$ equality rules since they are standard.
@@ -72,7 +72,7 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
     
     
     
-    \subsubsection{Proof term assignment and Gentzen Equalities for $\Box$ Judgments}
+    \subsection{Proof term assignment and Gentzen Equalities for $\Box$ Judgments}
     Before we proceed, we will give a small primer of \textit{let}-bindings as used in modern programming languages to provide for some intuition on how such terms work. 
     Let us assume a rudimentary programming language that supports some basic types, say integers (${\sf int}$), as well as pairs of such types. Moreover, let us define a datatype 
     $\sf{Point}$ as a pair of ${\sf int}$ i.e. as $\sf {(int,int)}$ 
@@ -104,7 +104,7 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
         \inferrule*[]{{ \Turn {\Gamma}{N:\Box  A}}\\{\Turn {x:A} { M:B}}\\{\Turn {s:\llbracket A \rrbracket} {{\sf J}:\llbracket  B\rrbracket} }} {\Turn {\Gamma} {{\sf let} \ (x\& s \ \ {\sf be\ } N) \ {\sf in}\  (M\& {\sf J}):\Box  B}}
     \end{mathpar}
     
-    \subsubsection{Gentzen's Equalities for  ($\Box$ terms)}
+    \subsection{Gentzen's Equalities for  ($\Box$ terms)}
     Gentzen's reduction and expansion principles give computational meaning (dynamics) and an extensionality principle for linking terms. We omit naming the empty contexts for economy.
     
     \mbox{\small
@@ -136,7 +136,7 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
             $$M:\Box A =_{\eta}\ \ {\sf let} \ \ (x \& s\  {\sf be} \ M)\ \ {\sf in}\ \  { (x \& s)}:\Box A$$
         }
         The $\eta$ equality demands that every $M:\Box A$ should be reducible to a form $M'\& {\sf J^{\prime}}$.  
-        \subsubsection{Proof term assignment for the $\Box$ rule (Generically)}
+        \subsection{Proof term assignment for the $\Box$ rule (Generically)}
         After understanding the computational meaning of let expressions in the $\Box_{IE}$ rule 
         we can now give  proof term assignment  for the rule in the general case(i.e. for $\Gamma'$ of arbitrary length). 
         We define a helper syntactic construct --${\sf let}^{*}\ldots {\ \sf in\ }$-- as syntactic sugar for iterative  let bindings based on the structure  of contexts.
@@ -169,7 +169,7 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
             {\sf let} \{(x_1 \& s_1) {\ \sf be\ } (M_1\& {\sf J_1}),\ldots,  (x_i \& s_i) {\ {\sf be}\ } (M_i\& {\sf J_i})\}\ {\sf in}\  (M \&  {\sf J})& =_{\beta} \\
             {  M[M_1/x_1, \ldots,  M_i/x_i] \& {\sf J}[{\sf J_1}/s_1,\ldots, {\sf J_i}/s_i]}
             \end{array}$$}
-        \subsection{Strong Normalization and small-step semantics}
+        \section{Strong Normalization and small-step semantics}
         In the appendix (\ref{norm}) we provide a proof of normalization for  natural deduction (via cut elimination). 
         This is ``essentially" a strong normalization result for the proof term system also. A  weaker result is 
         normalization under a  deterministic,``call-by-value" reduction strategy for $\beta$-rules.
@@ -363,7 +363,7 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
         Immediate future developments would be to interpret modal formulas of higher degree under the same principles. 
         This corresponds to dynamic linking in two or more steps (i.e., when the host becomes itself a client of another interface that is implemented dynamically in a third level and, so on). 
         Some preliminary results towards this 
-        direction have been developed in \cite{DBLP:journals/entcs/PouliasisP14}. 
+        direction have been developed in \cite{DBLP:journals/entcs/PouliasisP14} and we sketch them in the next section. 
         %\nocite{Pfenning2009a, Pfenning2009b}
         
 

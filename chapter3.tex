@@ -1,5 +1,10 @@
 \chapter{Justification Logic}\label{jllogic}
-In the second part of this paper I will give an overview of \ac {JL} highlighting the parts that are closely related to constructivity to remain coherent with \ref{intui}. I will emphasize LP, the very first logic of justification, and its deep relation with \ac{IPL}. My scaffolding will be based upon \cite{Art01BSL},~\cite{Art95TR}  that reflect this relation. Beforehand, I will allow for a more general discussion on \ac{JL} following \cite{sep-logic-justification} and other relevant papers.
+In this chapter I will give an overview of \ac {JL}. I will emphasize LP, 
+the very first logic of justification, and its deep relation with 
+\ac{IPL}. My scaffolding will be based upon \cite{Art01BSL},~\cite{Art95TR}  
+that reflect this relation. Beforehand, I will allow for a more general discussion on 
+\ac{JL} following \cite{sep-logic-justification} and other 
+relevant papers.
 
 %It is well known that the provability predicate can be axiomatized using a modality \cite{citeulike:214701}, \cite{ArtBek05HPL}. The Logic of Proofs {\sf LP} \cite{Art94APAL} goes further and provides explicit proof terms (\textit{proof polynomials}) to inhabit judgments on validity. By translating reasoning in Intuitionistic Propositional Calculus ({\sf IPC}) to classical proofs, {\sf LP} obtains classical semantics for {\sf IPC} through a modality (inducing a {\sf BHK} semantics).
 
@@ -56,7 +61,10 @@ For the rule of necessitation to be admissible, we need necessitation of axioms 
 For that reason a constant specification is required. 
 We focus here on axiomatically appropriate constant specification $\sf{CS}$ because of its relation to combinatorial calculi. 
 An axiomatization of axiomatically appropriate $\sf{CS}$ given below. 
-Elements of $\sf{CS}$ are pairs $(C,\phi)$ of polymorphic (i.e. \textit{parametrized} over propositions) constants and propositions:
+Elements of $\sf{CS}$ are pairs $(C,\phi)$ of polymorphic 
+(i.e. \textit{parametrized} over propositions) constants and propositions. The $!$ operator relates to
+a concept of internalization of justified statements, i.e. witnessing the existence of a justified statement with
+a (higher order) justification. We demand that all justified axiomatic schemes can be internalized.
 \begin{mdframed} 
 \sf{Axiomatic CS}
 \begin{mathpar}
@@ -264,15 +272,16 @@ Next we give a a cut-free sequent formulation of ${\sf S4}$ (reference) with seq
 \and
 \inferrule*[right=$\vee$L]  {{\Gamma,\phi\vdash\Delta}\\   {\Gamma,\psi\vdash\Delta}}{\Gamma,\phi\vee\psi\vdash\Delta}
 \and
-\inferrule*[right=$\vee$R]  {\Gamma\vdash\phi,\psi,\Delta}   {\Gamma\vdash\phi\vee\psi\vdash\Delta}
+\inferrule*[right=$\vee$R]  {\Gamma\vdash\phi,\psi,\Delta}   {\Gamma\vdash\phi\vee\psi, \Delta}
 \and
-\inferrule*[right=$\supset$L]  {{\Gamma\vdash\phi,\Delta}\\   {\Gamma\psi\vdash\Delta}}{\Gamma,\phi\supset\psi\vdash\Delta}
+\inferrule*[right=$\supset$L]  {{\Gamma\vdash\phi,\Delta}\\   {\Gamma, \psi\vdash\Delta}}{\Gamma,\phi\supset\psi\vdash\Delta}
 \and
-\inferrule*[right=$\supset$R]  {{\Gamma\vdash\phi,\Delta}\\   {\Gamma\psi\vdash\Delta}}{\Gamma,\phi\supset\psi\vdash\Delta}
-\and
+\inferrule*[right=$\supset$R]  {{\Gamma,\phi\vdash\psi,\Delta}}{\Gamma\vdash\phi\supset\psi, \Delta}
+\end{mathpar}
+\begin{mathpar}
 \inferrule*[right=$\Box$L]  {\phi,\Gamma\vdash\Delta} {\Box\phi,\Gamma\vdash\Delta}
 \and
-\inferrule*[right=$\Box$R]  {\Box\Gamma\vdash\phi,\Delta}  {\Box\Gamma\vdash\Box\phi,\Delta}
+\inferrule*[right=$\Box$R]  {\Box\Gamma\vdash\phi}  {\Box\Gamma\vdash\Box\phi}
 \end{mathpar}
 
 \end{mdframed}

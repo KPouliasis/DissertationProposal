@@ -279,7 +279,7 @@ Gentzen's principles transliterate to an equational system for terms. In the fol
      \item	that commutes with  operators  E.g. 
      \begin{mathpar}
      	\inferrule*[]
-     	{\Gamma \entails M= M':A\times B}
+     	{\Gamma \entails M= M':A}
      	{\Gamma\entails \operatorname{fst}(M)=\operatorname{fst}(M'):A}
      	\end{mathpar} 
      \end{itemize}
@@ -313,13 +313,13 @@ The so called  $\beta$ equality rules are as follows:
 		\and
 		\inferrule*[right=$\beta\vee_1$]
 		{ {\Gamma,x
-				:A\vdash N:\psi}\\{\Gamma,y:B \vdash O:\psi}\\{\Gamma\vdash P:A} }
-		{\Gamma\vdash  ({\text{case } inj_l(P) \text{ of } inj_l(x) \longmapsto N  |\  inj_r (y)\longmapsto O) =[P/x]N: \psi}}
+				:A\vdash N:C}\\{\Gamma,y:B \vdash O:C}\\{\Gamma\vdash P:A} }
+		{\Gamma\vdash  ({\text{case } inj_l(P) \text{ of } inj_l(x) \longmapsto N  |\  inj_r (y)\longmapsto O) =[P/x]N: C}}
 		\and
 		\inferrule*[right=$\beta\vee_2$]
 		{ {\Gamma,x
-				:A\vdash N:\psi}\\{\Gamma,y:B \vdash O:\psi}\\{\Gamma\vdash Q:B} }
-		{\Gamma\vdash  ({\text{case } inJ_r(Q) \text{ of } inj_l(x)  \longmapsto N  |\  inj_r(y) \longmapsto O) =[Q/y]O: \psi}}
+				:A\vdash N:C}\\{\Gamma,y:B \vdash O:C}\\{\Gamma\vdash Q:B} }
+		{\Gamma\vdash  ({\text{case } inJ_r(Q) \text{ of } inj_l(x)  \longmapsto N  |\  inj_r(y) \longmapsto O) =[Q/y]O: C}}
 	\end{mathpar}
 \end{mdframed}
 
@@ -332,7 +332,8 @@ via elimination rules. Another way to see this is that canonical
 forms of a certain type structure should have certain shape. 
 
 
-The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
+The $\eta$ rules (a.k.a. \textit{identity expansion}) are given below. We assume that in the $\eta\rightarrow$ case
+the variable $x$ does not appear free in the term $M$:
 
 \begin{mdframed}
 	\begin{mathpar}
@@ -341,7 +342,7 @@ The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 		
 		\inferrule*[right=$\eta\times$]{\Gamma\vdash M:A\times B}{\Gamma\vdash M= \langle \operatorname{fst}(M),\operatorname{snd}(M)\rangle :A\times B }
 		\and
-		\inferrule*[right=$\eta\rightarrow$]{\Gamma\vdash M:A\rightarrow B}{\Gamma\vdash M= \lambda x. M x: A\rightarrow B} 
+		\inferrule*[right=$\eta\rightarrow$]{\Gamma\vdash M:A\rightarrow B}{\Gamma\vdash M= \lambda x:A. M x: A\rightarrow B} 
 		\and
 		\inferrule*[right=$\eta\vee$]
 		{\Gamma\vdash M:A+B}
@@ -349,7 +350,7 @@ The $\eta$ rules (a.k.a. \textit{identity expansion})are given below:
 				\begin{tabular}[b]{ rl}
 					$\Gamma\vdash M = \text{case }  M \text{ of }$  & $| inj_l(x) \mapsto inj_l(x)$
 					\\
-					& $ inj_r(y)\mapsto inj_r(y)) : \psi$
+					& $ inj_r(y)\mapsto inj_r(y) : A+ B $
 					\\
 				\end{tabular}
 			}
