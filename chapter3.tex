@@ -1,5 +1,6 @@
 \chapter{Justification Logic}\label{jllogic}
-In this chapter I will give an overview of \ac {JL}. I will emphasize LP, 
+In this chapter I will give an overview of \ac {JL}. 
+I will emphasize LP, 
 the very first logic of justification, and its deep relation with 
 \ac{IPL}. My scaffolding will be based upon \cite{Art01BSL},~\cite{Art95TR}  
 that reflect this relation. Beforehand, I will allow for a more general discussion on 
@@ -9,15 +10,19 @@ relevant papers.
 %It is well known that the provability predicate can be axiomatized using a modality \cite{citeulike:214701}, \cite{ArtBek05HPL}. The Logic of Proofs {\sf LP} \cite{Art94APAL} goes further and provides explicit proof terms (\textit{proof polynomials}) to inhabit judgments on validity. By translating reasoning in Intuitionistic Propositional Calculus ({\sf IPC}) to classical proofs, {\sf LP} obtains classical semantics for {\sf IPC} through a modality (inducing a {\sf BHK} semantics).
 
 \section{A bird's eye view}
-According to \cite{sep-logic-justification}\begin{quotation} Justification logics are epistemic logics which allow knowledge and belief modalities to be ``unfolded'' into justification terms.
-\end{quotation}
- More specifically, in \ac{JL} the modality in question is witnessed by a reason and propositions of the kind $\Box\phi$ become $t:\phi$ that reads ``$\phi$ is justified by reason t". Witnesses in \ac{JL} have structure and operations. Different choices of operators result in logics that explicate different modalities ({\sf {$K$,$T$,$S4$,$S5$}}). 
+According to \cite{sep-logic-justification}\say {Justification logics are epistemic logics which allow knowledge and belief modalities to be ``unfolded'' into justification terms.}
+ More specifically, in \ac{JL} the modality in question is witnessed by a reason and propositions of the kind $\Box\phi$ become $t:\phi$ that reads ``$\phi$ is justified by reason t". Witnesses in \ac{JL} have structure and operations. Different choices of operators result in logics that explicate different modalities 
+ ({\sf {$K$, $T$, $S4$, $S5$}}). 
  In general, there is an infinite family of justification logics.
- For our purposes, and in addition to type theoretic approaches to logic, \ac{JL} reveals a computational content for \emph{validity} in classical terms. As we will see following~\cite{artemov97un}, \ac{JL} and especially its {\sf $S4$} counterpart \ac{LP}, can provide a unified classical \emph{semantics} for type theoretic formulations of intuitionistic logic. In addition, following TODO and \cite{DBLP:journals/entcs/PouliasisP14}, \ac{JL} mechanics can be viewed type theoretically to provide for modal typed systems that enrich computational type theories with ``semantical" notions such as explicit reflection and modular binding. 
+ For our purposes, and in addition to type theoretic approaches to logic, \ac{JL} reveals a computational content for \emph{validity} in classical terms. As we will see following~\cite{artemov97un}, \ac{JL} and especially its {\sf $S4$} counterpart \ac{LP}, can provide a unified classical \emph{semantics} for type theoretic 
+ formulations of intuitionistic logic. In addition, following \cite{Artemov2007a, DBLP:journals/entcs/PouliasisP14}, JL mechanics can be viewed type
+ theoretically to provide for modal typed systems that enrich computational
+ type theories with \say{semantical} notions such as explicit reflection and modular
+ binding.
  
 
 \section{Minimal Justification Logic $J_0$}~\label{min:jo}
-To permit for an account of reasons, the logic is enriched with an extra sort for $j$ for justifications. The sort of propositions is then enriched with propositions of the kind $j:\phi$ with $\phi$ being a proposition. Here is the abstract syntax:
+To permit for an account of reasons, the logic is enriched with an extra sort ($j$) for justifications. The sort of propositions is then enriched with propositions of the kind $j:\phi$ with $\phi$ being a proposition. Here is the abstract syntax:
 
 \begin{mdframed}
 \begin{align*}
@@ -25,7 +30,7 @@ j := &s_i|\ C_i| j_1*j_2| j_2 + j_2\\
  \phi:=& P_i|\ \bot|\ \phi_1\wedge\phi_2|\ \phi_1\vee\phi_2| \ \phi_2\supset\phi_2|\ \neg\phi|\ j:\phi   
 \end{align*}
 \end{mdframed}
-Constants $C_i$ are symbols that can be assigned to logic axioms that are assumed to be necessary. Weaker justifications logics exist without any assignment of constants (empty \emph{constant specifications}) or with partial constant specifications. Nevertheless, in order for the  \emph{rule of necessitation} to be admissible each axiom instance of the underlying propositional logic has to be assigned a constant. We will be coming back to this topic in later sections. Symbols $s_i$ stand for variables.
+Constants $C_i$ are symbols that can be assigned to logic axioms that are assumed to be necessary. Weaker justification logics exist without any assignment of constants (empty \emph{constant specifications}) or with partial constant specifications. Nevertheless, in order for the  \emph{rule of necessitation} to be admissible each axiom instance of the underlying propositional logic has to be assigned a constant. We will be coming back to this topic in later sections. Symbols $s_i$ stand for variables.
 
 A Hilbert--style axiomatization of $J_0$ is given below. Its components are Hilbert's axioms for propositional logic together with two basic rules for justification: \emph{applicativity} and \emph{concatenation}. Concatenation internalizes weakening of proofs.
 \begin{mdframed}
@@ -99,7 +104,7 @@ Finally we require reflection on $\sf{CS}$:
 
 \end{mdframed}
 
-The system can be given a Natural Deduction formulation a la \ac{IPL} since the following theorem holds:
+The system can be given a Natural Deduction formulation \textit{\`a la} \ac{IPL} since the following theorem holds:
 \begin{mdframed}
 \textbf{Deduction Theorem}
 For any set of propositional assumptions $\Gamma$, \\ $\Gamma,\phi\vdash\psi$ implies $\Gamma\vdash\phi\supset\psi$ 
@@ -110,7 +115,10 @@ For any set of propositional assumptions $\Gamma$, \\ $\Gamma,\phi\vdash\psi$ im
 The modal approach to the logic of knowledge is, in a sense, built around the universal quantifier: X is known in a situation if X is true in all situations indistinguishable from that one. Justifications, on the other hand, bring an existential quantifier into the picture: X is known in a situation if there exists a justification for X in that situation
 \end{quotation}
 
-This fresh approach on epistemic tradition has been utilized to solve many problems in formal epistemology (see \cite{Artemov2014-ARTLOA}). We give here a solution to the famous 'Red barn problem' that is also a pedagogical example on how deduction in the system works.
+This fresh approach to the epistemic tradition has been utilized to solve many problems in formal epistemology (see \cite{Artemov2014-ARTLOA}). We sketch 
+here the solution to the famous \textit{Red barn problem} 
+that, also, provides a pedagogical example 
+on how deduction in the system works.
 
 The red barn problem can be stated as follows:
 \begin{quote}
@@ -130,7 +138,7 @@ At the metalevel, 2 is actually knowledge, whereas by the problem description, 1
 \begin{quote}	
 Within this formalization, it appears that epistemic closure in its modal form (2) is violated:line 2, $\Box(B \wedge R )$, and line 3, $(B \wedge R \supset B)$ are cases of knowledge whereas $\Box B$ (line 1) is not knowledge. The modal language here does not seem to help resolving this issue.
 \end{quote}
-Of course, one can resolve this by introducing a second modality(e.g. for 'I believe that'). But then similar problems can occur (e.g. by adding a third modality read as `it should be'). Indexing of modalities with reasons solves this problem in its generality: by permitting the applicative closure only on reasons of the same sort one can overcome this defect.
+Of course, one can resolve this by introducing a second modality(e.g. for \say{I believe that}). But then similar problems can occur (e.g. by adding a third modality read as `it should be'). Indexing of modalities with reasons solves this problem in its generality: by permitting the applicative closure only on reasons of the same sort one can overcome this defect.
 \begin{enumerate}
    \item $u:B$, ‘$u$ is a reason to believe that the object in front of me is a barn’;
    \item $v:(B \wedge R)$, ‘$v$ is a reason to believe that the object in front of me is a red barn’;
@@ -145,7 +153,7 @@ Of course, one can resolve this by introducing a second modality(e.g. for 'I bel
 
 \end{enumerate}
 \section{Proof theoretic view}
-	In ~\ref{intui} we gave an analytic account of the \ac{BHK} principles of  constructive proofs. In the paper ``Eine Interpretation des
+	In  Chapter ~\ref{intui} we gave an analytic account of the \ac{BHK} principles of  constructive proofs. In the paper ``Eine Interpretation des
 	intuitionistischen Aussagenkalküls ", G\"oedel gave a classical provability interpretation of \ac{BHK} using the modal system ${\sf S4}$.
 	
 	The standard axiomatization of ${\sf S4}$ is given below: 
@@ -206,7 +214,8 @@ Also, the lifting property can be obtained:
 Any deduction of the kind $\vec{j}:\Gamma,\Delta\vdash\phi$ implies $\vec{j}:\Gamma,\vec{s}:\Delta\vdash j'(\vec{j},\vec{s}):\phi$ where $\vec{j}$ is a vector metavariables to be substituted for arbitrary polynomials and $\vec{s}$ is a vector of (object) variables. 
 
 \end{mdframed}
-In addition, \ac{LP} is the forgetful projection of {\sf $S4$}. More specifically, consider and formula of \ac{LP} $\phi$ and the transformation $F_\Box(\phi)$ that replaces all subformulae of $\phi$ of the kind $j:\phi'$ with $\Box\phi'$. The following theorem holds:
+In addition, \ac{LP} is the forgetful projection of {\sf $S4$}. 
+More specifically, consider a formula of \ac{LP} $\phi$ and the transformation $F_\Box(\phi)$ that replaces all subformulae of $\phi$ of the kind $j:\phi'$ with $\Box\phi'$. The following theorem holds:
 \begin{mdframed}
 \textbf{Forgetful Projection Property}
 

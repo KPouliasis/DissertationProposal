@@ -119,7 +119,8 @@ of basic necessity that relates the two deductions by internalizing  a  notion o
 \label{lsjcalc}
 
 We aim for a reading of necessity that internalizes a notion of ``double proof''  in two deductive systems.
-Motivated by the discussion and definitions in the previous section we will treat the notion of interpretation abstractly -- as a function symbol on types -- 
+Motivated by the discussion and definitions in the previous section we will treat the 
+notion of interpretation abstractly -- as a function symbol on types -- 
 and axiomatize in accordance. Intuitively we want:
 $$\Box  A\  {\sf true} :=  A\ {\sf true}\   \& \ A\ {\sf valid} = A{\sf\  true\  in\  I}\  \& \  \llbracket  A \rrbracket \ {\sf true\  in\  J}$$
 We will be dropping indexes $I$, $J$ since they can be inferred by the different kinds of assumption  contexts. In addition, we  omit signatures 
@@ -427,7 +428,7 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 	
 	\subsection{Harmony: Local Soundness and Local Completeness}
 	\label{gprinc}
-	Before we move on to show (Global) Soundness we provide evidence for the so called ``local soundness" and ``local completeness'' of the $\Box$ connective
+	Before we move on to show (Global) Soundness we provide evidence for the so-called ``local soundness" and ``local completeness'' of the $\Box$ connective
 	following Gentzen's dictum. The local soundness and completeness for the $\supset$ connective 
 	is given elsewhere (e.g. \cite{prawitz10natural}) and in Gentzen's original \cite{Gentzen1935}. Gentzen's program can be described with the following two slogans:\begin{itemize} \item[a.] Elim is left-inverse to Intro \item[b.] Intro is right-inverse to Elim\end{itemize}   
 	Applied to the $\Box$ connective, the first principle says that introducing a $\Box   A$ (resp. many $\Box A_1, \ldots, \Box A_i$) only to eliminate it (resp. them) directly is redundant. 

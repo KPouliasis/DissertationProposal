@@ -7,14 +7,18 @@
 	{  A \wedge B \true}}
 \end{mathpar}
 
-The rule says, ``given the existence a proof of $\phi$ and a proof of $\psi$ from assumptions $\Gamma$, there exists a proof of $\phi\wedge\psi$ from assumptions $\Gamma$ at hand ".
+The rule says, ``given the existence a proof of $A$  and a proof of $B$ from assumptions $\Gamma$, there exists a proof of $A\wedge B$ from assumptions $\Gamma$ at hand ".
 
 We used the description ``declarative" because in this format \vocab{IPL} sequents $\Gamma\vdash \true $ do not describe how such existentials are realized. It is in essence a logic of ``proof relevant truth" but it does not involve the proofs themselves as first class objects. 
 
 An alternative presentation is to explicate proof constructs by directly providing a system of ``proof trees". Such an approach was actually championed in Gentzen's natural deduction systems and is the necessary move to obtain proof calculi. 
-Once we have  explicit  proof objects (either as trees, or as we will see, as terms) the system is enriched with equality principles involving such objects. Such rules give computational value (``proof dynamics") to the constructs  and are the driver idea in the  ``Curry--Howard Isomorphism" and its extensions.
-
-Here we provide such a  formulation in proof trees of judgments together with the equality rules on trees, essentially following Gentzen. Proof trees of judgments have the following shape:
+Once we have  explicit  proof objects (either as trees, or as we will see, as terms) the system is enriched with equality principles involving such objects. Such rules give computational value (``proof dynamics") 
+to the constructs  and  drive the idea of  ``Curry--Howard Isomorphism" 
+and its extensions. We will provide such a  formulation in proof trees of
+ judgments together with the equality rules on trees, 
+ essentially following Gentzen. 
+ 
+ Proof trees of judgments have the following shape:
 
 \begin{mathpar}
 \inferrule*[vdots=1.5em]{}{ J_1,\ldots,  J_i}
@@ -22,8 +26,9 @@ Here we provide such a  formulation in proof trees of judgments together with th
 \begin{mathpar}
 \inferrule*[]{}{J}
 \end{mathpar}
-We focus one judgments $J$ of the form ${A \true}$.
-Here are the the rules for constructing proof trees with labeled assumptions\footnote{Essentially the constructs are directed acyclic graphs since assumptions with the same label are ``bind" and substitutable together but we will be cavalier with such a details}.
+We focus on judgments $J$ of the form ${A \true}$.
+Here are the the rules for constructing proof trees with labeled assumptions\footnote{Strictly speaking the constructs are directed acyclic graphs and not \textit{trees} 
+since assumptions with the same label are bound and substitutable together but we will be cavalier with such a detail}.
 \begin{mathpar}
 \begin{array}[b]{c}{ x_1:A_1 \true,\ldots,  x_i:A_i\true}\\{\vdots}\\{A_{j\in 1\dots i} \true}
 \end{array}
@@ -43,7 +48,7 @@ Here are the the rules for constructing proof trees with labeled assumptions\foo
 \end{mathpar}
 
 \begin{mathpar}
-\inferrule[]{{\begin{array}[b]{c} \overline{x:A}\\ {\mathcal{D}} \\ A \true  \end{array}} }{A\supset B \true}
+\inferrule[]{{\begin{array}[b]{c} \overline{x:A}\\ {\mathcal{D}} \\ B \true  \end{array}} }{A\supset B \true}
 \and
 \inferrule[]{{\begin{array}[b]{c} {\mathcal{D}} \\ A\supset B\true  \end{array}}\\ {\begin{array}[b]{c} {\mathcal{E}} \\ A\true  \end{array}}}{B  \true}
 	
@@ -76,7 +81,14 @@ Here are the the rules for constructing proof trees with labeled assumptions\foo
 			%\inferrule*[]{}{\    A\\ \ \qquad %\llbracket   A\rrbracket}}{\Box   A }}}
 %\end{mathpar}
 \subsection{Properties of Intuitionistic Entailment Redux}
-Proof trees by their nature satisfy the properties of entailment in \ref{ssec:entail}. We will not bother with reflection and contraction. The first is trivial and the second can be shown by simple induction on the structure of trees with the proof highlighting  that reflection on hypothesis is order-irrelevant. Transitivity is established by \textit{compositionality} of proof trees and reflects the essence of hypothetical reasoning: proof trees of the appropriate proposition can be ``plugged in" for assumptions to create new valid trees.  
+Proof trees by their nature satisfy the properties of entailment in \ref{ssec:entail}. 
+We will not bother with reflection and contraction. The first is trivial and the 
+second can be shown by simple induction on the structure of trees; 
+the proof is highlighting  that reflection on hypothesis is order-irrelevant. 
+Transitivity is established by \textit{compositionality} of proof trees and 
+reflects the essence of hypothetical reasoning: proof trees of the 
+appropriate proposition can be ``plugged in" for assumptions 
+to create new, well-formed trees.  
 \begin{mdframed}
 	\begin{theorem}\label{thm:cmpha}
 		If {$\begin{array}{c}{ x:A }\\{\mathcal{D}}
@@ -89,11 +101,12 @@ Proof trees by their nature satisfy the properties of entailment in \ref{ssec:en
 Having proof objects as first class citizens, permits for developing logics, essentially, 
 as theories of (typed) equality among such objects. 
 This idea stemmed from Gentzen's work on natural deduction and 
-cut elimination and it is what gives to proofs  computational content. 
-Here are the proposed  equalities for the proof relevant \vocab{IPL} introduced initially 
-by Gentzen as the driver of the proof  cut elimination. 
-We will be revisiting these very same equalities and reframe them as equalities among
- proof terms in the next section. Nevertheless, they can be expressed in proof tree form.  
+cut elimination and it is what gives  proofs  computational content. 
+Following are the proposed  equalities for the proof relevant \vocab{IPL} 
+introduced initially by Gentzen as the driver of the proof  cut elimination. 
+We will be revisiting these very same equalities and reframing them 
+as equalities among proof terms in the next section. 
+Nevertheless, they originated in proof tree form.  
  We show indicatively the equalities regarding the $\supset,\wedge$ connectives reserving the
   rest for the more concise notation.
 
@@ -174,13 +187,13 @@ We will be revisiting these very same equalities and reframe them as equalities 
 		\inferrule{
 		\inferrule[]{\inferrule {\mathcal{D}}{ A\wedge B \true}}
 		{A \true}\\\inferrule[]{\inferrule {\mathcal{D}}{ A\wedge B \true}}
-		{A \true}}{A\wedge B}
+		{B \true}}{A\wedge B}
 	\end{array}
 \end{mathpar}
 
 
 \section{Linear representation of trees  with proof terms: $\lambda$ calculus}
-Proof terms provide an alternative linear representation for proof trees. The simply typed lambda calculus and its equational system can, thus, be viewed as a calculus for proof trees and proof reductions for  intuitionistic logic. What's more, following the doctrine of proof relevance and of characterizing connectives by their proof reductions, i.e. working in the realm of Curry -- Howard Isomorphism, we hit two birds with one stone: we both develop proof relevant logics and we get typed programming languages that reflect their computational content. The ``simplest" language obtained within this program is the simply typed lambda calculus, but we will see that the same doctrine  extends to different logics with different judgmental constructs.
+Proof terms provide an alternative, linear representation for proof trees. The simply typed lambda calculus and its equational system can, thus, be viewed as a calculus for proof trees and proof reductions for  intuitionistic logic. What's more, following the doctrine of proof relevance and of characterizing connectives by their proof reductions, i.e. working in the realm of Curry -- Howard Isomorphism, we hit two birds with one stone: we both develop proof relevant logics and we get typed programming languages that reflect their computational content. The ``simplest" language obtained within this program is the simply typed lambda calculus, but we will see that the same doctrine  extends to different logics with different judgmental constructs.
   
 \subsubsection{Simply typed lambda calculus}
 \begin{mdframed}
@@ -222,7 +235,7 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mathpar}
 \inferrule*[right=$\top$I] { } {\Turnsi {\Gamma} { \langle \rangle:\top }}
 \and
-\inferrule*[right=$\bot$E] {\Turnsi {\Gamma} {M:\bot } } {\Turnsi {\Gamma} { abort[A](M) : A}}
+\inferrule*[right=$\bot$E] {\Turnsi {\Gamma} {M:\bot } } {\Turnsi {\Gamma} { \operatorname{abort}[A](M) : A}}
 \end{mathpar}
 
 \end{mdframed}
@@ -250,9 +263,10 @@ Proof terms provide an alternative linear representation for proof trees. The si
 \begin{mdframed}
 \textbf{Union Construction and Elimination}
 \begin{mathpar}
-\inferrule*[right=InjL] {\Turnsi {\Gamma} {M:A}} {\Turnsi {\Gamma} {  inj_l(M):A+B}}
+\inferrule*[right=InjL] {\Turnsi {\Gamma} {M:A}} {\Turnsi {\Gamma} {  
+	\operatorname{inj_l}[B](M):A+B}}
 \and
-\inferrule*[right=InjR] {\Turnsi {\Gamma} {M:B }} {\Turnsi {\Gamma} {inj_r(M) : A+B}}
+\inferrule*[right=InjR] {\Turnsi {\Gamma} {M:B }} {\Turnsi {\Gamma} {\operatorname{inj_r}[A](M) : A+B}}
 \end{mathpar}
 
 
@@ -262,13 +276,14 @@ Proof terms provide an alternative linear representation for proof trees. The si
 {\Turnsi {\Gamma,x:A } {N:C }}\\
 {\Turnsi {\Gamma,y:B} {O:C }}
 }
- {\Turnsi {\Gamma} {\text{case }M \text{ of } inj_l(  x)\longmapsto N  |\  inj_r (y)\longmapsto O : C}}
+ {\Turnsi {\Gamma} {\text{case }M \text{ of } \operatorname{inj_l}[B]( x)\longmapsto N  |\  \operatorname{inj_r}[A](y)\longmapsto O : C}}
 \end{mathpar}
 
 \end{mdframed}
 \subsection{Definitional Equality: Proof tree equalities as term equalities}
 
-Gentzen's principles transliterate to an equational system for terms. In the following we are defining a congruence relation on proof terms  which is usually coined as \emph{definitional equality} and denoted $M= M':A$. We want definitional equality $=$ to be the least congruence closed under the $\beta, \eta$ rules that directly reflect Gentzen's principles in term form.
+Gentzen's principles transliterate to an equational system for terms. 
+In the following we are defining a congruence relation on proof terms  which is usually coined as \emph{definitional equality} and denoted $M= M':A$. We want definitional equality $=$ to be the least congruence closed under the $\beta, \eta$ rules that directly reflect Gentzen's principles in term form.
 
 
 \begin{mdframed}
@@ -290,9 +305,9 @@ Informally , we should be able to replace ``equals with equals" everywhere in a 
 
 \subsubsection{Local Soundness}\label{ge:in}
 Local soundness captures the idea that  
-``elimintation rules are not too strong", which is the informal notion that the 
+``elimination rules are not too strong", which is the informal notion that the 
 elimination rules should cancel the introduction rules and give nothing new. 
-The so called  $\beta$ equality rules are as follows:
+The so-called  $\beta$ equality rules are as follows:
 
 
 \begin{mdframed}
@@ -311,23 +326,23 @@ The so called  $\beta$ equality rules are as follows:
 		{{\Gamma,x:A\vdash M:B}\\ {\Gamma\vdash N:A}}
 		{\Gamma\vdash(\lambda x:A .\ M)(N)= [N/x]M:B}
 		\and
-		\inferrule*[right=$\beta\vee_1$]
+		\inferrule*
 		{ {\Gamma,x
 				:A\vdash N:C}\\{\Gamma,y:B \vdash O:C}\\{\Gamma\vdash P:A} }
-		{\Gamma\vdash  ({\text{case } inj_l(P) \text{ of } inj_l(x) \longmapsto N  |\  inj_r (y)\longmapsto O) =[P/x]N: C}}
+		{\Gamma\vdash  ({\text{case } \operatorname{inj_l}[B](P) \text{ of } \operatorname{inj_l}[B](x) \longmapsto N  |\  \operatorname{inj_r}[A] (y)\longmapsto O) =[P/x]N: C}}
 		\and
-		\inferrule*[right=$\beta\vee_2$]
+		\inferrule*
 		{ {\Gamma,x
 				:A\vdash N:C}\\{\Gamma,y:B \vdash O:C}\\{\Gamma\vdash Q:B} }
-		{\Gamma\vdash  ({\text{case } inj_r(Q) \text{ of } inj_l(x)  \longmapsto N  |\  inj_r(y) \longmapsto O) =[Q/y]O: C}}
+		{\Gamma\vdash  ({\text{case } \operatorname{inj_r}[A](Q) \text{ of } \operatorname{inj_l}[B](x)  \longmapsto N  |\  \operatorname{inj_r}[A](y) \longmapsto O) =[Q/y]O: C}}
 	\end{mathpar}
 \end{mdframed}
 
 \subsubsection{Local completeness}
 
 Local completeness on the other hand captures the idea that 
-``elim rules are not to weak". Given any proof of a specific type
-one should be able to reintroduce is by extracting its constituents 
+``elimination rules are not too weak". Given any proof of a specific type
+one should be able to reintroduce it by extracting its constituents 
 via elimination rules. Another way to see this is that canonical
 forms of a certain type structure should have certain shape. 
 
@@ -348,9 +363,9 @@ the variable $x$ does not appear free in the term $M$:
 		{\Gamma\vdash M:A+B}
 		{{
 				\begin{tabular}[b]{ rl}
-					$\Gamma\vdash M = \text{case }  M \text{ of }$  & $| inj_l(x) \mapsto inj_l(x)$
+					$\Gamma\vdash M = \text{case }  M \text{ of }$  & $| \operatorname{inj_l}[B](x) \mapsto \operatorname{inj_l}[B](x)$
 					\\
-					& $ inj_r(y)\mapsto inj_r(y) : A+ B $
+					& $ \operatorname{inj_r}[A](y)\mapsto \operatorname{inj_r}[A](y) : A+ B $
 					\\
 				\end{tabular}
 			}
@@ -380,20 +395,24 @@ term surrounding the redex explicit, we can use a \textit{term context},
 i.e. a term with a single term hole, such as $\lambda x:A.[]$, $(e[\bullet])$, $[\bullet]e$, where  a hole can be substituted for a term to give a larger term. To be strict all single hole terms have the following diagram:
 $$H:= [\bullet]|\ (M[\bullet])|\  ([\bullet]M)|\ \lambda x:A. H|\  \langle H, M \rangle |\  \langle  M, H \rangle $$
 
-Now we have enough tools to define the \textit{(one-step) $\beta\eta$-reduction} between two terms can be defined on terms that include redexes as subterms as follows :
+Now we have enough tools to define the \textit{(one-step) $\beta\eta$-reduction} 
+between two terms that include redexes as follows:
 \begin{mdframed}
 	\textbf{One-step $\mapsto_{\beta\eta}$  reduction}
 	\begin{mathpar}
 		\inferrule*[right=($\beta$)]{} {(\lambda x: A. N) M \mapsto [M/x]N }
-		\and
+	\end{mathpar}
+	\begin{mathpar}
 		\inferrule*[right=($\beta$)] {}{\operatorname{fst}\langle M, N \rangle\mapsto M}
 		\and
 		\inferrule*[right=($\beta$)] {}{\operatorname{snd}\langle M, N \rangle\mapsto N}
-		\and
+	\end{mathpar}	
+	\begin{mathpar}
 		\inferrule*[right=($\eta$)]{}{\lambda x: M x\mapsto M}
-		\and
-		\inferrule*[right=($\eta$)]{} { \langle \operatorname{fst} M\operatorname{snd} M\rangle\mapsto M }  
-		\and
+        
+		\inferrule*[right=($\eta$)]{} { \langle \operatorname{fst} M, \operatorname{snd} M\rangle\mapsto M }  
+	\end{mathpar}
+	\begin{mathpar}
 		\inferrule*[right=(subterm)]{M\mapsto M^{'}}{H[M]\mapsto H[M^{'}]}
 	\end{mathpar}
 \end{mdframed}
@@ -410,7 +429,9 @@ Now we can define the  reflexive, transitive closure of the previous relation as
 		
 	\end{theorem}	
 \end{mdframed}
- The first consistency result for the equational system comes straight from the Church--Rosser properties. Since, it is  easy to show that for any terms $M$, $N$ s.t where $\Gamma\vdash M= N: A$ based on the $=$ axiomatization there exists a finite sequence of terms $N_0,\ldots, N_i$ such that $M\mapsto_{\beta\eta}^{*}N_0\mapsfrom_{\beta\eta}^{*} N_1\mapsto_{\beta\eta}^{*} N_2\mapsfrom_{\beta\eta}^{*}\ldots \mapsfrom_{\beta\eta} N_i$. Now we can obtain:
+ The first consistency result for the equational system comes straight from the Church--Rosser properties. 
+ Since it is  easy to show that for any terms $M$, $N$ s.t.  $\Gamma\vdash M= N: A$, 
+ based on the $=$ axiomatization, there exists a finite sequence of terms $N_0,\ldots, N_i$ such that $M\mapsto_{\beta\eta}^{*}N_0\mapsfrom_{\beta\eta}^{*} N_1\mapsto_{\beta\eta}^{*} N_2\mapsfrom_{\beta\eta}^{*}\ldots \mapsfrom_{\beta\eta} N_i$. Now we can obtain:
  \begin{mdframed}
  \begin{theorem}	\textbf{Definitional equality implies common contractum}
  	For any terms, $M$,$N$ if $\Gamma\vdash M= N:A$ then there exists term $L$ s.t. $M,N\mapsto_{\beta\eta}^{*} L$
@@ -429,7 +450,12 @@ Moving toward consistency of the whole system (i.e. there is not term of type $\
 For any term $M$, there exists a finite sequence of terms s.t. $M\mapsto_{\beta}N_0\mapsto_{\beta} N_1\mapsto_{\beta} N_2\mapsto_{\beta}\ldots \mapsto_{\beta} N_i$ where $N_i$ is a $\beta$ normal form.
 \end{theorem}	
 \end{mdframed}
-It is common place in metatheoretic proofs for such systems that induction on the structure of the term does not ``go through''. Intuitively, a reduction can be ``enlarging" the term but, yet, it is doing progress based on a different kind of metric. We build this metric based on the following definitions and facts. The idea is that we can choose a reduction strategy such that the number of \textit{redexes of a specific type} (to be defined soon) reduce. Here are the steps towards the proof. We omit redexes related to disjunction but the proof extends to such cases pretty easily.
+It is common place in metatheoretic proofs for such systems that induction on the structure of the term does not ``go through''. 
+Intuitively, a reduction can be ``enlarging" the term  yet, 
+it is doing progress based on a different kind of metric. 
+ The idea is that we can choose a reduction strategy 
+such that the number of \textit{redexes of a specific type} 
+(to be defined soon) reduce. Here are the steps towards the proof. We omit redexes related to disjunction but the proof extends to such cases pretty easily.
 
 
 \begin{mdframed}
@@ -466,7 +492,6 @@ Now we can prove the following facts:
 \end{enumerate}
 	\end{mdframed}
 \end{theorem}
-Which give us the following fact that suggests the induction principle that succeeds toward the proof.
 \begin{mdframed}
 	\begin{theorem}
 If $M\mapsto M^{\prime}$ then $d(M)<d(N)$ and hence, if $M\mapsto^{+} N$ then $d(M)<d(N)$.
@@ -488,20 +513,28 @@ Combining with previous results we get:
 There is no (closed) term $M$ for which $\vdash M:\bot$ 
 \end{mdframed}
 \end{theorem}
- Suppose the opposite and obtain a contradiction using the previous theorem: there is no way to obtain a normal form of a bottom type from the rules.  
+ Suppose the opposite and obtain a contradiction 
+ using the previous theorem; there is no way to obtain a normal form of a bottom type from the rules.  
  
- A stronger result is the strong normalization theorem that says that \textit{every} strategy 
- in normalizing. This result is important in concurrent implementations of reduction since 
- it implies that the order in which redexes are consumed does 
- not matter during the evaluation of  expression. 
+ A stronger result is the strong normalization theorem which states that \textit{every} 
+ strategy is normalizing. This result is relevant to concurrent 
+ implementations of reduction since it implies that the order 
+ in which redexes are consumed does not matter during the evaluation of  expression. 
  
  The important idea behind the technique -- that generalizes to proof of 
- strong normalization for more complex calculi-- is the concept of  reducibility predicates. 
- Reducibility predicates give a stronger induction principle that delivers the desired 
- result as a lemma(see, e.g. ~\cite{prawitz1971ideas}). 
+ strong normalization for more complex calculi-- is the concept of  reducibility predicates (see, e.g. ~\cite{prawitz1971ideas}). 
  
 
 \subsection{The essence of proofs--as--programs }
-The proofs of normalization above are essentially of the same "proof strength" (induction principles) as the logical proof of cut elimination. In a nutshell, eliminating cuts is the same as normalizing proof terms (and the corresponding proof trees).
+The proofs of normalization above are essentially of the same 
+\say{proof strength}  as the logical proof of cut elimination. 
+In a nutshell, eliminating cuts is the same as normalizing proof 
+terms (or, correspondingly, proof trees).
 
-In reality, the slogan of the Curry-Howard isomorphism and, in general, of a type theoretic treatment to logic should be "Normalization as Cut Elimination". This aspect of the isomorphism can be shown explicitly follow Sieg's extraction method ~\cite{Sieg1998}, that  showcases how a construction of the Cut-free sequent calculus comes naturally from an analysis of normal proofs in the natural deduction. 
+In reality, the slogan of the Curry-Howard isomorphism and, 
+in general, of a type theoretic treatment to logic should be \say{Normalization as Cut Elimination}. 
+This aspect of the isomorphism can be articulated 
+nicely following Sieg's extraction method ~\cite{Sieg1998}, which  
+showcases how a construction of a Cut-free sequent 
+calculus comes naturally from an analysis of normal proofs 
+in natural deduction. 
