@@ -14,7 +14,7 @@ validity-under-interpretation and, hence,
 treat  a  ``semantical'' notion in a purely
  proof-theoretic manner. We present the system  in 
 Gentzen-style  natural deduction formulation  and provide reduction and expansion rules for the $\Box$ connective. Finally, we add proof-terms and proof-term equalities
-to obtain a corresponding calculus ({\sf{Jcalc$^{-}$}}) in the next chapter.
+to obtain a corresponding calculus ({\sf{Jcalc}}) in the next chapter.
 The obtained system can be viewed as an extension of the Curry--Howard 
 isomorphism with justifications.
 We provide standard metatheoretic results  and suggest a 
@@ -115,7 +115,7 @@ provides for an axiomatization of such logically complete interpretations $\llbr
 In what follows we provide  a natural deduction for
 an intuitionistic system $I$ (truth), an axiomatization/specification of   $\llbracket \bullet \rrbracket_J$ (treated abstractly as a function symbol on types) and a treatment 
 of basic necessity that relates the two deductions by internalizing  a  notion of ``double truth'' (proof in $I$  and  existence of corresponding validation in  $J$).
-\section{Judgments of Jcalc$^{-}$}
+\section{Judgments of Jcalc}
 \label{lsjcalc}
 
 We aim for a reading of necessity that internalizes a notion of ``double proof''  in two deductive systems.
@@ -185,7 +185,7 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 		\item Judgments that relate truth and validity (modal judgments).
 	\end{itemize}
 	%The former judgments could be viewed as a "Hilbert-style" encoding of the underlying intuitionistic one. Justification logic uses a combinatory calculus (extended with classical combinators) to represent logical principles (constants) in this second level. We follow the same route, obtaining a Curry Howard Correspondance for Justification logic under this new ``necessity as double proof" doctrine. 
-	\subsection{Natural Deduction for Jcalc$^{-}$}
+	\subsection{Natural Deduction for Jcalc}
 	The treatment of necessity in the previous section is completely orthogonal to the underlying systems \
 	(it just assumes the basic requirements stated for the behavior $\llbracket\bullet\rrbracket$). 
 	In this section we will provide a full natural deduction and in congruence with justification logic we will
@@ -404,7 +404,7 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 		\end{mathpar}}
 	\end{mdframed}
 	
-	It is easy to verify that axioms $1$, $2$ are derived theorems of {\sf Jcalc$^{-}$} in ${\sf Prop_0}$. The rule Modus Ponens is also admissible trivially, whereas axiom $K$  was  
+	It is easy to verify that axioms $1$, $2$ are derived theorems of {\sf Jcalc} in ${\sf Prop_0}$. The rule Modus Ponens is also admissible trivially, whereas axiom $K$  was  
 	shown to be a theorem in the previous section (\ref{smpdv}). The rule of Necessitation is not obviously admissible though. In our reading of necessity the
 	admissibility of this rule is directly related to the requirement of ``logical completeness of the interpretation'' i.e. preservation of logical theoremhood.  
 	In general, adding more connectives in $I$ would require additional specifications for the host theory to obtain necessitation.
@@ -413,7 +413,7 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 	The proof fully depends on
 	the provability requirements imposed in the $\llbracket{\sf Prop_0}\rrbracket$ fragment.
 	\begin{theorem}[$\Box$Lifting Lemma]
-		In {\sf Jcalc$^{-}$}, for every  $\Gamma,   A \in {\sf Prop_0}$ if  $\Gamma\vdash A$ then  $\llbracket \Gamma\rrbracket\vdash\llbracket A\rrbracket $ and, hence, $\Box\Gamma \vdash \Box   A$.
+		In {\sf Jcalc}, for every  $\Gamma,   A \in {\sf Prop_0}$ if  $\Gamma\vdash A$ then  $\llbracket \Gamma\rrbracket\vdash\llbracket A\rrbracket $ and, hence, $\Box\Gamma \vdash \Box   A$.
 	\end{theorem}
 	We get admissibility of necessitation as a lemma for $\Gamma$ empty:
     \begin{theorem}[Admissibility of Necessitation]
@@ -422,7 +422,7 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 	\end{theorem}
 	As a result:
 	\begin{theorem}[Completeness]
-		{\sf Jcalc$^{-}$} is complete with respect to the Hilbert style formulation of degree-$1$ intuitionistic $K$ modal logic. 
+		{\sf Jcalc} is complete with respect to the Hilbert style formulation of degree-$1$ intuitionistic $K$ modal logic. 
 	\end{theorem}
 	
 	\subsection{Harmony: Local Soundness and Local Completeness}
@@ -521,7 +521,7 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 		\end{mathpar}}
 		\subsection{(Global) Soundness}
 		\label{seqcalc}
-		Soundness is shown by proof theoretic techniques. Standardly, we add the bottom type ($\bot$) to {\sf Jcalc$^{-}$} together with its elimination rule and show  that the system is consistent ($\not\vdash \bot$) by   devising a sequent calculus  and showing admissibility of cut. We 
+		Soundness is shown by proof theoretic techniques. Standardly, we add the bottom type ($\bot$) to {\sf Jcalc} together with its elimination rule and show  that the system is consistent ($\not\vdash \bot$) by   devising a sequent calculus  and showing admissibility of cut. We 
 		only present the calculus here and collect the theorems towards consistency  in the Appendix. 
 		
 		In the following we use $\Gamma\Rightarrow   A$ (where $\Gamma,  A \in {\sf Prop_0}\cup{\sf Prop_1})$  to denote 
@@ -569,7 +569,7 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 			%\begin{proposition}
 			%$\centernot{\Rightarrow^{+}}\bot$
 			%\end{proposition}
-			\begin{theorem}[Consistency of {\sf Jcalc$^{-}$}]
+			\begin{theorem}[Consistency of {\sf Jcalc}]
 				$\centernot{\vdash}\bot$
 			\end{theorem}
 			

@@ -358,7 +358,7 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
         \section{Related and Future Work}
         \label{relat}
         Directly related work with our calculus, in the same fashion that justification logic and LP \cite{Artemov2001} are related to modal logic, is \cite{Bellin2001}.  The work in \cite{Bellin2001} provides a calculus for explicit assignments (substitutions) which is actually a sub-case of 
-        {\sf Jcalc$^{-}$} with $\llbracket\bullet \rrbracket$ identity. This  sub-case  captures dynamic linking where the host language is the very same one; such need appears in languages with module mechanisms (i.e. implementation hiding and separate compilation within the very same language). In general, the judgmental approach to modality is heavily influenced by \cite{citeulike:5447115}. In a sense, our treatment of validity-as-explicit-provability also generalizes the approach there without having to commit to a ``factive" modality. Finally,  
+        {\sf Jcalc} with $\llbracket\bullet \rrbracket$ identity. This  sub-case  captures dynamic linking where the host language is the very same one; such need appears in languages with module mechanisms (i.e. implementation hiding and separate compilation within the very same language). In general, the judgmental approach to modality is heavily influenced by \cite{citeulike:5447115}. In a sense, our treatment of validity-as-explicit-provability also generalizes the approach there without having to commit to a ``factive" modality. Finally,  
         important results on programming paradigms related to justification logic have been obtained in \cite{ArtBon07LFCS,BONELLI2012935, bavera2010justification}. 
         Immediate future developments would be to interpret modal formulas of higher degree under the same principles. 
         This corresponds to dynamic linking in two or more steps (i.e., when the host becomes itself a client of another interface that is implemented dynamically in a third level and, so on). 
@@ -409,7 +409,7 @@ We do not repeat here the corresponding $\beta, \eta$ equality rules since they 
         \begin{theorem}[Collapse $\Box$ Lemma] If $\Box\Gamma\vdash \Box A$ for $\Gamma,A \in {\sf Prop_0}$ then $ \Gamma\vdash  A$.
         \end{theorem}
         \begin{theorem}[Weakening]
-            For the N.D. system of {\sf Jcalc$^{-}$}, with $\Gamma, \Gamma^{\prime}\in {\sf Prop_0}$.
+            For the N.D. system of {\sf Jcalc}, with $\Gamma, \Gamma^{\prime}\in {\sf Prop_0}$.
             \begin{enumerate}
                 \item If  $\Gamma\vdash A$ then $\Gamma,\Gamma^{\prime}\vdash   A$.
                 \item If  $\Box\Gamma\vdash \Box   A$ then $\Box\Gamma,\Box\Gamma^{\prime} \vdash \Box A$.
