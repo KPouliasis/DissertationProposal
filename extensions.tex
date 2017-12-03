@@ -2,15 +2,18 @@
 \label{ext}
 In this chapter we will make an informal case about the scalability
 of the presented system. We will sketch how the calculus can
-quite easily be extended in different ways 
-and make a case that such extensions are of interest from 
-the trinitarian (logic/ type theory/ category theory)
+easily be extended in different ways 
+and support that such extensions are of interest from 
+a trinitarian (logic/ type theory/ category theory)
 point of view.
 
 \section{Extending on higher order modal types}
 We saw in Chapter $6$ how the calculus corresponds to Jcalc algebras
-which are essentially pairs of Heyting algebras under an order preserving function.
+which are essentially pairs of Heyting algebras 
+under an order preserving function.
 The points of such functions correspond to $\Box$ed types.
+
+
 
 \begin{tikzpicture}[description/.style={fill=white,inner sep=2pt}]
     \matrix (m) [matrix of math nodes, row sep=3em,
@@ -27,9 +30,10 @@ The points of such functions correspond to $\Box$ed types.
 
 This structure is easily
 extensible to account for $\Box$ed types of higher degree. Instead of a pair of 
-Heyting algebras we could have a stack of Heyting algebras 
+Heyting algebras we could have a tower of Heyting algebras 
 related with order preserving
 functions as shown in the schema.
+
 
 \begin{tikzpicture}[description/.style={fill=white,inner sep=2pt}]
     \matrix (m) [matrix of math nodes, row sep=3em,
@@ -56,19 +60,20 @@ the system can
 be axiomatized to reason about chains of 
 composable (provability) preserving functions. 
 The modifications required are minor to obtain such a system.
-Instead of a function symbol $\llbracket \rrbracket$ we have $F_0, F_1\ldots F_j$ and we 
+Instead of one function symbol $\llbracket\bullet \rrbracket$ 
+we have a collection $F_0, F_1\ldots F_j$ and we 
 define for any formula $\Box A\in {\sf Prop_i}$, 
-$F_i\Box A:= \Box F_i A$ (
-    and similarly, lifting over the connectives: 
-$F_i(\Box A\supset \Box B):= \Box F_i A\supset\Box F_i B$)
-the rule can then be written:
+$F_i\Box A:= \Box F_i A$ (and, similarly, lifting over the connectives: 
+$F_i(\Box A\supset \Box B):= \Box F_i A\supset\Box F_i B$).
+The rule can then be written:
 
 \begin{mdframed}[nobreak=true, frametitle={\footnotesize 
-    Judgments on Necessity with $\Gamma\in {\sf Prop_i} \text{,{\ \sf length}}(\Gamma)=i\text{,\ }
+    Judgments on Necessity \\
+    with $\Gamma\in {\sf Prop_i} \text{,{\ \sf length}}(\Gamma)=j\text{,\ }
     \ 1\le k\le j  \text{\ and, }\Gamma^{\prime},A, A_k,  B\in {\sf Prop_{i-1}}$ }]
 \mbox{\footnotesize
     \begin{mathpar}
-        \inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_i}$]
+        \inferrule*[right=$I_{\Box B}E^{\vec{x},\vec{s}}_{\Box A_1\ldots \Box A_j}$]
         {{(\forall  A_i \in \Gamma'. \ \Turn {\Gamma}{\Box  A_i})}\\{\Turn {\Gamma'} { B}}\\{\Turn {F_i\Gamma'} {F_i  B} }} {\Turn {\Gamma}\Box  B}
         
     \end{mathpar}}
@@ -81,74 +86,79 @@ the rule can then be written:
 
 There is a classic passage from orders to categories, 
 which corresponds to the passage of provability to 
-proof relevance. In addition, order preserving functions become 
+proof relevance. The main idea is that  instances ($\Gamma\le\phi$)
+of the inequality relation arising from an order theoretic treatment
+of a deductive system are now refined to (equivalent classes) 
+of arrows $M:\Gamma\Longrightarrow \phi$. Each
+term $M$ is corresponding to a different deduction  of $\phi$ 
+from $\Gamma$.
+Order preserving functions become 
 functors in the categorical scenario. But functors behave functionally
-on terms (i.e. preserve proof equalities, or essentially, normalization principles of the cut elimination process).
+on terms; they preserve proof equalities  or, essentially, normalization principles of the cut elimination process.
 To account, hence, for 
 a categorical semantics of the system one has to account for equality
 in the higher level of the system (i.e. on justifications).
 
-This idea is actually not foreign in the literature that explores the relation
-between lambda calculus and (typed) combinatory logic and, in addition,
+This idea is actually not foreign in literature that explores the relation
+between lambda calculus and (typed) combinatory logic and, moreover,
 it is tempting to introduce equality between justifications so that one
 could more accurately describe computational phenomena arising when 
 a language interacts with another language (or, its own modules).
 
-Generalizing, from the order theoretic semantics, we would expect a system
-in which $\llbracket\rrbracket$ would correspond to functors 
+Generalizing from the order theoretic semantics, we would expect a system
+in which $\llbracket\bullet\rrbracket$ would correspond to functors 
 (preserving the connectives and hence, $\beta\eta$ equalities). 
-We are expecting the extension of Jcalc with rules for $\beta\eta$ equalities 
+We are expecting an extension of Jcalc with rules for $\beta\eta$ equalities 
 on the level of justifications to fit exactly the bill.
 
-We expect that such a system is a full axiomatization  of functors
-that preserve products and exponentials (of cartesian closed categories) 
-Which are common in the literature in proofs of the (syntactical) 
-embedding of the lambda calculus into combinatory logic.
+
 
 
 
 \section {Factivity and adjunctions}
 Having an understanding of the system in order theoretic/ categorical terms 
-helps thinking about extensions. In any category theoretic
+facilitates thinking about extensions. In any category theoretic
 textbook, the next ``tighter" relation between categories is that of an adjunction.
-Interestingly, the notion of adjunction, is also central in the relation
-between classical and intuitionistic proofs (the two parts of the adjunction
-are inclusion, and double negation translation).  The notion of adjunction, plays
-an important role in functional programming theory as the backbone 
+Interestingly, adjunctions arise from the relation of classical and intuitionistic proofs.  
+Also, adjunctions play an important role in functional programming theory as the backbone 
 of monadic computation. 
 
-We would expect that the view of necessity as 
-relating two proof systems could be extended to cover such a notion.
-In order theoretic terms an adjunction between two partial orders $\mathcal{C},\mathcal{D}$
+We would expect that our view of necessity as 
+a means of controlling two proof systems could be 
+extended to cover such a notion.
+In order-theoretic terms, an adjunction between two partial orders $\mathcal{C},\mathcal{D}$
 is a pair of order preserving functions $L:\mathcal{D}\rightarrow C$, $R:\mathcal{C}\rightarrow{D}$
 such that there is an isomorphism:
-$\forall d\in  D, c\in C Ld\ le c \longleftrightarrow d\le R c$. A logically interesting example of 
-an adjunction is that between intuitionistic proofs and classical proofs where the $L$ adjunct is inclusion
-and the right adjunct is double negation translation and we have:
+$\forall d\in  D, c\in C. \  Ld\le c \longleftrightarrow d\le R c$. A logically interesting example of 
+an adjunction is that between intuitionistic proofs and 
+classical proofs where the left adjunct is inclusion
+and the right one is double negation translation and we have:
 \begin{mathpar}
     \inferrule*[right=$\downarrow\uparrow$]{I(\Gamma)\vdash\phi}{\Gamma\vdash\neg\neg \phi} 
 \end{mathpar}
 To axiomatize such notions in $Jcalc$ one should add another function symbol to 
 correspond to $R$ and add the rule:  
 \begin{mathpar}
-    \inferrule*[right=$R$]{\llbracket\Gamma\rrbracket\vdash_J j:\phi}
-    {\Gamma\vdash return{j}:R\phi} 
+    \inferrule*[right=$R$]{\llbracket\Gamma\rrbracket\vdash_J \sf{j}:\phi}
+    {\Gamma\vdash {\sf return{\  (j)}:R\phi}} 
 \end{mathpar}
 
-This is enough to obtain a generalized notion of Factivity that is:
+This is enough to obtain a generalized notion of Factivity:
 \begin{mathpar}
     \inferrule*[right=$R$]{\llbracket\Gamma\rrbracket\vdash M:\Box\phi}
-    {\Gamma\vdash let \_&s=M in return (s):R\llbracket\phi\rrbracket} 
+    {\Gamma\vdash {\sf let \_&s=}M {\sf \ in \ return \ (s)}:R\llbracket\phi\rrbracket} 
 \end{mathpar}
-Such an extension gives the standard factivity rule if $R\llbracket\rrbracket=id$.
-Such extensions can capture phenomena in which a language is giving control to another language
-to perform a computation externally but then it retains to control to calculate the continuation
-of the client program. Refine example above.
+Such an extension gives the standard factivity rule if the composition 
+$R\llbracket\bullet\rrbracket=id$.
+With such a rule, a system can capture phenomena in which 
+a language is giving control to another language
+partially to calculate a result but it retains  control back
+for the continuation its program.
 
 To conclude, our system captures a basic fragment of justification logic within
 a Curry--Howard isomorphism. Justification logic provides a rich, higher-order system
-with reflection. We expect that it can deployed to provide foundations for richer
-type programming language interaction.
+with reflection. We expect that it can be deployed to provide foundations for richer
+typed programming language interaction.
 
 
 

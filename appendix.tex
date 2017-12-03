@@ -20,19 +20,20 @@ The proof goes by induction on the derivations trivially for all the cases($\sup
 For $\Gamma,   A \in {\sf Prop_0}$, then $\Gamma\vdash   A$ implies $\Box\Gamma \vdash \Box   A$.
 \end{lemma}
 \begin{proof}
- Assuming a derivation $\mathcal {D}$ ::$\Gamma\vdash   A$ from \ref{bracklift} there exists corresponding validity derivation $\mathcal{E}::\llbracket\Gamma\rrbracket\vdash\llbracket   A \rrbracket$. Using the two as premises in the $\Box_{IE}$ with $\Gamma := \Box \Gamma$ we obtain $\Box\Gamma\vdash\Box   A$.
+ Assuming a derivation $\mathcal {D}$ ::$\Gamma\vdash   A$, 
+ from the  previous item, there exists corresponding validity derivation $\mathcal{E}::\llbracket\Gamma\rrbracket\vdash\llbracket   A \rrbracket$. Using the two as premises in the $\Box_{IE}$ with $\Gamma := \Box \Gamma$ we obtain $\Box\Gamma\vdash\Box   A$.
 \end{proof}
-From the previous we get:
-Let us show an inverse principle to the $\Box$ Lifting Lemma. We define for $A$ in {\sf Prop}:
+Let us show an inverse principle to the $\Box$ Lifting Lemma. 
+We define for $A$ in {\sf Prop$_1$}:
 \begin{flalign*}
-\nonumber \downharpoonright P_i\ & =  P_i \\ \downharpoonright (A_1\supset A_2)&  =  \downharpoonright A_1 \supset \downharpoonright A_2 \\
+\nonumber  \downharpoonright (A_1\supset A_2)&  =  \downharpoonright A_1 \supset \downharpoonright A_2 \\
 \downharpoonright \Box A & = \downharpoonright A
 \end{flalign*}
 And the lifting of the $\downharpoonright$ over $\Gamma\in {\sf Prop}$. We get:
-\begin{theorem}[Collapse $\Box$ Lemma] If $\Gamma\vdash A$ for $\Gamma,A \in {\sf Prop}$ then $\downharpoonright \Gamma\vdash \downharpoonright$ A.
+\begin{theorem}[Collapse $\Box$ Lemma] If $\Gamma\vdash A$ for $\Gamma,A \in {\sf Prop_1}$ then $\downharpoonright \Gamma\vdash \downharpoonright$ A.
 \end{theorem}
 \begin{theorem}[Weakening]
-For the N.D. system of JCalc, with $\Gamma,\Gamma^{\prime}\vdash \sf wf$ and $\Delta,\Delta^{'}\vdash\llbracket {\sf wf}\rrbracket $.
+For the N.D. system of Jcalc, with $\Gamma,\Gamma^{\prime}\vdash \sf wf$ and $\Delta,\Delta^{'}\vdash\llbracket {\sf wf}\rrbracket $.
 \begin{enumerate}
 \item If  $\Gamma\vdash   A$ then $\Gamma,\Gamma'\vdash   A$.
 \item If  $\Delta\vdash \llbracket   A\rrbracket$ then $\Delta,\Delta^{'} \vdash \llbracket   A\rrbracket$.
@@ -43,7 +44,7 @@ For the N.D. system of JCalc, with $\Gamma,\Gamma^{\prime}\vdash \sf wf$ and $\D
 By induction on derivations.
 \end{proof}
 \begin{theorem}[Contraction]
-For the N.D. system of JCalc, with $\Gamma,x:A,x':A,\Gamma'\vdash \sf wf$ and $\Delta,s:\llbracket A \rrbracket, s':\llbracket A\rrbracket,\Delta^{'}\vdash\llbracket {\sf wf}\rrbracket $.
+For the N.D. system of Jcalc, with $\Gamma,x:A,x':A,\Gamma'\vdash \sf wf$ and $\Delta,s:\llbracket A \rrbracket, s':\llbracket A\rrbracket,\Delta^{'}\vdash\llbracket {\sf wf}\rrbracket $.
 \begin{enumerate}
 \item If  $\Gamma,x:A,x':A,\Gamma'\vdash  B$ then $\Gamma,x:A,\Gamma'\vdash   B$.
 \item If  $\Delta,s:\llbracket A \rrbracket, s':\llbracket A\rrbracket,\Delta^{'}\vdash\llbracket B \rrbracket $ then $\Delta,s:\llbracket A \rrbracket, \Delta^{'} \vdash \llbracket   B\rrbracket$.
@@ -53,7 +54,7 @@ For the N.D. system of JCalc, with $\Gamma,x:A,x':A,\Gamma'\vdash \sf wf$ and $\
 By induction on derivations.
 \end{proof}
 \begin{theorem}[Permutation]
-For the N.D. system of JCalc, with $\Gamma\vdash \sf wf$ and $\Delta\vdash\llbracket {\sf wf}\rrbracket $ and $\pi \Gamma$ and $\pi \Delta$ the collection of well-formed contexts of assumptions with the same co-domain of $\Gamma$, $\Delta$ we get
+For the N.D. system of Jcalc, with $\Gamma\vdash \sf wf$ and $\Delta\vdash\llbracket {\sf wf}\rrbracket $ and $\pi \Gamma$ and $\pi \Delta$ the collection of well-formed contexts of assumptions with the same co-domain of $\Gamma$, $\Delta$ we get
 \begin{enumerate}
 \item If  $\Gamma\vdash   A$ and $\Gamma'\in \pi{\Gamma}$ then $\Gamma'\vdash   A$.
 \item If  $\Delta\vdash \llbracket   A\rrbracket$ and $\Delta^{'}\in \pi \Delta$ then  $ \Delta'\vdash \llbracket   A\rrbracket$.
@@ -69,7 +70,7 @@ The following hold for both kinds of judgments:
 \item If  $\Delta,s:\llbracket A \rrbracket \vdash \llbracket B\rrbracket$ and$\Delta\vdash  \llbracket A\rrbracket$ then  $\Delta\vdash\llbracket B\rrbracket$ 
 \end{enumerate}
 \end{theorem}
-All previous $9$ theorems can be stated for proof terms too. We should discuss the following:
+All previous  theorems can be stated for proof terms too. Specifically:
 \begin{theorem}[Deduction Theorem / Emulation of $\lambda$ abstraction]
 	\label{deductterms}
 	With $\Delta\vdash \llbracket\sf wf\rrbracket$, if $\Delta, s:\llbracket   A\rrbracket \vdash {\sf j}:\llbracket B \rrbracket $ then there exists {\sf j'} s.t. $\Delta \vdash {\sf j'}:\llbracket   A \supset B \rrbracket $. 
@@ -78,7 +79,8 @@ All previous $9$ theorems can be stated for proof terms too. We should discuss t
 \label{highorder}
 	If $\Gamma A \in {\sf Prop_0}$ and $\Gamma\vdash M: A$ then there exists ${\sf j}$ s.t. $\llbracket \Gamma\rrbracket \vdash {\sf j}:\llbracket   A \rrbracket$. 
 \end{lemma}
-In both theorems the existence of this ${\sf j,j'}$ is algorithmic following the induction proof. 
+In both theorems the existence of this ${\sf j,j'}$ is algorithmic following the induction
+principle of the proof. 
 
 
 \chapter{Notes on the cut elimination proof and normalization of natural deduction}

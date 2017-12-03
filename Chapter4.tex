@@ -37,8 +37,8 @@ We recover them later and study  their relation  to  the Rule of Necessitation f
 What's more,  such a semantic relation can be treated logically giving  rise to a modality of 
 explicit necessity. 
 Different sorts of necessity
-have been offered  an explicit counterpart under the umbrella of justification 
-logic and there is an infinite family of such logics. 
+have been offered  explicit counterparts under the umbrella of justification 
+logic. In fact, there is an infinite family of  logics of justification. 
 Some of them have been studied within a
 Curry--Howard setting ~\cite{ArtBon07LFCS}. Our paper
 focuses on  $K$ modality and  should be viewed as the  counterpart of ~\cite{Bellin2001} with justifications as we explain in \ref{relat}.
@@ -85,15 +85,15 @@ Now we can define:
 \begin{definition}
 	Given a deductive system $I$, we say that an interpretation  $\llbracket\bullet \rrbracket_J$  is \textit{logically complete} when  for
 	all purely logical deductions $\mathcal{D}$ (i.e. deductions that make no use of $\Sigma_I$) in $I$ 
-	there exists a corresponding (purely logical) validation $\llbracket\mathcal{D}\rrbracket$ in $J$.
+	there exists a corresponding (purely logical) validation $\llbracket\mathcal{D}\rrbracket$ in $J$\footnote{Note, that we require existence but not uniqueness. Nevertheless, if we treat deductive systems  in a proof irrelevant manner as preorders 
+	the above definition gives uniqueness vacuously. In a more refined approach where $I$ and $J$ are viewed as  categories of proofs  the above ``logical completeness''  
+	translates to the requirement that if the set of (purely logical) arrows $Hom_I(\Gamma,A)$ is non empty  then $Hom_J(\llbracket\Gamma\rrbracket,\llbracket A\rrbracket_J)$ 
+	cannot be empty (i.e. that $\llbracket\bullet \rrbracket_J$ can be extended to a functor). We leave a complete categorical semantics of our logic 
+	for future work but we expect   a generalization of the 
+	endofunctorial interpretations of $K$ modality appearing in \cite{Bellin2001,kavvos2016system}.}.
 	i.e. $$\forall \mathcal{D}. \ \mathcal{D}:\Gamma\vdash_I A \Longrightarrow \exists \llbracket\mathcal{D}\rrbracket: \llbracket \Gamma\vdash A\rrbracket_J$$
 \end{definition}
-\footnote{Note, that we require existence but not uniqueness. Nevertheless, if we treat deductive systems  in a proof irrelevant manner as preorders 
-the above definition gives uniqueness vacuously. In a more refined approach where $I$ and $J$ are viewed as  categories of proofs  the above ``logical completeness''  
-translates to the requirement that if the set of (purely logical) arrows $Hom_I(\Gamma,A)$ is non empty  then $Hom_J(\llbracket\Gamma\rrbracket,\llbracket A\rrbracket_J)$ 
-cannot be empty (i.e. that $\llbracket\bullet \rrbracket_J$ can be extended to a functor). We leave a complete categorical semantics of our logic 
-for future work but we expect   a generalization of the 
-endofunctorial interpretations of $K$ modality appearing in \cite{Bellin2001,kavvos2016system}.} 
+ 
 
 
 Examples of triplets ($I$, $J$, $\llbracket\bullet \rrbracket_J$) of logical systems that fall under the definition above are: any intuitionistic system mapped 
@@ -106,7 +106,7 @@ is admissibility of necessitation which is obtained even in the extreme case whe
 everything. 
 
 
-The main thesis that is exposed in this chapter is that this notion of ``double proof'' (reasoning about proofs that exists in two related systems) 
+The main thesis outlined  in this chapter is that this notion of ``double proof'' (reasoning about proofs that exists in two related systems) 
 provides for an understanding of necessity in proof theoretic terms. In addition, we argue, 
 that this is the driver of (at least) the simplest
 form of necessity ($K$) that appears in justification logic (\textit{necessity as internalization}).
@@ -204,8 +204,7 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	of provability (existence of proofs) of any candidate $J$. 
 	
 	When we write $\llbracket \Gamma\rrbracket\vdash\llbracket\phi\rrbracket$ it reads as there exists derivation
-	$\mathcal{D}$ : $\Delta\vdash_{J}\psi$ s.t. $\Delta=\llbracket\Gamma\rrbracket$ and $\psi = \llbracket \phi\rrbracket$ )
-	
+	$\mathcal{D}$ : $\Delta\vdash_{J}\psi$ s.t. $\Delta=\llbracket\Gamma\rrbracket$ and $\psi = \llbracket \phi\rrbracket$).
 	We use ${\sf Prop_0}$  to denote  the type universe of $I$ and $\llbracket \sf Prop_0\rrbracket $ to denote its image under an interpretation, ${\sf Prop_1}$ denotes   modal (``boxed'') types
 	and ${\sf Prop}$  the union of ${\sf Prop_0, Prop_1}$. We write $P_k$ with $k$ ranging in some subset of natural numbers to denote atomic propositions in $I$. 
 	
@@ -334,12 +333,16 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 			\end{mdframed}
 			
 			Finally, we have judgments in the $\Box$ed universe (${\sf Prop_1}$). These are context reflection, the $\Box$ Intro-After-Elim rule, and the rules for intuitionistic implication between $\Box$ed types
-			\footnote{The implication and elimination rules in ${\sf Prop_1}$ actually coincide with the ones
-				in ${\sf Prop_0}$ since we are focusing on the case where $I$ is intuitionistic. This need not necessarily be the case as we have explained. Intuitionistic  implication among $\Box$ types should be read as
+			\footnote{The implication and elimination rules 
+			in ${\sf Prop_1}$ actually coincide with the ones
+				in ${\sf Prop_0}$ since we are focusing on the 
+				case where $I$ is intuitionistic. 
+				This need not necessarily be the case as we have explained. Intuitionistic  implication among $\Box$ types should be read as
 				``double proof of $A$ implies double
 				proof of $B$'' and would still be defined even if we did not observe any kind of  implication in $I$. Similarly, one could provide intuitionistic conjunction or disjunction between $\Box$ types independently of 
 				$I$ and, vice versa, one could add connectives in $I$ that are not observed between $\Box$ed types.}. 
-			\begin{mdframed}[nobreak=true, frametitle={\footnotesize Judgments on Necessity with $\Gamma\in {\sf Prop_1} \text{,{\ \sf length}}(\Gamma)=i\text{,\ }
+			\begin{mdframed}[nobreak=true, frametitle={\footnotesize Judgments on Necessity with \\ $\Gamma\in 
+				{\sf Prop_1} \text{,{\ \sf length}}(\Gamma)=i\text{,\ }
 					\ 1\le k\le i  \text{\ and, }\Gamma^{\prime},A, A_k,  B\in {\sf Prop_0}$ }]
 				\mbox{\footnotesize
 					\begin{mathpar}
@@ -377,7 +380,7 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 					}
 \subsection{Logical Completeness, Admissibility of Necessitation and Completeness with respect to Hilbert Axiomatization}
 \label{completness}
-Here we give a Hilbert  axiomatization  of the $\supset$ fragment of intuitionistic $K$ logic in order to compare it with our system. Here  $\vdash^{\mathcal{H}}$ captures the textbook (metatheoretic)
+In this section,  we give a Hilbert  axiomatization  of the $\supset$ fragment of intuitionistic $K$ logic in order to compare it with our system. Here  $\vdash^{\mathcal{H}}$ captures the textbook (metatheoretic)
 notion of ``deduction from assumptions'' in a Hilbert style axiomatization. 
 We assume the restriction of the system to formulas up to modal degree $1$ as we have done throuhgout. 
 This restriction is, firstly, for pedagogical purposes and, secondly, for pragmatic purposes 
@@ -405,13 +408,13 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 		\end{mathpar}}
 	\end{mdframed}
 	
-	It is easy to verify that axioms $1$, $2$ are derived theorems of {\sf Jcalc} in ${\sf Prop_0}$. The rule Modus Ponens is also admissible trivially, whereas axiom $K$  was  
+	It is easy to verify that axioms $1$, $2$ are derived theorems of {\sf Jcalc} in ${\sf Prop_0}$. The rule Modus Ponens is trivially admissible, whereas axiom $K$  was  
 	shown to be a theorem in the previous section (\ref{smpdv}). The rule of Necessitation is not obviously admissible though. In our reading of necessity the
 	admissibility of this rule is directly related to the requirement of ``logical completeness of the interpretation'' i.e. preservation of logical theoremhood.  
 	In general, adding more connectives in $I$ would require additional specifications for the host theory to obtain necessitation.
 	
 	The steps of the proof are given in the Appendix, but this is essentially  the ``lifting lemma'' in justification logic \cite{Artemov2001}. 
-	The proof fully depends on
+	The proof makes essential use of
 	the provability requirements imposed in the $\llbracket{\sf Prop_0}\rrbracket$ fragment.
 	\begin{theorem}[$\Box$Lifting Lemma]
 		In {\sf Jcalc}, for every  $\Gamma,   A \in {\sf Prop_0}$ if  $\Gamma\vdash A$ then  $\llbracket \Gamma\rrbracket\vdash\llbracket A\rrbracket $ and, hence, $\Box\Gamma \vdash \Box   A$.
@@ -525,7 +528,7 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 		Soundness is shown by proof theoretic techniques. Standardly, we add the bottom type ($\bot$) to {\sf Jcalc} together with its elimination rule and show  that the system is consistent ($\not\vdash \bot$) by   devising a sequent calculus  and showing admissibility of cut. We 
 		only present the calculus here and collect the theorems towards consistency  in the Appendix. 
 		
-		In the following we use $\Gamma\Rightarrow   A$ (where $\Gamma,  A \in {\sf Prop_0}\cup{\sf Prop_1})$  to denote 
+		In the following, we use $\Gamma\Rightarrow   A$ (where $\Gamma,  A \in {\sf Prop_0}\cup{\sf Prop_1})$  to denote 
 		sequents modulo $\Gamma$ permutations where $\Gamma$ is a multiset of ${\sf Prop}$ (no labels)  and $\Delta \Rightarrow\sf \llbracket   A \rrbracket$ for sequents corresponding to $\llbracket \sf judgments \rrbracket$ of the calculus modulo $\Delta$ permutations (with $\Delta$ (unlabeled) multiset of ${\sf \llbracket Prop_0 \rrbracket}$). The multiset/ modulo permutation approach is instructed by standard structural properties. 
 		All properties are stated formally and proved in the Appendix. 
 		
@@ -558,7 +561,8 @@ Nevertheless, in chapter ~\ref{ext} we sketch how such restrictions can be dropp
 			\end{mdframed}
 			
 			Standardly, we  extend the system with the ${\sf Cut}$ rule and we  obtain the extended system $\Gamma \Rightarrow^{+} A:= \Gamma\Rightarrow A + {\sf Cut}$. 
-			We show Completeness of $\Rightarrow^{+}$ with respect to Natural Deduction and  Admissibility of Cut that leads to the consistency result
+			We show Completeness of $\Rightarrow^{+}$ with respect to Natural Deduction and  Admissibility of Cut that leads to the consistency result.
+			
 			%\begin{theorem}[Admissibility of Cut]
 			%$\Gamma \Rightarrow^{+}A$ implies $\Gamma\Rightarrow A$
 			%\end{theorem}

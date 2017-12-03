@@ -1,6 +1,6 @@
 \chapter{Order theoretic semantics}
 \label{jcalcsem}
-This chapter started by introducing 
+The previous chapter started by introducing 
 mappings between deductive systems and 
 motivating the reading of necessity as ``double-proof under a map''.
 As a result, it is unsurprising that the calculus is amenable to order theoretic semantics.
@@ -40,7 +40,7 @@ with the properties:
 \end{enumerate}
 \end{mdframed}
 
-\section{$Jcalc$-triplets}
+\section{Jcalc-triplets}
 Given two \emph{semi-HAs}, we are 
 interested in order preserving 
 functions (functors) $F$ that also preserve products and exponentials: 
@@ -57,7 +57,7 @@ $\phi,\psi \in HA_1$
     \end{enumerate}
 \end{mdframed}
 
-For the order theoretic models of  Jcalc $^{-}$ the following structures (triplets) 
+For the order theoretic models of  Jcalc  the following structures (triplets) 
 are of interest. We define a $Jcalc$-triplet as follows:
 \begin{mdframed}
     \textbf{Definition}
@@ -73,7 +73,9 @@ A \emph{$Jcalc$-triplet} is
 \end{enumerate}
 \end{enumerate}
 \end{mdframed}
+
 We are going to utilize the following definition: 
+
 \begin{mdframed}
     \textbf{Definition}
     Given two partial orders $(K,\le_{K})$, $(L,\le_{L})$ and a function ($F: K\rightarrow L$) 
@@ -100,7 +102,7 @@ Given a $Jcalc$-triplet there is an induced $F$-point algebra:
     \textbf{Definition}
     Given a $Jcalc$-triplet we define the algebra  $\Box^{F}HA$ as the induced $F$-point algebra.
 \end{mdframed}
-By the definitions, the $\Box^{F}HA$ point algebra has the following properties:
+By definition, the $\Box^{F}HA$ point algebra has the following properties:
 \begin{enumerate}
     \item Elements are pairs $\langle A, FA\rangle$ (name them $\Box^{F}A$) where $A\in HA$ and $FA$ its image
     \item For every two elements $\Box^{F}A$, $\Box^{F}B$:
@@ -137,28 +139,29 @@ omitting indexes in the $\le$ relations since they can be trivially inferred:
     that is the greatest element with the previous property.
     I.e. for any $\Box^F C$ s.t. $\Box^F C\le \Box^F A $ and 
     $\Box^F C\le \Box^F B $ we get $\Box^F C\le\Box^F(A\times B)$. 
-    By the definition for any such  $\Box^F C$ we have $C\le A\times B$
-    and $FC\le F(A\times B)$ which imply that $\Box^F C\le\Box^F(A\times B)$
+    By the definition for any such  $\Box^F C$ we have 
+    $C\le A\times B$ and $FC\le F(A\times B)$ that imply 
+    $\Box^F C\le\Box^F(A\times B)$.
 
     To show that  $\Box^F(A\rightarrow B)$ is the  
-    exponential of $\Box^FA$, $\Box^FB$, 
-    we have to show, first that 
+    exponential of $\Box^FA$, $\Box^FB$
+    we have to show first that 
     $\Box^F ( A\rightarrow B)\times\Box^F A\le \Box^F B$.
     By the $\Box^F HA$ product definition 
     $\Box^F ( A\rightarrow B)\times\Box^F A :=\Box^F( (A\rightarrow B)\times A)$. 
-    Also
+    Also,
     by the underlying exponentials we have $ (A\rightarrow B)\times A\le B$ 
     and  $F((A\rightarrow B)\times A)= (FA\rightarrow FB)\times FA \le FB$
-    which by definition of $\Box^F HA$ gives   
+    that by definition of $\Box^F HA$ gives   
     $\Box^F((A\rightarrow B)\times A)\le \Box^F B$ 
     and hence, by definition, 
     $\Box^F ( A\rightarrow B)\times \Box^F A\le \Box^F B$.
 
-    In addition we have to show that 
+    In addition, we have to show that 
     $\Box^F ( A\rightarrow B)$ is the 
     greatest element with the previous property.
     Consider any other $\Box^F C$ s.t. $\Box^F C\times\Box^F A\le \Box^F B$, 
-    by definitions of $\Box^F$ and its products then, $C\times A\le B$
+    by definitions of $\Box^F$ and its products we obtain: $C\times A\le B$
      and $FC\times FA\le FB$.
       By the definitions of the underlying exponentials 
      we get $C\le A\rightarrow B$ and 
@@ -166,17 +169,17 @@ omitting indexes in the $\le$ relations since they can be trivially inferred:
      And again by definition of $\Box^F HA$, $\Box^F C\le \Box^F(A\rightarrow B)$.  
 \end{proof}
 
-\section{ $Jcalc$-algebras: Soundness and completeness}
-Given a $Jcalc$-triplet we can define a $Jcalc$-algebra:
+\section{ Jcalc algebras: Soundness and completeness}
+Given a $Jcalc$-triplet we can define a $Jcalc$ algebra:
 \begin{mdframed}
     \textbf{Definition}
-    Given a $J$-triplet we define the corresponding $Jcalc$
+    Given a $Jcalc$-triplet we define the corresponding $Jcalc$-
      algebra as the union of the underlying relations
     of   $HA$, $F(HA)$, $\Box^{F}HA$
 \end{mdframed}
     \begin{theorem}\label{thm:cmpjtriplet}
         \textbf{Soundness and completeness}\\
-    $\Gamma\vdash_{Jcal}\phi$ iff for any \vocab{Jcalc Algebra}  $JC$ ($HA,F,J$)
+    $\Gamma\vdash_{Jcal}\phi$ iff for any \vocab{Jcalc algebra}  $JC$ ($HA,F,J$)
     and any $*$ map that extends  a map of atomic $\prop$s ($p_i$) to elements of $HA$ 
     with properties shown below and $(+)$ 
     is defined inductively on the length of $\Gamma$ as shown below
@@ -212,7 +215,7 @@ Given a $Jcalc$-triplet we can define a $Jcalc$-algebra:
     . 
     For the ${\sf \llbracket Prop_0\rrbracket}$ part of the calculus again by induction.
     Reflection, of contexts is trivial. For the axiomatic cases, it is a well known result
-    that in any Heyting algebra (and thus in $F(HA)$ of any Jcalc algebra) 
+    that in any Heyting algebra (and, subsequently, in $F(HA)$ of any Jcalc algebra) 
     elements of the shape of the axiomatic combinators are equivalent 
     (equiprovable) to $\top$.
     For example in any Heyting algebra  we have $\top\le A\rightarrow(B\rightarrow A)$ 
@@ -223,7 +226,7 @@ Given a $Jcalc$-triplet we can define a $Jcalc$-algebra:
 
 
     The interesting part of the proof is the $\Box$ rule which we present again here for readability:
-    \begin{mdframed}[nobreak=true, frametitle={\footnotesize Judgments on Necessity with 
+    \begin{mdframed}[nobreak=true, frametitle={\footnotesize Judgments on Necessity\\ with 
         $\Gamma\in {\sf Prop_1} \text{,{\ \sf length}}(\Gamma)=i\text{,\ }
         \ 1\le k\le i  \text{\ and, }\Gamma^{\prime},A, A_k,  B\in {\sf Prop_0}$ }]
     \mbox{\footnotesize
@@ -251,14 +254,14 @@ Given a $Jcalc$-triplet we can define a $Jcalc$-algebra:
         \item Show that it is a Heyting Algebra with products the elements of
         of shape $\phi\wedge\psi$, top $\top$ and exponentials $\phi\supset\psi$
         \item Repeat the construction for the syntactic elements of 
-        $\llbracket Prop_0 \rrbracket$, with 
+        $\llbracket {\sf Prop_0} \rrbracket$, with 
         $\llbracket\phi\rrbracket\le\llbracket\psi\rrbracket$ 
-        \textit{iff} $\llbracket\phi\rrbracket\vdash\llbracket\psi\rrbracket$
-        show that it is a Heyting algebra $J$.
+        \textit{iff} $\llbracket\phi\rrbracket\vdash\llbracket\psi\rrbracket$.
+        Show that it is a Heyting algebra $J$
         \item Repeat the construction for the syntactic elements of
          ${\sf Prop_1}$ and $\Box \phi\le\Box\psi$ \textit{iff} $\Box\phi\vdash\Box\psi$
         \item Show that the union of the three relations above forms a 
-        Jcalc-algebra with $F:= A\mapsto \llbracket A\rrbracket$. I.e. show that:
+        Jcalc algebra with $F:= A\mapsto \llbracket A\rrbracket$. I.e. show that:
         \begin{itemize}
             \item $A\vdash B\Rightarrow \llbracket A\rrbracket\vdash \llbracket B\rrbracket$
             (Holds by the lifting lemma)
@@ -266,12 +269,13 @@ Given a $Jcalc$-triplet we can define a $Jcalc$-algebra:
             $\llbracket A\supset B \rrbracket$ (trivial given the deduction theorem which we have shown)
             in $J$
             \item $\Box A\vdash\Box B$ \textit{iff} $A\vdash B$ and $\llbracket A\rrbracket \vdash \llbracket B\rrbracket$
-            Easy by induction on the derivations and usage of the lifting lemma.
+            Easy by induction on the derivations and usage of the lifting lemma
         \end{itemize}
     \end{itemize}
     Now assume that $\Gamma^{+}\le\phi*$ for any Jcalc algebra and 
     mapping $*$; consider  $*$ to extend  the identity mapping  
-    into the (free) J-calc algebra defined above. It is trivial to see that in JCalc
+    into the (free) Jcalc algebra defined above. 
+    It is trivial to see that in Jcalc
     $\Gamma\vdash\phi$.
 \end{proof}
 
