@@ -92,7 +92,8 @@ Standardly, we add the bottom type and elimination rule in the natural deduction
 \and
 \inferrule*[right= $E_\bot$] {{\Gamma\vdash\bot }\\ A\in {\sf Prop}} {\Gamma \vdash A}
 \end{mathpar}
-Our proof strategy follows directly \cite{pfenning2004automated}. We construct an intercalation calculus \cite{sieg1998normal} corresponding to the ${\sf Prop}$ fragment  with the following two judgments:
+Our proof strategy follows directly \cite{pfenning2004automated}. 
+We construct an intercalation calculus \cite{Sieg1998} corresponding to the ${\sf Prop}$ fragment  with the following two judgments:
 \begin{itemize}
 	\item[] $A\Uparrow$ for ``Proposition $A$ has normal deduction".
 	\item[] $A^\downarrow$ for ``Proposition $A$ is extracted from hypothesis".
@@ -218,7 +219,7 @@ Next we define the $\Gamma\Rightarrow^{+} A$ as $\Gamma\Rightarrow A$ plus the r
 \inferrule*[right=Cut]{{\Gamma\Rightarrow^{+} A}\\{\Gamma,A\Rightarrow^{+}B}}{\Gamma\Rightarrow^{+}B}
 \end{mathpar}
 \begin{proof}
-As before. The cut rule case is handled by the $\Uparrow\downarrow$ and substitution for extractions principle showcasing that the correspondence of the cut rule to the coercion from normal to extraction derivations.
+As before. The cut rule case is handled by the $\Uparrow\downarrow$ and substitution for extractions principle showcasing  the correspondence of the cut rule to the coercion from normal to extraction derivations.
 \end{proof}
 Standard structural properties (\textit{Weakening, Contraction}) to show completeness. We do not show these here but they hold.
 \begin{theorem}[Completeness of the Sequent Calculus] 
@@ -258,7 +259,9 @@ Which in turn gives us:
 	If $\Gamma\vdash A$ then $\Gamma^{\downarrow}\vdash^{-} A\Uparrow$
 \end{theorem}
 \begin{proof}
-	From assumption $\Gamma \vdash A$ which by \ref{compannot} gives $\Gamma\vdash^{+} A\Uparrow$. By \ref{compseqcut} and Cut  Elimination we obtain $\Gamma\Rightarrow A$ which by  \ref{soundnseq} completes the proof.
+	From assumption $\Gamma \vdash A$ which by completeness of annotated deductions gives $\Gamma\vdash^{+} A\Uparrow$. 
+	Then by completeness of sequent calculus  and Cut  Elimination we obtain $\Gamma\Rightarrow A$ 
+	which by  soundness of sequent calculus completes the proof.
 \end{proof}
 As a result we obtain:
 \begin{proof}
@@ -266,6 +269,18 @@ As a result we obtain:
 \end{proof}
 \chapter{Makam Implementation}
 A \textit{Github} repo is preserved for $Jcalc$ which includes an implementation in the
-metaprogramming framework Makam ~\cite{stampoulis}. The implementation is currently developed by Antonis Stampoulis and
+metaprogramming framework {\sf Makam} ~\cite{stampoulis}. 
+The implementation is currently developed by Antonis Stampoulis and
 the author. A type checker for $Jcalc$ terms has been implemented and the call-by-value evaluation
-strategy is under current development. ThFollow the instruction 
+strategy is under current development. 
+
+The interested reader should install {\sf Makam}
+(in a unix environment) and then she can run the \url{run.sh} 
+file in the repository. 
+A successful run will verify a number of Jcalc theorems encoded in the file \url{just.md} 
+and will  additionally output an html file 
+(already included in the repo as \url{just.html}).
+The obtained file is a notebook of (pretty-printed) {\sf Latex} and {\sf Makam} code 
+that can be opened in any modern browser.
+It showcases how the implementation faithfully follows the rules 
+of the formal system.  
