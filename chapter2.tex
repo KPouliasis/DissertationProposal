@@ -94,7 +94,9 @@ to create new, well-formed trees.
 		If {$\begin{array}{c}{ x:A }\\{\mathcal{D}}
 			\\{B \true}
 			\end{array}$}
-		and {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\end{array}$} are valid proof trees their composition denoted as {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\\{\mathcal{D}}\\{B\true}\end{array}$},  defined by substituting all occurrences of $x:A$ for $E$ in $\mathcal{D}$, is a valid proof tree for $B \true$. 
+		and {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\end{array}$} 
+		are valid proof trees their composition denoted as {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\\{\mathcal{D}}\\{B\true}\end{array}$},  
+			defined by substituting all occurrences of $x:A$ for $\mathcal{E}$ in $\mathcal{D}$, is a valid proof tree for $B \true$. 
 	\end{theorem}
 \end{mdframed}
 \subsection{Equating Proof Trees}
@@ -392,7 +394,7 @@ $$\lambda x:A. M x | \langle \operatorname{fst}  M, \operatorname{snd} M \rangle
 \end{mdframed}
 A \textit{normal form} is a term where no redex occurs. To make the
 term surrounding the redex explicit, we can use a \textit{term context}, 
-i.e. a term with a single term hole, such as $\lambda x:A.[]$, $(e[\bullet])$, $[\bullet]e$, where  a hole can be substituted for a term to give a larger term. To be strict all single hole terms have the following diagram:
+i.e. a term with a single term hole, such as $\lambda x:A.[\bullet]$, $(e[\bullet])$, $[\bullet]e$, where  a hole can be substituted for a term to give a larger term. To be strict all single hole terms have the following diagram:
 $$H:= [\bullet]|\ (M[\bullet])|\  ([\bullet]M)|\ \lambda x:A. H|\  \langle H, M \rangle |\  \langle  M, H \rangle $$
 
 Now we have enough tools to define the \textit{(one-step) $\beta\eta$-reduction} 
