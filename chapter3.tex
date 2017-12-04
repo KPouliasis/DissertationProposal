@@ -22,7 +22,8 @@ According to \cite{sep-logic-justification}\say {Justification logics are episte
  
 
 \section{Minimal Justification Logic $J_0$}~\label{min:jo}
-To permit for an account of reasons, the logic is enriched with an extra sort ($j$) for justifications. The sort of propositions is then enriched with propositions of the kind $j:\phi$ with $\phi$ being a proposition. Here is the abstract syntax:
+To permit for an account of reasons, the logic is enriched with an extra sort ($j$) for justifications. The sort of propositions is then enriched with propositions of the kind $j:\phi$ with $\phi$ being a proposition. 
+The abstract syntax is as follows:
 
 \begin{mdframed}
 \begin{align*}
@@ -146,7 +147,8 @@ Of course, one can resolve this by introducing a second modality(e.g. for \say{I
     \item $a:(B \wedge R \supset B)$, because of logical awareness.
 
 
- On the metalevel, the problem description states that 2 and 3 are cases of knowledge, and not merely belief, whereas 1 is belief which is not knowledge. Here is how the formal reasoning goes:
+ On the metalevel, the problem description states that 2 and 3 are cases of knowledge, and not merely belief, whereas 1 is belief which is not knowledge. 
+ The formal reasoning goes as follows:
 
     \item $a:(B \wedge R \supset B)\supset(v:(B \wedge R) \supset  a*v:B)$, by {\sf Times} 
     \item $v:(B \wedge R) \supset a*v:B$, from 3 and 4, by propositional logic;

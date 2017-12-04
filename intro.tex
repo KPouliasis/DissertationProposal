@@ -24,17 +24,19 @@ can be done in an \textit{equational way}, a property that is heavily connected
 to their underlying foundational principles as we will see. Features such as side effects 
 or concurrency in the language are reflected via typing. For example,  
 a program that changes global state has a type that  says so explicitly. Similarly,  
-a program that uses goto mechanisms  would also say register its behavior in its type. 
-All in all, even ``unpure", non-functional constructs (state, mutable references) are added 
+a program that uses goto mechanisms  would also 
+register its behavior in its type. 
+All in all, even ``impure", non-functional constructs (state, mutable references, IO) are added 
 in a mathematical/ algebraic fashion under the \ac{CHI} disciple. 
 As a result, reasoning about properties of such programs is significantly simpler. 
-Moreover, under a strongly typed doctrine, important properties of programs are checked 
-statically by the type-checker and prior to their execution. 
+Moreover, working within the strongly typed doctrine and in conjunction with static type checking
+permits for the verification of meaningful properties of programs
+prior to their execution. 
 Henceforth, the need for testing is reduced to verify only non-trivial properties. 
 
 
 The renewed interest in functional programming owes a lot to the
- difficulties of scaling concurrent programs in traditional programming paradigms. 
+ difficulties of scaling concurrent programs in imperative programming paradigms. 
  It is very hard  to scale programs that make unlimited use of side effects 
  (such as state change) in an implicit way (i.e. without leaving any trace in their typing)
   from sequential to  multithreaded style of computation. Programming freedoms in traditional 
@@ -50,7 +52,7 @@ The renewed interest in functional programming owes a lot to the
 
 On the other hand, the logician has good reasons to study logics as rules of program formation and reduction. First of all, 
 such designs make logics implementable ``for free"
-in modern theorem provers using the programmistic side of the correspondence. 
+in modern theorem provers using the programming side of the correspondence. 
 Secondly the study of logic in such a way has put upfront a  Gentzen-style treatment of logical 
 connectives where emphasis is given to the notion of proof, proof structure and proof reduction. 
 This has sparked studies for more refined versions of proof relevant deduction than the ones 
@@ -59,11 +61,12 @@ As we will see, the Gentzen-- Brouwer initiative in  logic  does not merely call
 axiomatization but for a ``proof relevant" interpretation of connectives that comes with a
 computational taste. Metatheory is also standardized once one studies logic this way;  
 scalable techniques have been developed within the area of ``proof-theoretic" semantics 
-that make the passing from  natural deduction of a logic to its cut free calculus pretty standard ~\cite{Sieg1998,pfenning2000structural}. 
+that standardize the passage from  natural deduction of a logic to its cut-free calculus.
+ ~\cite{Sieg1998,pfenning2000structural}. 
 In other words, treating logics within a Curry -- Howard environment 
 enriches logic as a discipline with good organizing principles. 
 Finally, proof relevant treatments of logic -- pushed further by ideas of 
-\emph{Martin-L\"{o}f Type Theory}~\cite{martin1984intuitionistic} 
+\ac{MLTT}~\cite{martin1984intuitionistic} 
 have sparked  a renewed interest in  a foundation of mathematics that stems from 
 a  treatment of proofs as \textit{the} primitive objects of mathematics. 
 
@@ -91,7 +94,7 @@ There is a good reason to believe that this should be doable. Justification logi
          We will present a modal logic that is based on this relation and we will argue
           that such phenomena of binding two kinds of constructions abound both
            in the realm  of mathematical proofs 
-           but also in the realm of programming languages  with constructs 
+           as well as in the realm of programming languages  with constructs 
            such as modules, foreign function calls and dynamic linkers.
 
            This work  is structured in three parts: 
@@ -102,7 +105,7 @@ There is a good reason to believe that this should be doable. Justification logi
            The relevant systems are introduced syntactically together with main 
             metatheoretic proof techniques which will be useful 
            in the rest of the thesis.
-           The second part (\cref{proposal}, \cref{jcalsem}, \cref{jcalccom}) 
+           The second part (\cref{proposal}, \cref{jcalcsem}, \cref{jcalccom}) 
            constitutes my main contributions.
            I will propose  
            a modal type system that extends simple type theory

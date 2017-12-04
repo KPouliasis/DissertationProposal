@@ -1,4 +1,4 @@
-\chapter{Curry -- Howard view of justification logic}
+\chapter{Curry -- Howard view of Justification Logic}
 \label{proposal}
 In this and the subsequent chapters
 we suggest reading a constructive necessity  
@@ -29,7 +29,7 @@ The general idea, upon which we build our calculus, is that
 any notion of semantics for a deductive system $I$ involves mappings 
 of proof constructs of $I$ into another proof system $J$ 
 (which we call justifications) and can, thus, be viewed in a solely proof-theoretic manner.
-As an example one could think  $I$  being  Heyting arithmetic and $J$ some  ``stronger'' system 
+As an example one could think  of $I$  being  Heyting arithmetic and $J$ some  ``stronger'' system 
 (e.g. a classical axiomatization of Peano arithmetic, a classical or intuitionistic set theory etc). 
  In Artemov's work $I$ is assumed to be
 based on intuitionistic logic and $J$  on classical logic. 
@@ -86,12 +86,12 @@ Now we can define:
 \begin{definition}
 	Given a deductive system $I$, we say that an interpretation  $\llbracket\bullet \rrbracket_J$  is \textit{logically complete} when  for
 	all purely logical deductions $\mathcal{D}$ (i.e. deductions that make no use of $\Sigma_I$) in $I$ 
-	there exists a corresponding (purely logical) validation $\llbracket\mathcal{D}\rrbracket$ in $J$\footnote{Note, that we require existence but not uniqueness. Nevertheless, if we treat deductive systems  in a proof irrelevant manner as preorders 
+	there exists\footnote{Note, that we require existence but not uniqueness. Nevertheless, if we treat deductive systems  in a proof irrelevant manner as preorders 
 	the above definition gives uniqueness vacuously. In a more refined approach where $I$ and $J$ are viewed as  categories of proofs  the above ``logical completeness''  
 	translates to the requirement that if the set of (purely logical) arrows $Hom_I(\Gamma,A)$ is non empty  then $Hom_J(\llbracket\Gamma\rrbracket,\llbracket A\rrbracket_J)$ 
 	cannot be empty (i.e. that $\llbracket\bullet \rrbracket_J$ can be extended to a functor). We leave a complete categorical semantics of our logic 
 	for future work but we expect   a generalization of the 
-	endofunctorial interpretations of $K$ modality appearing in \cite{Bellin2001,kavvos2016system}.}.
+	endofunctorial interpretations of $K$ modality appearing in \cite{Bellin2001,kavvos2016system}.} a corresponding (purely logical) validation $\llbracket\mathcal{D}\rrbracket$ in $J$.
 	i.e. $$\forall \mathcal{D}. \ \mathcal{D}:\Gamma\vdash_I A \Longrightarrow \exists \llbracket\mathcal{D}\rrbracket: \llbracket \Gamma\vdash A\rrbracket_J$$
 \end{definition}
  
@@ -196,7 +196,7 @@ $\Gamma'$ is empty which conforms exactly with the idea  of necessity internaliz
 	completeness of logical deductions).   
 
 	Following type theory conventions,  we first provide rules underlying type construction, then  rules for  well-formedness of (labeled) assumption contexts and rules  introducing and eliminating connectives. 
-	The rules below should be obvious except for small caveat.
+	The rules below should be obvious except for one small caveat.
 	 On the one hand, the type universe of $U_I$ and the proof trees of $I$ are 
 	inductively defined as usual; on the other 
 	hand, the host theory $J$ (its corresponding universe, connectives and  proof trees) is  ``black boxed''. What we actually axiomatize are the properties that all

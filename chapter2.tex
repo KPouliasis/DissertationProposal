@@ -1,5 +1,5 @@
-\chapter{Typed lambda calculus}\label{lambda}
-\section{From intuitionistic provability to  proof trees}
+\chapter{Typed Lambda Calculus}\label{lambda}
+\section{From Intuitionistic Provability to  Proof Trees}
 \vocab{IPL} can be viewed as a declarative axiomatization of proof constructs. Take the introduction rule for conjunction as an example: 
 \begin{mathpar}
 	\inferrule*[right=$\wedge$I] {\Turnsi {\Gamma} {A\true}\\
@@ -95,8 +95,10 @@ to create new, well-formed trees.
 			\\{B \true}
 			\end{array}$}
 		and {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\end{array}$} 
-		are valid proof trees their composition denoted as {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\\{\mathcal{D}}\\{B\true}\end{array}$},  
-			defined by substituting all occurrences of $x:A$ for $\mathcal{E}$ in $\mathcal{D}$, is a valid proof tree for $B \true$. 
+		are valid proof trees, \\
+		their composition denoted as:\\ \\
+	    {$\begin{array}{c}\PrTri{$\mathcal{E}$}\\{A \true}\\{\mathcal{D}}\\{B\true}\end{array}$}\\
+		and defined by substituting all occurrences of $x:A$ for $\mathcal{E}$ in $\mathcal{D}$, is a valid proof tree for $B \true$. 
 	\end{theorem}
 \end{mdframed}
 \subsection{Equating Proof Trees}
@@ -110,7 +112,7 @@ We will be revisiting these very same equalities and reframing them
 as equalities among proof terms in the next section. 
 Nevertheless, they originated in proof tree form.  
  We show indicatively the equalities regarding the $\supset,\wedge$ connectives reserving the
-  rest for the more concise notation.
+  rest for the more concise proof-term notation.
 
 
 \begin{mathpar}
@@ -194,7 +196,7 @@ Nevertheless, they originated in proof tree form.
 \end{mathpar}
 
 
-\section{Linear representation of trees  with proof terms: $\lambda$ calculus}
+\section{Linear Representation of Trees  with Proof Terms: $\lambda$ Calculus}
 Proof terms provide an alternative, linear representation for proof trees. The simply typed lambda calculus and its equational system can, thus, be viewed as a calculus for proof trees and proof reductions for  intuitionistic logic. What's more, following the doctrine of proof relevance and of characterizing connectives by their proof reductions, i.e. working in the realm of Curry -- Howard Isomorphism, we hit two birds with one stone: we both develop proof relevant logics and we get typed programming languages that reflect their computational content. The ``simplest" language obtained within this program is the simply typed lambda calculus, but we will see that the same doctrine  extends to different logics with different judgmental constructs.
   
 \subsubsection{Simply typed lambda calculus}
@@ -282,7 +284,7 @@ Proof terms provide an alternative, linear representation for proof trees. The s
 \end{mathpar}
 
 \end{mdframed}
-\subsection{Definitional Equality: Proof tree equalities as term equalities}
+\subsection{Definitional Equality: Proof Tree Equality as Term Equality}
 
 Gentzen's principles transliterate to an equational system for terms. 
 In the following we are defining a congruence relation on proof terms  which is usually coined as \emph{definitional equality} and denoted $M= M':A$. We want definitional equality $=$ to be the least congruence closed under the $\beta, \eta$ rules that directly reflect Gentzen's principles in term form.
@@ -489,7 +491,7 @@ Now we can prove the following facts:
 \begin{enumerate}
 	\item The degree of redex $r$ is strictly larger than the degree of its type $A$: 
 	$\theta(A)<d(r)$
-	\item The degree of a redex ($r$) seen as term ($t$)  can be smaller than its redex degree since it might include other redexes: $d(r)\le d(t)$.
+	\item The degree of a redex ($r$) seen as term ($t$)  is smaller or equal to its redex degree (as a term) since the whole term might include other redexes: $d(r)\le d(t)$.
 	\item The term resulting from a substitution $M[N/x]$  has degree : $d(M[N/x])\le max(d(M),d(N),\theta(A))$ where $A$ is the declared type of $x$ in the type context.
 \end{enumerate}
 	\end{mdframed}
@@ -527,7 +529,7 @@ There is no (closed) term $M$ for which $\vdash M:\bot$
  strong normalization for more complex calculi-- is the concept of  reducibility predicates (see, e.g. ~\cite{prawitz1971ideas}). 
  
 
-\subsection{The essence of proofs--as--programs }
+\subsection{The Essence of Proofs--as--Programs }
 The proofs of normalization above are essentially of the same 
 \say{proof strength}  as the logical proof of cut elimination. 
 In a nutshell, eliminating cuts is the same as normalizing proof 

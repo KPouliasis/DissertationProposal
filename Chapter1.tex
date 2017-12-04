@@ -8,7 +8,7 @@ of mathematics  that extends \emph{Brouwer's program}~\cite{brouwer1975collected
 Brouwer, in an almost Kantian fashion, viewed mathematical reasoning as a human faculty 
 and mathematics as a language of the ``creative subject"
 aiming to communicate mathematical concepts. 
-The concept of \emph{algorithm} as a step--by--step constructive process is brought in the 
+The concept of \emph{algorithm} as a step--by--step constructive process is brought to the 
 foreground in Brouwer's program. 
 As a result, intuitionistic theories are amenable to 
 computational interpretations. We are  using the terms intutionistic 
@@ -46,8 +46,7 @@ is a proof given in a fixed formal system and it is constructed
 by the application of the rules in that system, recursively. 
 Formal proofs can, thus, be viewed as strings or \textit{g\"{o}delizations} of textual derivation in some fixed system. 
 
-As Harper puts it \say{Although every formal proof (in a specific system)
-is also a proof (assuming soundness of the system) the converse is not true}.  
+As Harper puts it \cite{Harper2013}\say{While formal proofs are always proofs (at least, under the assumption of consistency of the underlying formal theory), a proof need not be, or even have a representation as, a formal proof}.  
 This conforms with G\"{o}del's Incompleteness Theorem, which precisely states that there
 exist true propositions (with a proof in \emph{some} formal system), but for which 
 there is no formal proof within the system in question. 
@@ -65,14 +64,15 @@ approach and the classical one i.e. the (default) absence of the
 appropriate of the fact. \emph{Proofs} can be synthesized to obtain 
 proofs for more complex facts (\emph{introduction rules}) and consumed
  to provide proofs relevant for other  facts (\emph{elimination rules}). The importance of the interplay between introduction and elimination rules was developed by Gentzen. 
- A discussion on the meaning of the logical connectives that is prevalent in \emph{MLTT} can be found
+ A discussion on the meaning of the logical connectives that is prevalent in \ac{MLTT} can be found
 in \cite{martin1996meanings}. 
 Following the presentation style  by   Martin-L\"{o}f we split the notions of \emph{judgment} and \emph{proposition}. We have two main kinds of judgments:
 \begin{itemize}
-\item  \emph{Judgments} that are logical arguments about the truth (or, equivalently, proof) of a \emph{proposition}. They might, optionally, involve 
-assumptions about the truth (or, equivalently, proof) of other propositions. We might call these \emph{logical judgments}. 
+  \item Judgments on \emph{propositionality} or typeability. \emph{Propositions} are the \emph{subjects}  of \emph{logical judgments}. If something is judged to be a proposition then it belongs to the universe of discourse and can be mentioned in \emph{logical judgments}. 
+  
+  \item  \emph{Judgments} that are logical arguments about the truth (or, equivalently, proof) of a \emph{proposition}. They might, optionally, involve 
+assumptions about the truth (or, equivalently, proof) of other propositions. We  call these \emph{logical judgments}. 
 
-\item Judgments on \emph{propositionality} or typeability. \emph{Propositions} are the \emph{subjects}  of \emph{logical judgments}. If something is judged to be a proposition then it belongs to the universe of discourse and can be mentioned in \emph{logical judgments}. 
 \end{itemize} 
 In addition, since a \emph{logical judgment} might involve a set $\Gamma$ of assumptions (or a \emph{context}), it is convenient to add a third kind of judgment of the form $\Gamma \context$ 
 Thus, in \ac{IPL}, we get the judgments $\phi\ \in \prop$, $\phi \true$ and $\Gamma \context$:
