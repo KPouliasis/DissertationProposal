@@ -241,7 +241,8 @@ We do not repeat  the corresponding $\beta, \eta$ equality rules since they are 
         with the following signature ${\sf \Sigma}$:
         \begin{lstlisting} 
         using type intstack
-        empty: intstack, push: int -> intstack -> intstack,
+        empty: intstack, 
+        push: int -> intstack -> intstack,
         pop: intstack -> int
         \end{lstlisting}
         
@@ -278,7 +279,7 @@ We do not repeat  the corresponding $\beta, \eta$ equality rules since they are 
                 {\sf \Sigma};\mathtt{x_1^{\prime}:\Box intstack ,x_2^{\prime}:\Box(int\rightarrow intstack\rightarrow intstack),} \\
                 \mathtt{x_3^{\prime}: \Box  (intstack\rightarrow int)} \\
                 \mathtt{\vdash let\{ x_1\& s_1 {\ \sf be \ } x_1^{\prime},\ x_2\& s_2 {\ \sf be \ } x_2^{\prime}, \  x_3\& s_3 {\ \sf be \ } x_3^{\prime} \}\  in}\\  
-                \mathtt{(x_3 (x_2\ 2 \ x_1)\ \& \ s_3*(s_2* \bar{2}*s_1))}:\mathtt{\Box int & }
+                \mathtt{(x_3 (x_2\ 2 \ x_1)\ \& \ s_3*(s_2* \bar{2}*s_1))}:\mathtt{\Box int  }
                 \end{flalign*}}
             \item Using $\lambda$-abstraction three times we obtain the dynamic linker:
             
