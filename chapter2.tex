@@ -197,7 +197,7 @@ Nevertheless, they originated in proof tree form.
 
 
 \section{Linear Representation of Trees  with Proof Terms: $\lambda$ Calculus}
-Proof terms provide an alternative, linear representation for proof trees. The simply typed lambda calculus and its equational system can, thus, be viewed as a calculus for proof trees and proof reductions for  intuitionistic logic. What's more, following the doctrine of proof relevance and of characterizing connectives by their proof reductions, i.e. working in the realm of Curry -- Howard Isomorphism, we hit two birds with one stone: we both develop proof relevant logics and we get typed programming languages that reflect their computational content. The ``simplest" language obtained within this program is the simply typed lambda calculus, but we will see that the same doctrine  extends to different logics with different judgmental constructs.
+Proof terms provide an alternative, linear representation for proof trees. The simply typed lambda calculus and its equational system can, thus, be viewed as a calculus for proof trees and proof reductions for  intuitionistic logic. What's more, following the doctrine of proof relevance and of characterizing connectives by their proof reductions, i.e. working in the realm of Curry--Howard Isomorphism, we hit two birds with one stone: we both develop proof relevant logics and we get typed programming languages that reflect their computational content. The ``simplest" language obtained within this program is the simply typed lambda calculus, but we will see that the same doctrine  extends to different logics with different judgmental constructs.
   
 \subsubsection{Simply typed lambda calculus}
 \begin{mdframed}
@@ -424,11 +424,11 @@ between two terms that include redexes as follows:
 Now we can define the  reflexive, transitive closure of the previous relation as $\mapsto_{\beta\eta}^{*}$ to denote zero or more reduction steps. The following facts -- leading to a computational proof of consistency -- hold:
 
 \begin{mdframed}
-	\begin{theorem}	\textbf{Church -- Rosser for $\mapsto_{\beta\eta}$}
+	\begin{theorem}	\textbf{Church--Rosser for $\mapsto_{\beta\eta}$}
 		For every term $M$, if $M\mapsto_{\beta\eta} N_1$ and $M \mapsto_{\beta\eta} N_2$ then there exists $N^{'}$ s.t. $N_1 \mapsto N^{'}$ and $N_2\mapsto N^{'}$
 		
 	\end{theorem}	
-	\begin{theorem}	\textbf{Church -- Rosser for $\mapsto_{\beta\eta}^{*}$}
+	\begin{theorem}	\textbf{Church--Rosser for $\mapsto_{\beta\eta}^{*}$}
 		For every term $M$, if $M\mapsto_{\beta\eta}^{*} N_1$ and $M \mapsto_{\beta\eta}^{*} N_2$ then there exists $N^{'}$ s.t. $N_1 \mapsto_{\beta\eta}^{*} N^{'}$ and $N_2\mapsto_{\beta\eta}^{*} N^{'}$
 		
 	\end{theorem}	
@@ -526,16 +526,16 @@ There is no (closed) term $M$ for which $\vdash M:\bot$
  in which redexes are consumed does not matter during the evaluation of  expression. 
  
  The important idea behind the technique -- that generalizes to proof of 
- strong normalization for more complex calculi-- is the concept of  reducibility predicates (see, e.g. ~\cite{prawitz1971ideas}). 
+ strong normalization for more complex calculi -- is the concept of  reducibility predicates (see, e.g. ~\cite{prawitz1971ideas}). 
  
 
-\subsection{The Essence of Proofs--as--Programs }
+\subsection{The Essence of Proofs-as-Programs }
 The proofs of normalization above are essentially of the same 
 \say{proof strength}  as the logical proof of cut elimination. 
 In a nutshell, eliminating cuts is the same as normalizing proof 
 terms (or, correspondingly, proof trees).
 
-In reality, the slogan of the Curry-Howard isomorphism and, 
+In reality, the slogan of the Curry--Howard isomorphism and, 
 in general, of a type theoretic treatment to logic should be \say{Normalization as Cut Elimination}. 
 This aspect of the isomorphism can be articulated 
 nicely following Sieg's extraction method ~\cite{Sieg1998}, which  

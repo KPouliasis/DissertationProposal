@@ -142,7 +142,7 @@ We do not repeat  the corresponding $\beta, \eta$ equality rules since they are 
         \subsection{Proof term assignment for the $\Box$ rule (Generically)}
         After understanding the computational meaning of let expressions in the $\Box_{IE}$ rule 
         we can now give  proof term assignment  for the rule in the general case(i.e. for $\Gamma'$ of arbitrary length). 
-        We define a helper syntactic construct --${\sf let}^{*}\ldots {\ \sf in\ }$-- as syntactic sugar for iterative  let bindings based on the structure  of contexts.
+        We define a helper syntactic construct (namely, ${\sf let}^{*}\ldots {\ \sf in\ }$) as syntactic sugar for iterative  let bindings based on the structure  of contexts.
         The ${\sf let}^{*}$ macro takes four arguments: a context $\Gamma\in {\sf Prop_0}$, a  context $\Delta\in{\sf \llbracket Prop_1\rrbracket}$,  
         a possibly empty ($[\ ]$) list of terms  $Ns:=N_1,\ldots,  N_i$ - all three of the same length - and a term $M$. It is defined as follows for the empty and non-empty cases:
         %\footnote{Let us stretch here that when we speak about the structure of $\Gamma$ we imply (given the construction of $\Gamma\vdash{\sf wf}$) a treatment of contexts as lists where $\bullet$ stands for the empty list, singleton $x:A$ for $x:A + \bullet$ and contexts written in the form  $\Gamma,x:A$ for $x:A + \Gamma$ where $\Gamma$ is a list. I.e. contexts are lists but written down inversely with the head in the rightmost position. We treat the list of terms $Ns$ similarly for uniformity}  
@@ -604,7 +604,7 @@ We do not repeat  the corresponding $\beta, \eta$ equality rules since they are 
             $$\begin{array}{l r}
             \Delta \Rightarrow \llbracket A\rrbracket:= & \exists \Delta'\in \pi(\Delta)\ \text{s.t} \   
             \Delta'\vdash \llbracket A \rrbracket \end{array}$$
-            where $\pi(\Delta)$ is the collection of wellformed  $\llbracket {\sf Prop_0} \rrbracket$ contexts $\Delta'\vdash \llbracket {\sf wf}\rrbracket$  with some permutation of the multiset $\Delta$ as co--domain.
+            where $\pi(\Delta)$ is the collection of wellformed  $\llbracket {\sf Prop_0} \rrbracket$ contexts $\Delta'\vdash \llbracket {\sf wf}\rrbracket$  with some permutation of the multiset $\Delta$ as co-domain.
         \end{mdframed} 
         
         
